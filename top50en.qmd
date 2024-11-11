@@ -1,8 +1,10 @@
-# Top 50 ggplot2 Visualizations {#sec-top50ggplot2_visualizations}
+# Top 50 ggplot2 Visualizations {#sec-top50ggplot2en}
 
 ::: callout-note
 This article and code is from [r-statistics.co](https://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html)
 :::
+
+查看简体中文版本 @sec-top50ggplot2zh
 
 **An effective chart is one that:**
 
@@ -154,7 +156,6 @@ ggMarginal(g, type = "histogram", fill = "transparent")
 
 Compare variation in values between small number of items (or categories) with respect to a fixed reference.
 
-
 ### Diverging bars
 
 Diverging Bars is a bar chart that can handle both negative and positive values. This can be implemented by a smart tweak with `geom_bar()`. But the usage of `geom_bar()` can be quite confusing. Thats because, it can be used to make a bar chart as well as a histogram. Let me explain.
@@ -285,7 +286,6 @@ ggplot(cty_mpg, aes(x = make, y = mileage)) +
 
 ```
 
-
 ### Slope Chart
 
 Slope charts are an excellent way of comparing the positional placements between 2 points on time. At the moment, there is no builtin function to construct this. Following code serves as a pointer about how you may approach this.
@@ -295,7 +295,7 @@ Slope charts are an excellent way of comparing the positional placements between
 #| warning: false
 
 # Prepare data
-df <- read_csv("https://raw.githubusercontent.com/selva86/datasets/master/gdppercap.csv")
+df <- read_csv("data/top50ggplot2/gdppercap.csv")
 
 left_label <- paste(df$continent, round(df$`1952`), sep = ",")
 right_label <- paste(df$continent, round(df$`1957`), sep = ",")
@@ -345,7 +345,6 @@ ggplot(df) +
 
 ```
 
-
 ### Dumbbell Plot
 
 Dumbbell charts are a great tool if you wish to: 1. Visualize relative positions (like growth and decline) between two points in time. 2. Compare distance between two categories.
@@ -357,7 +356,7 @@ In order to get the correct ordering of the dumbbells, the Y variable should be 
 #| warning: false
 
 # Prepare data
-health <- read.csv("https://raw.githubusercontent.com/selva86/datasets/master/health.csv")
+health <- read.csv("data/top50ggplot2/health.csv")
 
 health$Area <- factor(health$Area,
   levels = as.character(health$Area)
@@ -392,7 +391,6 @@ ggplot(health, aes(x = pct_2013, xend = pct_2014, y = Area, group = Area)) +
 
 ```
 
-
 ## Distribution
 
 When you have lots and lots of data points and want to study where and how the data points are distributed.
@@ -419,7 +417,6 @@ ggplot(mpg, aes(manufacturer, cty)) +
 
 ```
 
-
 ### Population Pyramid
 
 Population pyramids offer a unique way of visualizing how much population or what percentage of population fall under a certain category. The below pyramid is an excellent example of how many users are retained at each stage of a email marketing campaign funnel.
@@ -430,7 +427,7 @@ Population pyramids offer a unique way of visualizing how much population or wha
 
 options(scipen = 999)
 
-email_campaign_funnel <- read.csv("https://raw.githubusercontent.com/selva86/datasets/master/email_campaign_funnel.csv")
+email_campaign_funnel <- read.csv("data/top50ggplot2/email_campaign_funnel.csv")
 
 # X Axis Breaks and Labels
 brks <- seq(-15000000, 15000000, 5000000)
@@ -457,7 +454,6 @@ ggplot(
 ```
 
 ## Composition
-
 
 ### Waffle Chart
 
@@ -492,7 +488,6 @@ ggplot(df, aes(x = x, y = y, fill = category)) +
 
 ```
 
-
 ### Treemap
 
 Treemap is a nice way of displaying hierarchical data by using nested rectangles. The treemapify package provides the necessary functions to convert the data in desired format (treemapify) as well as draw the actual plot (ggplotify).
@@ -505,7 +500,7 @@ Once the data formatting is done, just call `ggplotify()` on the treemapified da
 #| label: Treemap
 #| warning: false
 
-proglangs <- read.csv("https://raw.githubusercontent.com/selva86/datasets/master/proglanguages.csv")
+proglangs <- read.csv("data/top50ggplot2/proglanguages.csv")
 
 ggplot(proglangs, aes(
   area = value,
@@ -538,7 +533,6 @@ hc <- hclust(dist(USArrests), "ave")  # hierarchical clustering
 ggdendrogram(hc, rotate = TRUE, size = 2)
 
 ```
-
 
 ### Clusters
 

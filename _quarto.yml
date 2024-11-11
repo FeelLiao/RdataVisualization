@@ -21,7 +21,8 @@ book:
   chapters:
     - index.qmd
     - ChangeLog.qmd
-    # - top50ggplot2_visualizations.qmd
+    - top50en.qmd
+    - top50zh.qmd
     #- BasicStatisticalGraph.qmd
     # - NetworkRelatedGraph.qmd
 
