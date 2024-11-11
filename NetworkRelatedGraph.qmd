@@ -1,0 +1,98 @@
+# 网络相关绘图 {#sec-NetworkRelatedGraph}
+
+::: callout-warning
+这一小节的内容将会持续更新，详情请关注[更新日志](Advancedggplot2.qmd)。
+:::
+
+## 相关性网络图
+
+### 导入包
+
+```{r}
+# | warning: false
+
+library(tidyverse)
+library(ggraph)
+library(Hmisc)
+library(igraph)
+```
+
+### 数据处理
+
+```{r}
+df <- read_tsv("data/gene.csv") |>
+  column_to_rownames(var = "id")
+
+# 计算相关性
+df_cor <- rcorr(t(df), type = "spearman")
+df_cor_r <- df_cor$r
+df_cor_p <- df_cor$P
+df_cor_r[df_cor_p > 0.05 | abs(df_cor_r) < 0.7] <- 0
+
+# 将邻接矩阵转换为边列表
+edge_list <- df_cor_r |>
+  as_tibble(rownames = "from") |>
+  pivot_longer(cols = -from, names_to = "to", values_to = "weight") |>
+  filter(weight != 0, from != 0)
+```
+
+### 图形创建
+
+```{r}
+# 创建图形
+df_igraph <- graph_from_data_frame(edge_list, directed = FALSE)
+
+# 提取边权重
+df_weight <- E(df_igraph)$weight
+edge_attributes <- tibble(weight = df_weight) |>
+  mutate(
+    color = case_when(
+      weight > 0 ~ "#e6956f",
+      weight < 0 ~ "#788fce",
+      TRUE ~ "gray" # 其他情况下颜色为gray
+    ),
+    width = abs(weight) * 2.5
+  )
+
+# 将属性应用到图形对象的边上
+E(df_igraph)$color <- edge_attributes$color
+E(df_igraph)$width <- edge_attributes$width
+
+# 构建点数据
+node_size <- df |>
+  rowSums() |>
+  enframe(name = "name", value = "size") |>
+  mutate(size = log10(size) * 2.5) |>
+  filter(name %in% V(df_igraph)$name)
+
+# 将节点大小应用到图形对象的节点上
+V(df_igraph)$size <- node_size$size[match(V(df_igraph)$name, node_size$name)]
+```
+
+### 数据可视化
+
+```{r}
+portraits <- create_layout(df_igraph, layout = "circle")
+
+ggraph(df_igraph, layout = "circle") +
+  geom_edge_arc(aes(color = color),
+    edge_width = 0.4,
+    show.legend = FALSE, strength = 0.2
+  ) +
+  geom_node_point(aes(size = size),
+    shape = 21,
+    show.legend = FALSE, fill = "#788fce"
+  ) +
+  scale_edge_color_manual(values = c("#788fce", "red")) +
+  geom_node_text(
+    data = portraits, aes(
+      label = name, x = x * 1.05,
+      y = y * 1.05,
+      angle = -((-node_angle(x, y) + 90) %% 180) + 90,
+      hjust = ifelse(between(node_angle(x, y), 90, 270), 1, 0)
+    ),
+    size = 3, show.legend = FALSE
+  ) +
+  theme_graph() +
+  expand_limits(x = c(-1.2, 1.2), y = c(-1.2, 1.2))
+```

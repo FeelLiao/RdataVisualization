@@ -1,0 +1,9 @@
+# 欢迎 {.unnumbered}
+
+欢迎来到R语言数据可视化的学习笔记，本项目主要记录了我在学习使用R语言`ggplot2`包进行数据可视化时的一些思考和代码。
+
+`ggplot2` 是 R 语言中一个用于创建高质量图形和图表的强大包。它是基于“图形语法”（Grammar of Graphics）理论构建的，提供了一种灵活且一致的方式来描述和构建各种复杂的图形。ggplot2 的核心思想是将图形分解为多个组成部分，包括数据 (data)、映射（aes）、几何对象（geom）、统计变换（stat）、刻度（scale）和主题（theme）等。通过组合这些组件，用户可以轻松地创建从简单的散点图和柱状图到复杂的分层图形和地图等多种类型的图表。目前，`ggplot2`已经形成强大的拓展生态系统，可以利用`ggplot2`的扩展，轻松创建更加复杂和个性化的图形。
+
+笔记不会不含基础`ggplot2`绘图的相关知识，如果是初学者，建议先学习[ggplot2: Elegant Graphics for Data Analysis (3e)](https://ggplot2-book.org/)。在这里，主要主要包含ggplot2的一些高级用法，包括ggplot2内部如何工作，编写ggplot2扩展的原理和利用ggplot2进行高级绘图。
+
+本项目旨在记录自己学习R语言数据可视化的过程，如有错误，欢迎在[issue](https://github.com/FeelLiao/R_in_ASLDV/issues)中提出。

@@ -1,0 +1,37 @@
+project:
+  type: book
+  output-dir: docs
+
+engine: knitr
+
+book:
+  title: "R语言数据可视化学习笔记"
+  language: zh
+  reader-mode: true
+
+  page-footer:
+    center: |
+      博客<a href="https://blog.stariverfeel.eu.org/">Feel's Blog</a> | 部署 <a href="https://quarto.org/">Quarto</a>.
+  favicon: "favicon.png"
+  cover-image: "logo.png"
+  site-url: https://bookr.stariverfeel.eu.org/
+  repo-url: https://github.com/FeelLiao/R_in_ASLDV
+  repo-branch: main
+  repo-actions: [edit, issue]
+  chapters:
+    - index.qmd
+    - ChangeLog.qmd
+    # - top50ggplot2_visualizations.qmd
+    #- BasicStatisticalGraph.qmd
+    # - NetworkRelatedGraph.qmd
+
+format:
+  html:
+    theme:
+      - cosmo
+    code-link: true
+
+    author-meta: "Feel Liao"
+    callout-appearance: simple
+
+editor: visual

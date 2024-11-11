@@ -1,0 +1,22 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "R语言数据可视化学习笔记",
+    "section": "",
+    "text": "欢迎\n欢迎来到R语言数据可视化的学习笔记，本项目主要记录了我在学习使用R语言ggplot2包进行数据可视化时的一些思考和代码。\nggplot2 是 R 语言中一个用于创建高质量图形和图表的强大包。它是基于“图形语法”（Grammar of Graphics）理论构建的，提供了一种灵活且一致的方式来描述和构建各种复杂的图形。ggplot2 的核心思想是将图形分解为多个组成部分，包括数据 (data)、映射（aes）、几何对象（geom）、统计变换（stat）、刻度（scale）和主题（theme）等。通过组合这些组件，用户可以轻松地创建从简单的散点图和柱状图到复杂的分层图形和地图等多种类型的图表。目前，ggplot2已经形成强大的拓展生态系统，可以利用ggplot2的扩展，轻松创建更加复杂和个性化的图形。\n笔记不会不含基础ggplot2绘图的相关知识，如果是初学者，建议先学习ggplot2: Elegant Graphics for Data Analysis (3e)。在这里，主要主要包含ggplot2的一些高级用法，包括ggplot2内部如何工作，编写ggplot2扩展的原理和利用ggplot2进行高级绘图。\n本项目旨在记录自己学习R语言数据可视化的过程，如有错误，欢迎在issue中提出。",
+    "crumbs": [
+      "欢迎"
+    ]
+  },
+  {
+    "objectID": "ChangeLog.html",
+    "href": "ChangeLog.html",
+    "title": "1  更新日志",
+    "section": "",
+    "text": "2024-10-31：Top 50 ggplot2 Visualizations，目前是英文版，来自r-statistics.co。这里面简单介绍了一些常用的绘图原则，以及如何组合ggplot2本身自带的函数来绘制一些高级图形，部分图形会用到ggplot2的拓展包。\n基础统计绘图更新\n\n曼哈顿图 2024-11-05\n分裂小提琴图 2024-11-07\n阴影条带哑铃图 2024-11-07\n\n网络相关绘图更新\n\n相关性网络图 2024-11-07",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>更新日志</span>"
+    ]
+  }
+]
