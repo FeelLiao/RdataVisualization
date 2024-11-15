@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.33">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Feel Liao">
+<title>2&nbsp; ggplot2工作原理 – R语言数据可视化学习笔记</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./ggplot2extend.html" rel="next">
+<link href="./ggplot2intro.html" rel="prev">
+<link href="./favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-07ba0ad10f5680c660e360ac31d2f3b6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-5b63201b283509340feecb78f0a904f5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ggplot2internal.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">ggplot2工作原理</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">R语言数据可视化学习笔记</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/FeelLiao/R_in_ASLDV" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">欢迎</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ChangeLog.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">更新日志</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ggplot2intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">ggplot2简介</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ggplot2internal.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">ggplot2工作原理</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ggplot2extend.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">编写ggplot2拓展</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ggplot2_spring1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">一个学习案例</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./top50en.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 Visualizations</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./top50zh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 可视化</span></span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#sec-plot-method" id="toc-sec-plot-method" class="nav-link active" data-scroll-target="#sec-plot-method"><span class="header-section-number">2.1</span> The <code>plot</code> method</a></li>
+  <li>
+<a href="#sec-ggplotbuild" id="toc-sec-ggplotbuild" class="nav-link" data-scroll-target="#sec-ggplotbuild"><span class="header-section-number">2.2</span> The build step</a>
+  <ul class="collapse">
+<li><a href="#%E6%95%B0%E6%8D%AE%E5%87%86%E5%A4%87" id="toc-数据准备" class="nav-link" data-scroll-target="#%E6%95%B0%E6%8D%AE%E5%87%86%E5%A4%87"><span class="header-section-number">2.2.1</span> 数据准备</a></li>
+  <li><a href="#%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2" id="toc-数据转换" class="nav-link" data-scroll-target="#%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2"><span class="header-section-number">2.2.2</span> 数据转换</a></li>
+  <li><a href="#%E8%BE%93%E5%87%BA" id="toc-输出" class="nav-link" data-scroll-target="#%E8%BE%93%E5%87%BA"><span class="header-section-number">2.2.3</span> 输出</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#sec-ggplotgtable" id="toc-sec-ggplotgtable" class="nav-link" data-scroll-target="#sec-ggplotgtable"><span class="header-section-number">2.3</span> The gtable step</a>
+  <ul class="collapse">
+<li><a href="#%E6%B8%B2%E6%9F%93%E9%9D%A2%E6%9D%BF" id="toc-渲染面板" class="nav-link" data-scroll-target="#%E6%B8%B2%E6%9F%93%E9%9D%A2%E6%9D%BF"><span class="header-section-number">2.3.1</span> 渲染面板</a></li>
+  <li><a href="#%E6%B7%BB%E5%8A%A0%E5%AF%BC%E5%9B%BE" id="toc-添加导图" class="nav-link" data-scroll-target="#%E6%B7%BB%E5%8A%A0%E5%AF%BC%E5%9B%BE"><span class="header-section-number">2.3.2</span> 添加导图</a></li>
+  <li><a href="#%E6%B7%BB%E5%8A%A0%E4%BF%AE%E9%A5%B0" id="toc-添加修饰" class="nav-link" data-scroll-target="#%E6%B7%BB%E5%8A%A0%E4%BF%AE%E9%A5%B0"><span class="header-section-number">2.3.3</span> 添加修饰</a></li>
+  <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output"><span class="header-section-number">2.3.4</span> Output</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#sec-ggproto" id="toc-sec-ggproto" class="nav-link" data-scroll-target="#sec-ggproto"><span class="header-section-number">2.4</span> ggproto 简介</a>
+  <ul class="collapse">
+<li><a href="#ggproto-%E5%AF%B9%E8%B1%A1" id="toc-ggproto-对象" class="nav-link" data-scroll-target="#ggproto-%E5%AF%B9%E8%B1%A1"><span class="header-section-number">2.4.1</span> ggproto 对象</a></li>
+  <li><a href="#%E5%88%9B%E5%BB%BA%E6%96%B0%E7%B1%BB" id="toc-创建新类" class="nav-link" data-scroll-target="#%E5%88%9B%E5%BB%BA%E6%96%B0%E7%B1%BB"><span class="header-section-number">2.4.2</span> 创建新类</a></li>
+  <li><a href="#sec-ggproto-instances" id="toc-sec-ggproto-instances" class="nav-link" data-scroll-target="#sec-ggproto-instances"><span class="header-section-number">2.4.3</span> 创建新的实例</a></li>
+  <li><a href="#sec-ggproto-subclass" id="toc-sec-ggproto-subclass" class="nav-link" data-scroll-target="#sec-ggproto-subclass"><span class="header-section-number">2.4.4</span> 创建子类</a></li>
+  <li><a href="#sec-ggproto-style" id="toc-sec-ggproto-style" class="nav-link" data-scroll-target="#sec-ggproto-style"><span class="header-section-number">2.4.5</span> ggproto 代码风格</a></li>
+  </ul>
+</li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/FeelLiao/R_in_ASLDV/edit/main/ggplot2internal.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/FeelLiao/R_in_ASLDV/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title"><span id="sec-ggplot2internal" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">ggplot2工作原理</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<ol type="1">
+<li>本篇文章的内容来自于<a href="https://ggplot2-book.org/internals">Internals of ggplot2</a>，如果翻译有误，恳请指出！</li>
+<li>文章介绍的内容基于 ggplot2 3.3.0 版本，如果使用其他版本，代码可能出错。</li>
+</ol>
+</div>
+</div>
+</div>
+<p>当从用户转到开发人员时，遇到挫折是很常见的，因为在 ggplot2 中，用户的交互方式与其底层工作原理截然不同。随着 ggplot2 的扩展变得越来越常见，在理解如何将拓展的功能整合在一起上也会遇到挫折。本章将介绍 ggplot2 如何在 “幕后”工作。我们将重点放在系统的设计上，而不是其实现的技术细节，目的是让读者从概念上理解各部分是如何组合在一起的。首先，我们将概述绘制 ggplot 对象时的过程，然后深入细节，描述数据如何在整个过程中流动，并最终成为绘图中的可视化元素。</p>
+<section id="sec-plot-method" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="sec-plot-method">
+<span class="header-section-number">2.1</span> The <code>plot</code> method</h2>
+<p>在了解 ggplot2 的底层机制时，重要的是要认识到与绘图相关的几乎所有内容都是在打印 ggplot 对象时发生的，而不是在构建对象时发生的。例如，下面的代码中，对象 <code>p</code> 是绘图数据的抽象表示，如图层等。它并没有构造图像本身：</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, color <span class="op">=</span> <span class="va">drv</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span>position <span class="op">=</span> <span class="st">"jitter"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_smooth</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, formula <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"A plot for expository purposes"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>ggplot2 被设计成允许用户向图中添加新元素，而无需重新计算任何内容。这种设计的一个含义是，如果你想了解 ggplot2 的机制，你必须跟踪你的绘图是如何进入 <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>的。你可以通过在控制台中输入 <code>ggplot2:::plot.ggplot</code> 来检查 ggplot 对象的打印方法，但本章我们将使用一个简化的版本。剥离到最基本的形式，ggplot2 的绘图方法与以下 <code>ggprint()</code> 函数的结构相同：</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ggprint</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">ggplot_build</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>  <span class="va">gtable</span> <span class="op">&lt;-</span> <span class="fu">ggplot_gtable</span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span>  <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/grid.newpage.html">grid.newpage</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span><span class="op">(</span><span class="va">gtable</span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>这个函数并不处理所有可能的情况，但它足以绘制上面指定的图表：</p>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggprint</span><span class="op">(</span><span class="va">p</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="ggplot2internal_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>在我们简化的打印方法的代码中，显示了四个不同的步骤：</p>
+<ul>
+<li><p>首先，调用 <code>ggplot_build()</code>，这一步会准备每个图层的数据并整理成适合绘图的标准格式。</p></li>
+<li><p>其次，将准备好的数据传递给 <code>ggplot_gtable()</code>，并将其转化为存储在 gtable 中的图形元素（我们稍后再讨论 gtable 是什么）。</p></li>
+<li><p>第三，在 grid 软件包的帮助下，将 gtable 对象转换为图像。</p></li>
+<li><p>第四，将原始 ggplot 对象隐形返回给用户。</p></li>
+</ul>
+<p>这个过程揭示了 ggplot2 本身并不进行底层绘图：当创建了 <code>gtable</code> 对象后，它的责任就结束了。 gtable 包（实现了 gtable 类）也不进行任何绘制。 所有绘图工作都由 grid 软件包和激活的图形设备共同完成。 这是非常重要的一点，因为这意味着 ggplot2 或 ggplot2 的任何扩展都不会关心可视化输出的细枝末节。 相反，它的工作是将用户数据转换为一个或多个图形基元，如多边形、线、点等，然后将责任移交给 grid 包。</p>
+<p>尽管严格来说并不正确，但我们将称这个过程为<strong>渲染过程</strong>。接下来的两个部分数据将沿着渲染过程向下推进，通过 build step（<a href="#sec-ggplotbuild" class="quarto-xref"><span>Section 2.2</span></a>）和 gtable step（<a href="#sec-ggplotgtable" class="quarto-xref"><span>Section 2.3</span></a>），最终在图形基元的集合中到达 grid 。</p>
+</section><section id="sec-ggplotbuild" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="sec-ggplotbuild">
+<span class="header-section-number">2.2</span> The build step</h2>
+<p>正如上面讨论的，<code>ggplot_build()</code> 接受使用公共 API 构建的声明性表示，并通过准备数据以将其转换为图形基元来增强它。</p>
+<section id="数据准备" class="level3" data-number="2.2.1"><h3 data-number="2.2.1" class="anchored" data-anchor-id="数据准备">
+<span class="header-section-number">2.2.1</span> 数据准备</h3>
+<p>处理的第一部分是获取与每个图层相关的数据，并将其转换成可预测的格式。 图层可以通过以下三种方式之一提供数据：提供自己的数据（geom 的 <code>data</code> 参数是一个data frame），继承提供给 <code>ggplot()</code> 的全局数据，或者是一个函数，在应用到全局时返回一个data frame。 在所有三种情况下，结果都是一个data frame，它将传递给绘图布局，后者将协调坐标系和分面。 在这种情况下，数据首先被传递到绘图坐标系，坐标系可能会改变数据（但通常不会），然后被传递到分面，分面会检查数据以确定绘图应该有多少个面板以及如何组织这些面板。 在这个过程中，与每个图层相关的数据都会增加名叫 “PANEL” 一列数据。 这一列数据将（必须）在整个渲染过程中保留，用于将数据的每一行链接到最终绘图中的特定面板。</p>
+<p>数据准备的最后一部分是将图层数据转换为计算出的美学（aesthetic）值。 这包括在图层数据上评估来自 <code>aes()</code> 的所有美学表达式。 此外，如果没有明确给出，<code>group</code>美学值会从所有非连续美学值的交互中计算出来。 <code>group</code>美学和<code>PANEL</code>一样，是必须在整个处理过程中保留的特殊列。 例如，前面创建的<code>p</code>图只包含<code>geom_point()</code>指定的一个图层，在数据准备过程结束时，与该图层相关的前 10 行数据是这样的：</p>
+</section><section id="数据转换" class="level3" data-number="2.2.2"><h3 data-number="2.2.2" class="anchored" data-anchor-id="数据转换">
+<span class="header-section-number">2.2.2</span> 数据转换</h3>
+<p>提取图层数据并将其转换为可预测的格式后，需要进行一系列转换，直到转换为图层的几何图形所需的格式。 第一步是对数据中的列进行标度（scale）转换。 正是在这一阶段，标度中的任何 <code>trans</code> 参数都会产生影响，所有后续的渲染都将在这一转换后的空间中进行。 这就是在标度中设置位置变换与在坐标系中设置位置变换效果不同的原因。 如果在标度中指定变换，则变换会在任何其他计算<em>之前</em>应用，但如果在坐标系中指定变换，则变换会在这些计算<em>之后</em>应用。 例如，我们最初绘制的<code>p</code>图不涉及标度变换，因此图层数据在此阶段保持不变。 前三行如下所示：</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>    x  y colour PANEL group
+1 1.8 29      f     1     2
+2 1.8 29      f     1     2
+3 2.0 31      f     2     2</code></pre>
+</div>
+</div>
+<p>相反，如果我们的绘图对象是 <code>p + scale_x_log10()</code>，并在处理过程中检查此时的图层数据，我们就会看到 <code>x</code> 变量已进行了适当的转换：</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>          x  y colour PANEL group
+1 0.2552725 29      f     1     2
+2 0.2552725 29      f     1     2
+3 0.3010300 31      f     2     2</code></pre>
+</div>
+</div>
+<p>该过程的第二步是使用位置标度映射位置美学，根据所涉及的标度类型，映射过程会有不同的发生方式。 对于连续位置标度（例如我们示例中使用的标度），此时会应用 <code>oob</code> 参数中指定的出界函数，并删除图层数据中的 <code>NA</code> 值。 这对 <code>p</code> 没有什么影响，但如果我们绘制的是 <code>p + xlim(2, 8)</code>，则 <code>oob</code> 函数 – 本例中的 <code><a href="https://scales.r-lib.org/reference/oob.html">scales::censor()</a></code> – 会用 <code>NA</code> 替换 2 以下的 <code>x</code> 值，如下图所示：</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 22 rows containing non-finite values (stat_smooth).</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   x  y colour PANEL group
+1 NA 29      f     1     2
+2 NA 29      f     1     2
+3  2 31      f     2     2</code></pre>
+</div>
+</div>
+<p>对于离散位置，变化则更为剧烈，因为数值会与用户提供的 “limits”值或 “breaks”规范相匹配，然后转换为整数值位置。 最后，对于 binned 位置标度，首先使用 <code>breaks</code> 参数将连续数据切成 bins，然后将每个 bin 的位置设置为其范围的中点。 在这一阶段进行映射的原因是保持一致性：无论使用哪种位置标度，在 stat 和 geom 计算中看起来都是连续的。 这一点非常重要，否则离散标度的闪避和抖动等计算都会失败。</p>
+<p>在转换的第三阶段，数据被移交给统计变换（stat），由统计变换进行统计转换。程序如下：首先，统计变换可以检查数据并修改其参数，然后对数据进行一次性处理。接下来，按 “PANEL”和 “group”对图层数据进行拆分，并在数据重新组合之前计算统计数据。[^ggplot2-internal-2] 一旦数据以新的形式重新组合，就会经过另一个美学映射过程。在这个过程中，使用 <code>stat()</code>（或旧的 <code>...var...</code>符号）延迟计算的任何美学数据都会被添加到数据中。请注意，这就是为什么<code>stat()</code>表达式（包括用于在示例图<code>p</code>的<code>geom_smooth()</code>层中指定回归模型的公式）不能引用原始数据。此时，原始数据根本不存在。</p>
+<p>举例来说，我们可以看一下图中的第二图层，它可以产生线性回归结果。在进行统计计算之前，该图层的数据只包含坐标以及所需的 “PANEL”和 “group”列。</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>    x  y colour PANEL group
+1 1.8 29      f     1     2
+2 1.8 29      f     1     2
+3 2.0 31      f     2     2</code></pre>
+</div>
+</div>
+<p>在统计计算结束后，图层数据也会相应的改变：</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>         x        y     ymin     ymax        se flipped_aes colour PANEL group
+1 1.800000 24.33592 23.07845 25.59339 0.6250675       FALSE      4     1     1
+2 1.859494 24.17860 22.94830 25.40890 0.6115600       FALSE      4     1     1
+3 1.918987 24.02127 22.81795 25.22460 0.5981528       FALSE      4     1     1</code></pre>
+</div>
+</div>
+<p>此时，geom 接管了 stat 的工作（几乎）。它要做的第一件事就是检查数据、更新参数，并可能对数据进行第一次修改（与 stat 的设置相同）。这可能会对某些列进行重新参数化，例如将 <code>x</code>+<code>width</code> 改为 <code>xmin</code>+<code>xmax</code>。之后，位置调整将被应用，例如，重叠的条形图将被堆叠等。对于我们的示例图 <code>p</code> 来说，这一步是在图的第一层应用抖动，并对 <code>x</code> 和 <code>y</code> 坐标进行扰动：</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>         x        y colour PANEL group
+1 1.775735 29.08448      f     1     2
+2 1.782166 28.72732      f     1     2
+3 1.992427 31.09196      f     2     2</code></pre>
+</div>
+</div>
+<p>接下来–也许令人惊讶的是–位置标度将全部重置、重新训练并应用于图层数据。仔细想想，这绝对是必要的，因为，例如，堆叠会极大地改变其中一个坐标轴的范围。在某些情况下（例如在上面的直方图示例中），其中一个位置美学可能甚至要到统计计算之后才能获得，如果不对刻度进行重新训练，它就永远不会得到训练。</p>
+<p>数据转换的最后一部分是训练和映射所有非位置美学，即把映射的离散或连续输入转换成图形参数，如颜色、线型、大小等。此外，还将添加地形图中的任何默认美学，以便数据现在处于地形图的可预测状态。在最后一步，在构建步骤完成之前，stat 和 facet 都有最后一次机会使用它们的 “finish_data()”方法修改数据的最终映射形式。对于绘图对象 <code>p</code> 来说，图层数据最终状态的前几行是这样的：</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>   colour        x        y PANEL group shape size fill alpha stroke
+1 #00BA38 1.796652 29.03605     1     2    19  1.5   NA    NA    0.5
+2 #00BA38 1.806750 29.34470     1     2    19  1.5   NA    NA    0.5
+3 #00BA38 1.964462 30.98018     2     2    19  1.5   NA    NA    0.5</code></pre>
+</div>
+</div>
+</section><section id="输出" class="level3" data-number="2.2.3"><h3 data-number="2.2.3" class="anchored" data-anchor-id="输出">
+<span class="header-section-number">2.2.3</span> 输出</h3>
+<p>ggplot_build()<code>的返回值是一个包含</code>ggplot_built<code>类的列表结构。它包含计算数据以及一个</code>Layout` 对象，该对象包含有关训练过的坐标系和切面的信息。此外，它还包含一个原始绘图对象的副本，使用经过训练的标度。</p>
+</section></section><section id="sec-ggplotgtable" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="sec-ggplotgtable">
+<span class="header-section-number">2.3</span> The gtable step</h2>
+<p><code>ggplot_gtable()</code>的目的是获取 build step 的输出，并在 gtable 软件包的帮助下将其转化为可以使用grid绘制的对象。此时，负责进一步计算的主要元素是地形、坐标系、切面和主题。统计和位置调整已经不再发挥了它们的作用。</p>
+<section id="渲染面板" class="level3" data-number="2.3.1"><h3 data-number="2.3.1" class="anchored" data-anchor-id="渲染面板">
+<span class="header-section-number">2.3.1</span> 渲染面板</h3>
+<p>首先是将数据转换成图形表示。这分两步进行。首先，将每个图层转换为图形对象列表（“grobs”）。与统计一样，转换是通过分割数据进行的，首先是按 “PANEL”分割，然后是按 “group”分割，出于性能考虑，geom 可能会拦截这种分割。虽然很多数据准备工作已经完成，但在这一步中，geom 还会对数据进行一些额外的转换，这种情况并不少见。其中最关键的部分是位置数据的转换和归一化。这是由坐标系完成的，虽然这通常只是意味着根据坐标系的限制对数据进行归一化，但也可能包括激进的转换，如将位置转换为极坐标。这样做的结果是为每个图层生成一个<code>gList</code>对象列表，该列表与切面布局中的每个面板相对应。之后，切面接手并组装面板。它首先从图层中收集每个面板的凹槽，以及基于主题的渲染条、背景、网格线和坐标轴，并将所有这些合并到每个面板的单个 gList 中。然后，它会根据计算出的面板布局将所有这些面板排列到一个 gtable 中。对于大多数绘图来说，这很简单，因为只有一个面板，但对于使用了 “facet_wrap()”的绘图来说，这可能会相当复杂。输出结果是最终 gtable 对象的基础。在处理过程的这一阶段，我们的示例图 <code>p</code> 看起来是这样的：</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="ggplot2internal_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="添加导图" class="level3" data-number="2.3.2"><h3 data-number="2.3.2" class="anchored" data-anchor-id="添加导图">
+<span class="header-section-number">2.3.2</span> 添加导图</h3>
+<p>ggplot2 中有两种类型的导图：坐标轴和图例。正如我们的图 <code>p</code> 所示，此时坐标轴已经渲染完成，并与面板组装在一起，但图例仍然缺失。渲染图例是一个复杂的过程，首先要为每个比例尺训练一个向导。然后，如果映射允许，可能会合并多个导引器，然后再要求为图例作出贡献的图层为图例中的每个键提供键槽。然后，这些键槽会在各图层之间进行组合，并合并成最终的图例，这个过程让人想起图层是如何合并成面板的 gtable 的。最后输出的是一个 gtable，其中包含根据主题和指南规格排列和样式的每个图例框。创建完成后，会根据 <code>legend.position</code>主题设置将引导 gtable 添加到主 gtable 中。至此，我们的示例绘图在大多数方面都已完成：唯一缺少的就是标题。</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="ggplot2internal_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="添加修饰" class="level3" data-number="2.3.3"><h3 data-number="2.3.3" class="anchored" data-anchor-id="添加修饰">
+<span class="header-section-number">2.3.3</span> 添加修饰</h3>
+<p>剩下的工作就是添加标题、副标题、标题和标签，以及添加背景和页边距，这样最终的表格就完成了。</p>
+</section><section id="output" class="level3" data-number="2.3.4"><h3 data-number="2.3.4" class="anchored" data-anchor-id="output">
+<span class="header-section-number">2.3.4</span> Output</h3>
+<p>至此，ggplot2 已准备好移交给 grid。我们的渲染过程大致相当于下面的代码，最终结果如上所述，是一个 gtable：</p>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p_built</span> <span class="op">&lt;-</span> <span class="fu">ggplot_build</span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span>
+<span><span class="va">p_gtable</span> <span class="op">&lt;-</span> <span class="fu">ggplot_gtable</span><span class="op">(</span><span class="va">p_built</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">p_gtable</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "gtable" "gTree"  "grob"   "gDesc" </code></pre>
+</div>
+</div>
+<p>不那么明显的是，对象的尺寸是不可预测的，将取决于切面、图例位置和绘制的标题。因此，如果要进一步修改 gtable，建议不要在代码中依赖行和列的位置。不过，gtable 中的所有元素都已命名，因此仍可以通过一些工作可靠地检索到，例如左上角 y 轴的槽。下面的代码显示了我们的绘图 <code>p</code> 的 gtable：</p>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p_gtable</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>TableGrob (13 x 15) "layout": 22 grobs
+    z         cells        name                                          grob
+1   0 ( 1-13, 1-15)  background               rect[plot.background..rect.741]
+2   1 ( 8- 8, 5- 5)   panel-1-1                      gTree[panel-1.gTree.612]
+3   1 ( 8- 8, 9- 9)   panel-2-1                      gTree[panel-2.gTree.627]
+4   3 ( 6- 6, 5- 5)  axis-t-1-1                                zeroGrob[NULL]
+5   3 ( 6- 6, 9- 9)  axis-t-2-1                                zeroGrob[NULL]
+6   3 ( 9- 9, 5- 5)  axis-b-1-1           absoluteGrob[GRID.absoluteGrob.631]
+7   3 ( 9- 9, 9- 9)  axis-b-2-1           absoluteGrob[GRID.absoluteGrob.631]
+8   3 ( 8- 8, 8- 8)  axis-l-1-2                                zeroGrob[NULL]
+9   3 ( 8- 8, 4- 4)  axis-l-1-1           absoluteGrob[GRID.absoluteGrob.639]
+10  3 ( 8- 8,10-10)  axis-r-1-2                                zeroGrob[NULL]
+11  3 ( 8- 8, 6- 6)  axis-r-1-1                                zeroGrob[NULL]
+12  2 ( 7- 7, 5- 5) strip-t-1-1                                 gtable[strip]
+13  2 ( 7- 7, 9- 9) strip-t-2-1                                 gtable[strip]
+14  4 ( 5- 5, 5- 9)      xlab-t                                zeroGrob[NULL]
+15  5 (10-10, 5- 9)      xlab-b titleGrob[axis.title.x.bottom..titleGrob.694]
+16  6 ( 8- 8, 3- 3)      ylab-l   titleGrob[axis.title.y.left..titleGrob.697]
+17  7 ( 8- 8,11-11)      ylab-r                                zeroGrob[NULL]
+18  8 ( 8- 8,13-13)   guide-box                             gtable[guide-box]
+19  9 ( 4- 4, 5- 9)    subtitle         zeroGrob[plot.subtitle..zeroGrob.737]
+20 10 ( 3- 3, 5- 9)       title          titleGrob[plot.title..titleGrob.736]
+21 11 (11-11, 5- 9)     caption          zeroGrob[plot.caption..zeroGrob.739]
+22 12 ( 2- 2, 2- 2)         tag              zeroGrob[plot.tag..zeroGrob.738]</code></pre>
+</div>
+</div>
+<p>正如人们所希望的那样，最终的情节看起来与原作完全相同：</p>
+<div class="cell">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/grid.newpage.html">grid.newpage</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span><span class="op">(</span><span class="va">p_gtable</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="ggplot2internal_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section></section><section id="sec-ggproto" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="sec-ggproto">
+<span class="header-section-number">2.4</span> ggproto 简介</h2>
+<p><a href="#sec-plot-method" class="quarto-xref"><span>Section 2.1</span></a> 到 <a href="#sec-ggplotgtable" class="quarto-xref"><span>Section 2.3</span></a> 的重点是构建 ggplot 所涉及的事件顺序，但对于执行这项工作的编程对象类型却有意含糊其辞。</p>
+<p>所有的ggplot2对象都是使用面向对象编程的<strong>ggproto</strong>系统构建的。这是一个历史性的意外：ggplot2 最初使用 proto 进行面向对象编程，但由于 proto 系统的局限性，需要一个正式的扩展机制，这就成了一个问题。试图将 ggplot2 转换到其他系统（如 R6）的尝试被证明是困难的，而创建一个专门针对 ggplot2 需求的面向对象系统被证明是最不坏的解决方案。</p>
+<p>如果你想编写 ggplot2 扩展程序，了解 ggproto 面向对象编程系统是非常重要的。我们将在@sec-ggplot2extend和@sec-spring1 中遇到 ggplot2 使用的 ggproto 对象。与更著名的 R6 系统一样，ggproto 使用引用语义，允许继承和访问父类的方法。虽然 ggproto 并不强制执行这些设计原则，但它们对于理解如何在 ggplot2 中使用该系统至关重要。为了说明这些概念，本节将以简化的形式介绍 ggproto 的核心机制。</p>
+<section id="ggproto-对象" class="level3" data-number="2.4.1"><h3 data-number="2.4.1" class="anchored" data-anchor-id="ggproto-对象">
+<span class="header-section-number">2.4.1</span> ggproto 对象</h3>
+<p>创建一个新的ggproto对象需要使用<code>ggproto()</code>函数，该函数的第一个参数是新类的名称，第二个参数是新类继承的另一个ggproto对象。例如，我们可以用下面的命令创建一个ggproto对象–尽管它没有任何有用的功能：</p>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NewObject</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span></span>
+<span>  `_class` <span class="op">=</span> <span class="cn">NULL</span>, </span>
+<span>  `_inherits` <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>按照惯例，ggproto 对象使用 “UpperCamelCase”（大写字母）命名，每个单词都以大写字母开头。省略<code>`_class`</code>和<code>`_inherits`</code>参数的名称也是惯例，因此该命令的常规形式如下：</p>
+<div class="cell">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NewObject</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="cn">NULL</span>, <span class="cn">NULL</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>如果我们打印这个对象，就会发现它确实是一个 ggproto 对象，但没有显示其他信息。</p>
+<div class="cell">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NewObject</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;ggproto object: Class gg&gt;</code></pre>
+</div>
+</div>
+</section><section id="创建新类" class="level3" data-number="2.4.2"><h3 data-number="2.4.2" class="anchored" data-anchor-id="创建新类">
+<span class="header-section-number">2.4.2</span> 创建新类</h3>
+<p>要创建一个新的 ggproto 类，唯一严格需要做的就是提供一个类名作为 <code>ggproto()</code> 的第一个参数。定义一个新类的最简单命令可能是这样的</p>
+<div class="cell">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NewClass</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"NewClass"</span>, <span class="cn">NULL</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>NewClass</code>变量仍然指向一个 ggproto 对象，但我们可以通过打印它来验证它是否具有所需的类名：</p>
+<div class="cell">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NewClass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;ggproto object: Class NewClass, gg&gt;</code></pre>
+</div>
+</div>
+<p>然而，到目前为止，我们所做的唯一一件事就是创建一个指定类的对象。<code>NewClass</code>对象什么也不做。要创建一个有用的 ggproto 类，我们需要在定义类时提供一个字段和方法列表。在这里，“字段”用于存储与对象相关的数据，而 “方法”则是可以使用对象中存储的数据的函数。字段和方法的构造是一样的，从用户的角度来看，它们不会被区别对待。</p>
+<p>为了说明这一点，我们将创建一个名为 <code>Person</code> 的新类，用来存储和操作一个人的信息。我们可以通过向 <code>ggproto()</code> 函数提供名称/值对来实现这一点：</p>
+<div class="cell">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Person</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"Person"</span>, <span class="cn">NULL</span>,</span>
+<span>  </span>
+<span>  <span class="co"># fields                  </span></span>
+<span>  given_name <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  family_name <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  birth_date <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  </span>
+<span>  <span class="co"># methods</span></span>
+<span>  full_name <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">self</span>, <span class="va">family_last</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw">if</span><span class="op">(</span><span class="va">family_last</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="va">given_name</span>, <span class="va">self</span><span class="op">$</span><span class="va">family_name</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="va">family_name</span>, <span class="va">self</span><span class="op">$</span><span class="va">given_name</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span>,</span>
+<span>  age <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">self</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">days_old</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="va">self</span><span class="op">$</span><span class="va">birth_date</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/Round.html">floor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">days_old</span><span class="op">)</span> <span class="op">/</span> <span class="fl">365.25</span><span class="op">)</span></span>
+<span>  <span class="op">}</span>,</span>
+<span>  description <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">self</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="fu">full_name</span><span class="op">(</span><span class="op">)</span>, <span class="st">"is"</span>, <span class="va">self</span><span class="op">$</span><span class="fu">age</span><span class="op">(</span><span class="op">)</span>, <span class="st">"years old"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>现在，<code>Person</code>类有三个字段，分别对应人的 <code>given_name</code>, <code>family_name</code>和<code>birth_date</code>。它还拥有三个方法：<code>full_name()</code>方法是一个构造人的全名的函数，使用的惯例是将给名放在前面，姓氏放在后面；<code>age()</code>方法以年为单位计算人的年龄；<code>description()</code>方法打印出人的简短描述。</p>
+<p>打印对象会显示与其相关的字段和方法：</p>
+<div class="cell">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Person</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;ggproto object: Class Person, gg&gt;
+    age: function
+    birth_date: NA
+    description: function
+    family_name: NA
+    full_name: function
+    given_name: NA</code></pre>
+</div>
+</div>
+<p><code>Person</code>这个 ggproto 对象本质上是类的模板，我们可以用它来创建单个人的特定记录（在@sec-ggproto-instances 中讨论）。如果你熟悉其他面向对象编程系统，你可能会期待一些不同的东西：通常新类的定义有一个专门的构造函数。ggproto的一个怪癖是<code>ggproto()</code>不会这样做：相反，类的构造函数本身就是一个对象。</p>
+<p>定义方法时需要注意的另一点是使用 <code>self</code> 作为第一个参数。这是一个特殊参数，用于让方法访问与 ggproto 对象相关的字段和方法（示例参见@sec-ggproto-subclass）。这个参数的特殊地位在打印 ggproto 方法时显而易见：</p>
+<div class="cell">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Person</span><span class="op">$</span><span class="va">full_name</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;ggproto method&gt;
+  &lt;Wrapper function&gt;
+    function (...) 
+f(..., self = self)
+
+  &lt;Inner function (f)&gt;
+    function(self, family_last = TRUE) {
+    if(family_last == TRUE) {
+      return(paste(self$given_name, self$family_name))
+    }
+    return(paste(self$family_name, self$given_name))
+  }</code></pre>
+</div>
+</div>
+<p>这个输出结果似乎有点出人意料：当我们之前定义 <code>full_name()</code> 时，我们只提供了作为 “内部函数”列出的代码。现在的情况是，<code>ggproto()</code> 自动将我的函数封装在一个封装函数中，该封装函数调用我的代码作为内部函数，同时确保使用了适当的 <code>self</code> 定义。当打印该方法时，控制台会同时显示封装函数（通常没什么意义）和内部函数。这种格式的输出出现在@sec-extensions和@sec-spring1 中。</p>
+</section><section id="sec-ggproto-instances" class="level3" data-number="2.4.3"><h3 data-number="2.4.3" class="anchored" data-anchor-id="sec-ggproto-instances">
+<span class="header-section-number">2.4.3</span> 创建新的实例</h3>
+<p>既然已经定义了 <code>Person</code> 类，我们就可以创建该类的实例了。方法是将一个 ggproto 对象作为第二个参数传递给 <code>ggproto()</code>，而不在第一个参数中指定一个新的类名。例如，我们可以如下创建新对象 <code>Thomas</code> 和 <code>Danielle</code> ，它们都是 <code>Person</code> 类的实例：</p>
+<div class="cell">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Thomas</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="cn">NULL</span>, <span class="va">Person</span>,</span>
+<span>  given_name <span class="op">=</span> <span class="st">"Thomas Lin"</span>,</span>
+<span>  family_name <span class="op">=</span> <span class="st">"Pedersen"</span>,</span>
+<span>  birth_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"1985/10/12"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">Danielle</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="cn">NULL</span>, <span class="va">Person</span>,</span>
+<span>  given_name <span class="op">=</span> <span class="st">"Danielle Jasmine"</span>,</span>
+<span>  family_name <span class="op">=</span> <span class="st">"Navarro"</span>,</span>
+<span>  birth_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"1977/09/12"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>将 <code>NULL</code> 指定为第一个参数，将指示 <code>ggproto()</code> 不定义一个新类，而是创建第二个参数中指定的类的新实例。由于 <code>Thomas</code> 和 <code>Danielle</code> 都是 <code>Person</code> 类的实例，它们自动继承了 <code>age()</code>, <code>full_name()</code> 和 <code>description()</code> 方法：</p>
+<div class="cell">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Thomas</span><span class="op">$</span><span class="fu">description</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Thomas Lin Pedersen is 39 years old"</code></pre>
+</div>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Danielle</span><span class="op">$</span><span class="fu">description</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Danielle Jasmine Navarro is 47 years old"</code></pre>
+</div>
+</div>
+</section><section id="sec-ggproto-subclass" class="level3" data-number="2.4.4"><h3 data-number="2.4.4" class="anchored" data-anchor-id="sec-ggproto-subclass">
+<span class="header-section-number">2.4.4</span> 创建子类</h3>
+<p>在前面的示例中，我们创建了一个全新的类 <code>Person</code>。在实践中，你几乎永远不需要这样做：相反，你可能会使用现有的 ggproto 对象创建一个子类。为此，您可以在调用 <code>ggproto()</code> 时指定子类的名称及其继承对象：</p>
+<div class="cell">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># define the subclass</span></span>
+<span><span class="va">NewSubClass</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"NewSubClass"</span>, <span class="va">Person</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># verify that this works</span></span>
+<span><span class="va">NewSubClass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;ggproto object: Class NewSubClass, Person, gg&gt;
+    age: function
+    birth_date: NA
+    description: function
+    family_name: NA
+    full_name: function
+    given_name: NA
+    super:  &lt;ggproto object: Class Person, gg&gt;</code></pre>
+</div>
+</div>
+<p>上面的输出显示，<code>NewSubClass</code>现在提供了自己的类，它继承了我们之前创建的 <code>Person</code>对象的所有字段和方法。但是，这个新的子类并没有添加任何新功能。</p>
+<p>在创建子类时，我们经常要添加新的字段或方法，并覆盖一些已有的字段或方法。例如，假设我们要将 <code>Royalty</code>定义为<code>Person</code>的子类，并添加与相关皇室成员的 <code>rank</code>及其统治的<code>territory</code>相对应的字段。由于皇室成员通常以头衔和领地而不是姓氏和名字来称呼，因此我们还需要更改 <code>full_name()</code> 方法的定义方式：</p>
+<div class="cell">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Royalty</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"Royalty"</span>, <span class="va">Person</span>,</span>
+<span>  rank <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  territory <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  full_name <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">self</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="va">rank</span>, <span class="va">self</span><span class="op">$</span><span class="va">given_name</span>, <span class="st">"of"</span>, <span class="va">self</span><span class="op">$</span><span class="va">territory</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The <code>Royalty</code> object now defines a subclass of person that inherits some fields (<code>given_name</code>, <code>family_name</code>, <code>birth_date</code>) from the <code>Person</code> class, and supplies other fields (<code>rank</code>, <code>territory</code>). It inherits the <code>age()</code> and <code>description()</code> methods from <code>Person</code>, but it overwrites the <code>full_name()</code> method.</p>
+<p><code>Royalty</code> 对象现在定义了一个 <code>Person</code> 类的子类，它从 <code>Person</code> 类继承了一些字段（<code>given_name</code>、<code>family_name</code>、<code>birth_date</code>），并提供其他字段（<code>rank</code>、<code>territory</code>）。它从 <code>Person</code> 类继承了 <code>age()</code> 和 <code>description()</code> 方法，但它重写了 <code>full_name()</code> 方法。</p>
+<p>我们可以使用 <code>ggproto()</code> 创建 <code>Royalty</code> 类的实例，如下所示：</p>
+<div class="cell">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Victoria</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="cn">NULL</span>, <span class="va">Royalty</span>,</span>
+<span>  given_name <span class="op">=</span> <span class="st">"Victoria"</span>,</span>
+<span>  family_name <span class="op">=</span> <span class="st">"Hanover"</span>,</span>
+<span>  rank <span class="op">=</span> <span class="st">"Queen"</span>,</span>
+<span>  territory <span class="op">=</span> <span class="st">"the United Kingdom"</span>,</span>
+<span>  birth_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"1819/05/24"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>因此，当我们调用 <code>Victoria</code> 的 <code>full_name()</code> 方法时，输出结果会使用 <code>Royalty</code> 类中指定的方法，而不是 <code>Person</code> 类中定义的方法：</p>
+<div class="cell">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Victoria</span><span class="op">$</span><span class="fu">full_name</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Queen Victoria of the United Kingdom"</code></pre>
+</div>
+</div>
+<p>值得注意的是，当我们调用 <code>description()</code> 方法时会发生什么。该方法继承自 <code>Person</code>，但该方法的定义调用了 <code>self$full_name()</code>。尽管 <code>description()</code> 是在 <code>Person</code> 中定义的，但在此上下文中，<code>self</code> 仍然指的是 <code>Victoria</code>，她仍然是 <code>Royalty</code>。这意味着继承的 <code>description()</code> 方法的输出将使用为子类定义的 <code>full_name()</code> 方法：</p>
+<div class="cell">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Victoria</span><span class="op">$</span><span class="fu">description</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Queen Victoria of the United Kingdom is 205 years old"</code></pre>
+</div>
+</div>
+<p>创建子类有时需要访问父类及其方法，我们可以借助 <code>ggproto_parent()</code> 函数来实现。例如，我们可以定义一个 <code>Police</code>子类，该子类与 <code>Royalty</code>子类一样包含一个 <code>rank</code>字段，但只将该rank用作 <code>description()</code>方法的一部分：</p>
+<div class="cell">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Police</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"Police"</span>, <span class="va">Person</span>,</span>
+<span>  rank <span class="op">=</span> <span class="cn">NA</span>, </span>
+<span>  description <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">self</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span></span>
+<span>      <span class="va">self</span><span class="op">$</span><span class="va">rank</span>,</span>
+<span>      <span class="fu">ggproto_parent</span><span class="op">(</span><span class="va">Person</span>, <span class="va">self</span><span class="op">)</span><span class="op">$</span><span class="fu">description</span><span class="op">(</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>在这个例子中，<code>Police</code> 子类的 <code>description()</code> 方法被定义成明确引用 <code>Person</code> 父类的 <code>description()</code> 方法。通过使用 <code>ggproto_parent(Person, self)</code> 的这种方式，我们能够引用父类内的方法，同时仍然保留 <code>self</code> 的适当本地定义。和之前一样，我们将创建一个特定的实例并验证这如预期般工作：</p>
+<div class="cell">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">John</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="cn">NULL</span>, <span class="va">Police</span>,</span>
+<span>  given_name <span class="op">=</span> <span class="st">"John"</span>,</span>
+<span>  family_name <span class="op">=</span> <span class="st">"McClane"</span>,</span>
+<span>  rank <span class="op">=</span> <span class="st">"Detective"</span>,</span>
+<span>  birth_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"1955/03/19"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">John</span><span class="op">$</span><span class="fu">full_name</span><span class="op">(</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "John McClane"</code></pre>
+</div>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">John</span><span class="op">$</span><span class="fu">description</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Detective John McClane is 69 years old"</code></pre>
+</div>
+</div>
+<p>由于我们将在下文讨论的原因，<code>ggprot_parent()</code> 的使用在 ggplot2 源代码中并不普遍。</p>
+</section><section id="sec-ggproto-style" class="level3" data-number="2.4.5"><h3 data-number="2.4.5" class="anchored" data-anchor-id="sec-ggproto-style">
+<span class="header-section-number">2.4.5</span> ggproto 代码风格</h3>
+<p>由于 ggproto 是一个最小化的类系统，专门为 ggplot2 设计，不涉及其他任何内容，因此重要的是要认识到 ggproto 在 ggplot2 中的使用方式是非常特定的。它存在的目的是支持 ggplot2 的扩展系统，您不太可能在编写 ggplot2 扩展以外的任何环境中遇到 ggproto。考虑到这一点，了解 ggplot2 如何使用 ggproto 是有用的：</p>
+<ul>
+<li><p><strong>ggproto 类被有选择地使用</strong>。在 ggplot2 中使用 ggproto 并不是全面的。只有选择性的功能是基于 ggproto 的，并且既不期望也不建议在您的扩展中创建完全新的 ggproto 类。作为扩展开发者，您永远不会创建完全的 ggproto 对象，而是需要继承 ggplot2 提供的某个主要的 ggproto 类。<a href="ggplot2extend.html" class="quarto-xref"><span>Chapter 4</span></a> 和 <a href="ggplot2_spring1.html" class="quarto-xref"><span>Chapter 4</span></a> 将详细介绍如何做到这一点。</p></li>
+<li><p><strong>ggproto 类是无状态的</strong>。除了用于编排渲染的少数内部类之外，ggplot2 中的 ggproto 类被认为是“无状态的”。这意味着 ggplot2 预期在它们被构建之后，它们不会改变。这打破了对于基于引用的类（其中的方法通常可以安全地改变对象的状态）的常见期望，但在 ggplot2 中这样做是不安全的。如果您的代码违反了这个原则，并在渲染过程中改变了 Stat 或 Geom 的状态，那么绘制已保存的 ggplot 对象将会影响 <em>所有</em> 该 Stat 或 Geom 的实例（即使那些在其他图表中使用的实例），因为它们都指向同一个 ggproto 父对象。考虑到这一点，您应该只在两种情况下指定 ggplot2 中 ggproto 对象的状态。首先，您可以在创建对象时指定状态：这是可以接受的，因为此状态应该在任何实例之间共享。其次，您可以通过在别处管理的 params 对象来指定状态。正如您将在后面看到的（参见 <a href="ggplot2extend.html#sec-new-stats" class="quarto-xref"><span>Section 4.2</span></a> 和 <a href="ggplot2extend.html#sec-new-geoms" class="quarto-xref"><span>Section 4.3</span></a>），大多数 ggproto 类都有一个 <code>setup_params()</code> 方法，在那里可以检查数据并计算和存储特定的属性。</p></li>
+<li><p><strong>ggproto 类有简单的继承</strong>。由于 ggproto 类实例是无状态的，调用定义在其他类内部的方法，而不是显式地从该类继承，是相对安全的。这就是为什么在 ggplot2 源代码中很少调用 <code>ggproto_parent()</code> 函数的原因。例如，<code>GeomErrorbar</code> 中的 <code>setup_params()</code> 方法被定义为：</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span>    <span class="co">#| eval: false</span></span>
+<span>    <span class="va">GeomErrorbar</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span></span>
+<span>      <span class="co"># ...</span></span>
+<span>      setup_params <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="va">GeomLinerange</span><span class="op">$</span><span class="fu">setup_params</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span><span class="op">)</span></span>
+<span>      <span class="op">}</span></span>
+<span>      <span class="co"># ...</span></span>
+<span>    <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>这种模式通常比使用 <code>ggproto_parent()</code> 更容易读取，而且因为 ggproto 对象是无状态的，所以也同样安全。</p>
+
+
+</section></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+<ol>
+<li id="fn1"><p>你通常不会直接调用这个 <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> 方法，因为它是由打印方法调用的，因此每当打印 ggplot 对象时都会调用它。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/bookr\.stariverfeel\.eu\.org\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./ggplot2intro.html" class="pagination-link" aria-label="ggplot2简介">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">ggplot2简介</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./ggplot2extend.html" class="pagination-link" aria-label="编写ggplot2拓展">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">编写ggplot2拓展</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>博客<a href="https://blog.stariverfeel.eu.org/">Feel’s Blog</a> | 部署 <a href="https://quarto.org/">Quarto</a>.</p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/FeelLiao/R_in_ASLDV/edit/main/ggplot2internal.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/FeelLiao/R_in_ASLDV/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+</body></html>

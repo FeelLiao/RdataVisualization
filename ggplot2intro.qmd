@@ -1,0 +1,7 @@
+# ggplot2简介 {#sec-ggplot2intro}
+
+-   图层 Layers: 数据 data, 映射 mapping (美学 aesthetic), 几何对象 geom, 统计变换 stat, 位置调整 position adjustment
+-   标度 Scales
+-   坐标系 coordinate system
+-   分面 Faceting
+-   主题 Themes

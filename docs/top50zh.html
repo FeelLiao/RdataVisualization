@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.6.33">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Feel Liao">
-<title>2&nbsp; Top 50 ggplot2 可视化 – R语言数据可视化学习笔记</title>
+<title>6&nbsp; Top 50 ggplot2 可视化 – R语言数据可视化学习笔记</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -106,7 +106,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./top50zh.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 可视化</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./top50zh.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 可视化</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -149,14 +149,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./ggplot2intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">ggplot2简介</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ggplot2internal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">ggplot2工作原理</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ggplot2extend.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">编写ggplot2拓展</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ggplot2_spring1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">一个学习案例</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./top50en.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 Visualizations</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 Visualizations</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./top50zh.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 可视化</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 可视化</span></span></a>
   </div>
 </li>
     </ul>
@@ -168,57 +192,57 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
 <li>
-<a href="#%E7%9B%B8%E5%85%B3-correlation" id="toc-相关-correlation" class="nav-link active" data-scroll-target="#%E7%9B%B8%E5%85%B3-correlation"><span class="header-section-number">2.1</span> 相关 Correlation</a>
+<a href="#%E7%9B%B8%E5%85%B3-correlation" id="toc-相关-correlation" class="nav-link active" data-scroll-target="#%E7%9B%B8%E5%85%B3-correlation"><span class="header-section-number">6.1</span> 相关 Correlation</a>
   <ul class="collapse">
-<li><a href="#%E7%82%B9%E5%9B%BE-scatterplot" id="toc-点图-scatterplot" class="nav-link" data-scroll-target="#%E7%82%B9%E5%9B%BE-scatterplot"><span class="header-section-number">2.1.1</span> 点图 Scatterplot</a></li>
-  <li><a href="#%E6%9C%89%E5%9C%88%E7%82%B9%E5%9B%BE-scatterplot-with-encircling" id="toc-有圈点图-scatterplot-with-encircling" class="nav-link" data-scroll-target="#%E6%9C%89%E5%9C%88%E7%82%B9%E5%9B%BE-scatterplot-with-encircling"><span class="header-section-number">2.1.2</span> 有圈点图 Scatterplot With Encircling</a></li>
-  <li><a href="#%E8%AE%A1%E6%95%B0%E5%9B%BE-counts-chart" id="toc-计数图-counts-chart" class="nav-link" data-scroll-target="#%E8%AE%A1%E6%95%B0%E5%9B%BE-counts-chart"><span class="header-section-number">2.1.3</span> 计数图 Counts Chart</a></li>
-  <li><a href="#%E6%B0%94%E6%B3%A1%E5%9B%BE-bubble-plot" id="toc-气泡图-bubble-plot" class="nav-link" data-scroll-target="#%E6%B0%94%E6%B3%A1%E5%9B%BE-bubble-plot"><span class="header-section-number">2.1.4</span> 气泡图 Bubble plot</a></li>
-  <li><a href="#%E8%BE%B9%E9%99%85%E7%9B%B4%E6%96%B9%E5%9B%BE-marginal-histogram-boxplot" id="toc-边际直方图-marginal-histogram-boxplot" class="nav-link" data-scroll-target="#%E8%BE%B9%E9%99%85%E7%9B%B4%E6%96%B9%E5%9B%BE-marginal-histogram-boxplot"><span class="header-section-number">2.1.5</span> 边际直方图 Marginal Histogram / Boxplot</a></li>
+<li><a href="#%E7%82%B9%E5%9B%BE-scatterplot" id="toc-点图-scatterplot" class="nav-link" data-scroll-target="#%E7%82%B9%E5%9B%BE-scatterplot"><span class="header-section-number">6.1.1</span> 点图 Scatterplot</a></li>
+  <li><a href="#%E6%9C%89%E5%9C%88%E7%82%B9%E5%9B%BE-scatterplot-with-encircling" id="toc-有圈点图-scatterplot-with-encircling" class="nav-link" data-scroll-target="#%E6%9C%89%E5%9C%88%E7%82%B9%E5%9B%BE-scatterplot-with-encircling"><span class="header-section-number">6.1.2</span> 有圈点图 Scatterplot With Encircling</a></li>
+  <li><a href="#%E8%AE%A1%E6%95%B0%E5%9B%BE-counts-chart" id="toc-计数图-counts-chart" class="nav-link" data-scroll-target="#%E8%AE%A1%E6%95%B0%E5%9B%BE-counts-chart"><span class="header-section-number">6.1.3</span> 计数图 Counts Chart</a></li>
+  <li><a href="#%E6%B0%94%E6%B3%A1%E5%9B%BE-bubble-plot" id="toc-气泡图-bubble-plot" class="nav-link" data-scroll-target="#%E6%B0%94%E6%B3%A1%E5%9B%BE-bubble-plot"><span class="header-section-number">6.1.4</span> 气泡图 Bubble plot</a></li>
+  <li><a href="#%E8%BE%B9%E9%99%85%E7%9B%B4%E6%96%B9%E5%9B%BE-marginal-histogram-boxplot" id="toc-边际直方图-marginal-histogram-boxplot" class="nav-link" data-scroll-target="#%E8%BE%B9%E9%99%85%E7%9B%B4%E6%96%B9%E5%9B%BE-marginal-histogram-boxplot"><span class="header-section-number">6.1.5</span> 边际直方图 Marginal Histogram / Boxplot</a></li>
   </ul>
 </li>
   <li>
-<a href="#%E5%81%8F%E5%B7%AE-deviation" id="toc-偏差-deviation" class="nav-link" data-scroll-target="#%E5%81%8F%E5%B7%AE-deviation"><span class="header-section-number">2.2</span> 偏差 Deviation</a>
+<a href="#%E5%81%8F%E5%B7%AE-deviation" id="toc-偏差-deviation" class="nav-link" data-scroll-target="#%E5%81%8F%E5%B7%AE-deviation"><span class="header-section-number">6.2</span> 偏差 Deviation</a>
   <ul class="collapse">
-<li><a href="#%E5%8F%91%E6%95%A3%E5%9E%8B%E6%9D%A1%E5%BD%A2%E5%9B%BE-diverging-bars" id="toc-发散型条形图-diverging-bars" class="nav-link" data-scroll-target="#%E5%8F%91%E6%95%A3%E5%9E%8B%E6%9D%A1%E5%BD%A2%E5%9B%BE-diverging-bars"><span class="header-section-number">2.2.1</span> 发散型条形图 Diverging bars</a></li>
-  <li><a href="#%E5%8F%91%E6%95%A3%E5%9E%8B%E6%A3%92%E6%A3%92%E7%B3%96%E5%9B%BE-diverging-lollipop-chart" id="toc-发散型棒棒糖图-diverging-lollipop-chart" class="nav-link" data-scroll-target="#%E5%8F%91%E6%95%A3%E5%9E%8B%E6%A3%92%E6%A3%92%E7%B3%96%E5%9B%BE-diverging-lollipop-chart"><span class="header-section-number">2.2.2</span> 发散型棒棒糖图 Diverging Lollipop Chart</a></li>
-  <li><a href="#%E5%8F%91%E6%95%A3%E5%9E%8B%E7%82%B9%E5%9B%BE-diverging-dot-plot" id="toc-发散型点图-diverging-dot-plot" class="nav-link" data-scroll-target="#%E5%8F%91%E6%95%A3%E5%9E%8B%E7%82%B9%E5%9B%BE-diverging-dot-plot"><span class="header-section-number">2.2.3</span> 发散型点图 Diverging Dot Plot</a></li>
+<li><a href="#%E5%8F%91%E6%95%A3%E5%9E%8B%E6%9D%A1%E5%BD%A2%E5%9B%BE-diverging-bars" id="toc-发散型条形图-diverging-bars" class="nav-link" data-scroll-target="#%E5%8F%91%E6%95%A3%E5%9E%8B%E6%9D%A1%E5%BD%A2%E5%9B%BE-diverging-bars"><span class="header-section-number">6.2.1</span> 发散型条形图 Diverging bars</a></li>
+  <li><a href="#%E5%8F%91%E6%95%A3%E5%9E%8B%E6%A3%92%E6%A3%92%E7%B3%96%E5%9B%BE-diverging-lollipop-chart" id="toc-发散型棒棒糖图-diverging-lollipop-chart" class="nav-link" data-scroll-target="#%E5%8F%91%E6%95%A3%E5%9E%8B%E6%A3%92%E6%A3%92%E7%B3%96%E5%9B%BE-diverging-lollipop-chart"><span class="header-section-number">6.2.2</span> 发散型棒棒糖图 Diverging Lollipop Chart</a></li>
+  <li><a href="#%E5%8F%91%E6%95%A3%E5%9E%8B%E7%82%B9%E5%9B%BE-diverging-dot-plot" id="toc-发散型点图-diverging-dot-plot" class="nav-link" data-scroll-target="#%E5%8F%91%E6%95%A3%E5%9E%8B%E7%82%B9%E5%9B%BE-diverging-dot-plot"><span class="header-section-number">6.2.3</span> 发散型点图 Diverging Dot Plot</a></li>
   </ul>
 </li>
   <li>
-<a href="#%E6%8E%92%E5%BA%8F-ranking" id="toc-排序-ranking" class="nav-link" data-scroll-target="#%E6%8E%92%E5%BA%8F-ranking"><span class="header-section-number">2.3</span> 排序 Ranking</a>
+<a href="#%E6%8E%92%E5%BA%8F-ranking" id="toc-排序-ranking" class="nav-link" data-scroll-target="#%E6%8E%92%E5%BA%8F-ranking"><span class="header-section-number">6.3</span> 排序 Ranking</a>
   <ul class="collapse">
-<li><a href="#%E7%82%B9%E5%9B%BE-dot-plot" id="toc-点图-dot-plot" class="nav-link" data-scroll-target="#%E7%82%B9%E5%9B%BE-dot-plot"><span class="header-section-number">2.3.1</span> 点图 Dot Plot</a></li>
-  <li><a href="#%E5%9D%A1%E5%BA%A6%E5%9B%BE-slope-chart" id="toc-坡度图-slope-chart" class="nav-link" data-scroll-target="#%E5%9D%A1%E5%BA%A6%E5%9B%BE-slope-chart"><span class="header-section-number">2.3.2</span> 坡度图 Slope Chart</a></li>
-  <li><a href="#%E5%93%91%E9%93%83%E5%9B%BE-dumbbell-plot" id="toc-哑铃图-dumbbell-plot" class="nav-link" data-scroll-target="#%E5%93%91%E9%93%83%E5%9B%BE-dumbbell-plot"><span class="header-section-number">2.3.3</span> 哑铃图 Dumbbell Plot</a></li>
+<li><a href="#%E7%82%B9%E5%9B%BE-dot-plot" id="toc-点图-dot-plot" class="nav-link" data-scroll-target="#%E7%82%B9%E5%9B%BE-dot-plot"><span class="header-section-number">6.3.1</span> 点图 Dot Plot</a></li>
+  <li><a href="#%E5%9D%A1%E5%BA%A6%E5%9B%BE-slope-chart" id="toc-坡度图-slope-chart" class="nav-link" data-scroll-target="#%E5%9D%A1%E5%BA%A6%E5%9B%BE-slope-chart"><span class="header-section-number">6.3.2</span> 坡度图 Slope Chart</a></li>
+  <li><a href="#%E5%93%91%E9%93%83%E5%9B%BE-dumbbell-plot" id="toc-哑铃图-dumbbell-plot" class="nav-link" data-scroll-target="#%E5%93%91%E9%93%83%E5%9B%BE-dumbbell-plot"><span class="header-section-number">6.3.3</span> 哑铃图 Dumbbell Plot</a></li>
   </ul>
 </li>
   <li>
-<a href="#%E5%88%86%E5%B8%83-distribution" id="toc-分布-distribution" class="nav-link" data-scroll-target="#%E5%88%86%E5%B8%83-distribution"><span class="header-section-number">2.4</span> 分布 Distribution</a>
+<a href="#%E5%88%86%E5%B8%83-distribution" id="toc-分布-distribution" class="nav-link" data-scroll-target="#%E5%88%86%E5%B8%83-distribution"><span class="header-section-number">6.4</span> 分布 Distribution</a>
   <ul class="collapse">
-<li><a href="#tufte-boxplot" id="toc-tufte-boxplot" class="nav-link" data-scroll-target="#tufte-boxplot"><span class="header-section-number">2.4.1</span> Tufte Boxplot</a></li>
-  <li><a href="#%E4%BA%BA%E5%8F%A3%E9%87%91%E5%AD%97%E5%A1%94-population-pyramid" id="toc-人口金字塔-population-pyramid" class="nav-link" data-scroll-target="#%E4%BA%BA%E5%8F%A3%E9%87%91%E5%AD%97%E5%A1%94-population-pyramid"><span class="header-section-number">2.4.2</span> 人口金字塔 Population Pyramid</a></li>
+<li><a href="#tufte-boxplot" id="toc-tufte-boxplot" class="nav-link" data-scroll-target="#tufte-boxplot"><span class="header-section-number">6.4.1</span> Tufte Boxplot</a></li>
+  <li><a href="#%E4%BA%BA%E5%8F%A3%E9%87%91%E5%AD%97%E5%A1%94-population-pyramid" id="toc-人口金字塔-population-pyramid" class="nav-link" data-scroll-target="#%E4%BA%BA%E5%8F%A3%E9%87%91%E5%AD%97%E5%A1%94-population-pyramid"><span class="header-section-number">6.4.2</span> 人口金字塔 Population Pyramid</a></li>
   </ul>
 </li>
   <li>
-<a href="#%E7%BB%84%E6%88%90-composition" id="toc-组成-composition" class="nav-link" data-scroll-target="#%E7%BB%84%E6%88%90-composition"><span class="header-section-number">2.5</span> 组成 Composition</a>
+<a href="#%E7%BB%84%E6%88%90-composition" id="toc-组成-composition" class="nav-link" data-scroll-target="#%E7%BB%84%E6%88%90-composition"><span class="header-section-number">6.5</span> 组成 Composition</a>
   <ul class="collapse">
-<li><a href="#%E5%8D%8E%E5%A4%AB%E5%9B%BE-waffle-chart" id="toc-华夫图-waffle-chart" class="nav-link" data-scroll-target="#%E5%8D%8E%E5%A4%AB%E5%9B%BE-waffle-chart"><span class="header-section-number">2.5.1</span> 华夫图 Waffle Chart</a></li>
-  <li><a href="#%E6%A0%91%E5%BD%A2%E5%9B%BE-treemap" id="toc-树形图-treemap" class="nav-link" data-scroll-target="#%E6%A0%91%E5%BD%A2%E5%9B%BE-treemap"><span class="header-section-number">2.5.2</span> 树形图 Treemap</a></li>
+<li><a href="#%E5%8D%8E%E5%A4%AB%E5%9B%BE-waffle-chart" id="toc-华夫图-waffle-chart" class="nav-link" data-scroll-target="#%E5%8D%8E%E5%A4%AB%E5%9B%BE-waffle-chart"><span class="header-section-number">6.5.1</span> 华夫图 Waffle Chart</a></li>
+  <li><a href="#%E6%A0%91%E5%BD%A2%E5%9B%BE-treemap" id="toc-树形图-treemap" class="nav-link" data-scroll-target="#%E6%A0%91%E5%BD%A2%E5%9B%BE-treemap"><span class="header-section-number">6.5.2</span> 树形图 Treemap</a></li>
   </ul>
 </li>
   <li>
-<a href="#%E5%88%86%E7%BB%84-groups" id="toc-分组-groups" class="nav-link" data-scroll-target="#%E5%88%86%E7%BB%84-groups"><span class="header-section-number">2.6</span> 分组 Groups</a>
+<a href="#%E5%88%86%E7%BB%84-groups" id="toc-分组-groups" class="nav-link" data-scroll-target="#%E5%88%86%E7%BB%84-groups"><span class="header-section-number">6.6</span> 分组 Groups</a>
   <ul class="collapse">
-<li><a href="#%E5%88%86%E5%B1%82%E6%A0%91%E6%9E%9D%E5%9B%BE-hierarchical-dendrogram" id="toc-分层树枝图-hierarchical-dendrogram" class="nav-link" data-scroll-target="#%E5%88%86%E5%B1%82%E6%A0%91%E6%9E%9D%E5%9B%BE-hierarchical-dendrogram"><span class="header-section-number">2.6.1</span> 分层树枝图 Hierarchical Dendrogram</a></li>
-  <li><a href="#%E8%81%9A%E7%B1%BB-clusters" id="toc-聚类-clusters" class="nav-link" data-scroll-target="#%E8%81%9A%E7%B1%BB-clusters"><span class="header-section-number">2.6.2</span> 聚类 Clusters</a></li>
+<li><a href="#%E5%88%86%E5%B1%82%E6%A0%91%E6%9E%9D%E5%9B%BE-hierarchical-dendrogram" id="toc-分层树枝图-hierarchical-dendrogram" class="nav-link" data-scroll-target="#%E5%88%86%E5%B1%82%E6%A0%91%E6%9E%9D%E5%9B%BE-hierarchical-dendrogram"><span class="header-section-number">6.6.1</span> 分层树枝图 Hierarchical Dendrogram</a></li>
+  <li><a href="#%E8%81%9A%E7%B1%BB-clusters" id="toc-聚类-clusters" class="nav-link" data-scroll-target="#%E8%81%9A%E7%B1%BB-clusters"><span class="header-section-number">6.6.2</span> 聚类 Clusters</a></li>
   </ul>
 </li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/FeelLiao/R_in_ASLDV/edit/main/top50zh.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/FeelLiao/R_in_ASLDV/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title"><span id="sec-top50ggplot2zh" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 可视化</span></span></h1>
+<h1 class="title"><span id="sec-top50ggplot2zh" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 可视化</span></span></h1>
 </div>
 
 
@@ -238,11 +262,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>该文章来自 <a href="https://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html">r-statistics.co</a> 翻译参考了<a href="https://zhuanlan.zhihu.com/p/364735713">知乎-数据分析、特征工程的可视化</a></p>
+<p>该文章来自 <a href="https://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html">r-statistics.co</a></p>
+<p>翻译参考了<a href="https://zhuanlan.zhihu.com/p/364735713">知乎-数据分析、特征工程的可视化</a></p>
 </div>
 </div>
 </div>
-<p>英文原版 For original version in English <a href="top50en.html" class="quarto-xref"><span>Chapter 1</span></a></p>
+<p>英文原版 For original version in English: Top 50 ggplot2 Visualizations (<a href="top50en.html" class="quarto-xref"><span>Chapter 5</span></a>)</p>
 <p><strong>一个好的图形包含以下要素:</strong></p>
 <ol type="1">
 <li>传达正确信息，不扭曲事实。</li>
@@ -262,11 +287,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/andrie/ggdendro">ggdendro</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sinhrks/ggfortify">ggfortify</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="相关-correlation" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="相关-correlation">
-<span class="header-section-number">2.1</span> 相关 Correlation</h2>
+<section id="相关-correlation" class="level2" data-number="6.1"><h2 data-number="6.1" class="anchored" data-anchor-id="相关-correlation">
+<span class="header-section-number">6.1</span> 相关 Correlation</h2>
 <p>下面的图形帮助解释两个变量之间的相关性。</p>
-<section id="点图-scatterplot" class="level3" data-number="2.1.1"><h3 data-number="2.1.1" class="anchored" data-anchor-id="点图-scatterplot">
-<span class="header-section-number">2.1.1</span> 点图 Scatterplot</h3>
+<section id="点图-scatterplot" class="level3" data-number="6.1.1"><h3 data-number="6.1.1" class="anchored" data-anchor-id="点图-scatterplot">
+<span class="header-section-number">6.1.1</span> 点图 Scatterplot</h3>
 <p>最常使用的数据分析图无疑是散点图。每当您想了解两个变量之间的关系时，第一个选择就是散点图。</p>
 <div class="cell">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
@@ -290,8 +315,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section><section id="有圈点图-scatterplot-with-encircling" class="level3" data-number="2.1.2"><h3 data-number="2.1.2" class="anchored" data-anchor-id="有圈点图-scatterplot-with-encircling">
-<span class="header-section-number">2.1.2</span> 有圈点图 Scatterplot With Encircling</h3>
+</section><section id="有圈点图-scatterplot-with-encircling" class="level3" data-number="6.1.2"><h3 data-number="6.1.2" class="anchored" data-anchor-id="有圈点图-scatterplot-with-encircling">
+<span class="header-section-number">6.1.2</span> 有圈点图 Scatterplot With Encircling</h3>
 <p>在展示结果时，有时会在图表中强调某些特殊点组成的区域，以引起人们对这些特殊情况的注意。使用 <code>ggalt</code> 软件包中的<code><a href="https://rdrr.io/pkg/ggalt/man/geom_encircle.html">geom_encircle()</a></code>可以很方便地做到这一点。</p>
 <div class="cell">
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">midwest_select</span> <span class="op">&lt;-</span> <span class="va">midwest</span><span class="op">[</span></span>
@@ -327,8 +352,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section><section id="计数图-counts-chart" class="level3" data-number="2.1.3"><h3 data-number="2.1.3" class="anchored" data-anchor-id="计数图-counts-chart">
-<span class="header-section-number">2.1.3</span> 计数图 Counts Chart</h3>
+</section><section id="计数图-counts-chart" class="level3" data-number="6.1.3"><h3 data-number="6.1.3" class="anchored" data-anchor-id="计数图-counts-chart">
+<span class="header-section-number">6.1.3</span> 计数图 Counts Chart</h3>
 <p>当数据点重叠时，散点图可能无法清楚地显示数据，因此可以使用计数图。在计数图中，数据点重叠越多的地方会显示一更大的圆。</p>
 <div class="cell">
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">cty</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -346,8 +371,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section><section id="气泡图-bubble-plot" class="level3" data-number="2.1.4"><h3 data-number="2.1.4" class="anchored" data-anchor-id="气泡图-bubble-plot">
-<span class="header-section-number">2.1.4</span> 气泡图 Bubble plot</h3>
+</section><section id="气泡图-bubble-plot" class="level3" data-number="6.1.4"><h3 data-number="6.1.4" class="anchored" data-anchor-id="气泡图-bubble-plot">
+<span class="header-section-number">6.1.4</span> 气泡图 Bubble plot</h3>
 <p>散点图可以比较两个连续变量之间的关系，而气泡图则可以很好地帮助理解一个分类变量（通过改变颜色）和另一个连续变量（通过改变点的大小）的基础组内关系。简单地说，如果您有四维数据，其中两个是 X 和 Y（连续变量），另两个是表示颜色（分类变量）和大小（连续变量）的变量，那么气泡图就比较适合。</p>
 <p>气泡图可以清楚地区分不同制造商之间的<code>displ</code>范围以及最佳拟合直线斜率的变化情况，从而更好地对各组数据进行直观比较。</p>
 <div class="cell">
@@ -366,8 +391,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section><section id="边际直方图-marginal-histogram-boxplot" class="level3" data-number="2.1.5"><h3 data-number="2.1.5" class="anchored" data-anchor-id="边际直方图-marginal-histogram-boxplot">
-<span class="header-section-number">2.1.5</span> 边际直方图 Marginal Histogram / Boxplot</h3>
+</section><section id="边际直方图-marginal-histogram-boxplot" class="level3" data-number="6.1.5"><h3 data-number="6.1.5" class="anchored" data-anchor-id="边际直方图-marginal-histogram-boxplot">
+<span class="header-section-number">6.1.5</span> 边际直方图 Marginal Histogram / Boxplot</h3>
 <p>如果想在同一张图表中显示关系和分布，可以使用边际直方图。它在散点图的边缘显示 X 和 Y 变量的直方图。</p>
 <p>可以使用 <code>ggExtra</code> 软件包中的 <code><a href="https://rdrr.io/pkg/ggExtra/man/ggMarginal.html">ggMarginal()</a></code> 函数来实现。除了直方图，您还可以通过设置相应的类型选项来绘制边际盒状图或密度图。</p>
 <div class="cell">
@@ -384,11 +409,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section></section><section id="偏差-deviation" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="偏差-deviation">
-<span class="header-section-number">2.2</span> 偏差 Deviation</h2>
+</section></section><section id="偏差-deviation" class="level2" data-number="6.2"><h2 data-number="6.2" class="anchored" data-anchor-id="偏差-deviation">
+<span class="header-section-number">6.2</span> 偏差 Deviation</h2>
 <p>比较少量项目（或类别）之间相对于固定参照物的数值变化。</p>
-<section id="发散型条形图-diverging-bars" class="level3" data-number="2.2.1"><h3 data-number="2.2.1" class="anchored" data-anchor-id="发散型条形图-diverging-bars">
-<span class="header-section-number">2.2.1</span> 发散型条形图 Diverging bars</h3>
+<section id="发散型条形图-diverging-bars" class="level3" data-number="6.2.1"><h3 data-number="6.2.1" class="anchored" data-anchor-id="发散型条形图-diverging-bars">
+<span class="header-section-number">6.2.1</span> 发散型条形图 Diverging bars</h3>
 <p>发散条形图是一种可以处理负值和正值的条形图。可以通过对 <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code>进行巧妙的调整来实现。但是，“geom_bar()”的用法可能相当令人困惑。这是因为它既可以用来制作柱状图，也可以用来制作直方图。让我来解释一下。</p>
 <p>默认情况下，<code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code> 的统计量为计数。这意味着，当你只提供一个连续的 X 变量（而没有 Y 变量）时，它会尝试将数据制成柱状图。为了让条形图创建条形而不是直方图，需要做两件事。</p>
 <p>在 “aes()”中设置 “stat=identity”，同时提供 x 和 y，其中 x 是字符或因子，y 是数字。为了确保得到的是发散条形图而不是单纯的条形图，请确保您的分类变量有两个类别，其值在连续变量的某个阈值时会发生变化。在下面的示例中，mtcars 数据集中的 mpg 通过计算 z 分数进行归一化。mpg高于零的车辆标记为绿色，低于零的标记为红色。</p>
@@ -423,8 +448,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section><section id="发散型棒棒糖图-diverging-lollipop-chart" class="level3" data-number="2.2.2"><h3 data-number="2.2.2" class="anchored" data-anchor-id="发散型棒棒糖图-diverging-lollipop-chart">
-<span class="header-section-number">2.2.2</span> 发散型棒棒糖图 Diverging Lollipop Chart</h3>
+</section><section id="发散型棒棒糖图-diverging-lollipop-chart" class="level3" data-number="6.2.2"><h3 data-number="6.2.2" class="anchored" data-anchor-id="发散型棒棒糖图-diverging-lollipop-chart">
+<span class="header-section-number">6.2.2</span> 发散型棒棒糖图 Diverging Lollipop Chart</h3>
 <p>棒棒糖图传达的信息与柱状图和发散柱状图相同。只不过它看起来更现代。我没有使用 <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code>，而是使用了 <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point()</a></code> 和 <code><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment()</a></code> 来正确绘制棒棒糖图。让我们用上一个发散条形图示例中的相同数据来画一个棒棒糖图。</p>
 <div class="cell">
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mtcars_new</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">car_name</span>, y <span class="op">=</span> <span class="va">mpg_z</span>, label <span class="op">=</span> <span class="va">mpg_z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -451,8 +476,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section><section id="发散型点图-diverging-dot-plot" class="level3" data-number="2.2.3"><h3 data-number="2.2.3" class="anchored" data-anchor-id="发散型点图-diverging-dot-plot">
-<span class="header-section-number">2.2.3</span> 发散型点图 Diverging Dot Plot</h3>
+</section><section id="发散型点图-diverging-dot-plot" class="level3" data-number="6.2.3"><h3 data-number="6.2.3" class="anchored" data-anchor-id="发散型点图-diverging-dot-plot">
+<span class="header-section-number">6.2.3</span> 发散型点图 Diverging Dot Plot</h3>
 <p>点图也能传递类似的信息。其原理与我们在发散条形图中看到的相同，只是只使用了点。下面的示例使用了发散条形图示例中的相同数据。</p>
 <div class="cell">
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mtcars_new</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">car_name</span>, y <span class="op">=</span> <span class="va">mpg_z</span>, label <span class="op">=</span> <span class="va">mpg_z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -476,11 +501,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section></section><section id="排序-ranking" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="排序-ranking">
-<span class="header-section-number">2.3</span> 排序 Ranking</h2>
+</section></section><section id="排序-ranking" class="level2" data-number="6.3"><h2 data-number="6.3" class="anchored" data-anchor-id="排序-ranking">
+<span class="header-section-number">6.3</span> 排序 Ranking</h2>
 <p>用于比较多个变量之间的的排位。在排序中，变量实际值的重要性会显得没有他们的排位重要。</p>
-<section id="点图-dot-plot" class="level3" data-number="2.3.1"><h3 data-number="2.3.1" class="anchored" data-anchor-id="点图-dot-plot">
-<span class="header-section-number">2.3.1</span> 点图 Dot Plot</h3>
+<section id="点图-dot-plot" class="level3" data-number="6.3.1"><h3 data-number="6.3.1" class="anchored" data-anchor-id="点图-dot-plot">
+<span class="header-section-number">6.3.1</span> 点图 Dot Plot</h3>
 <p>点图与棒棒糖图非常相似，但没有线段，且翻转到水平位置。它更强调变量实际值的排序，以及不同变量与起始位置之间的距离。</p>
 <div class="cell">
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Prepare data: group mean city mileage by manufacturer.</span></span>
@@ -514,8 +539,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section><section id="坡度图-slope-chart" class="level3" data-number="2.3.2"><h3 data-number="2.3.2" class="anchored" data-anchor-id="坡度图-slope-chart">
-<span class="header-section-number">2.3.2</span> 坡度图 Slope Chart</h3>
+</section><section id="坡度图-slope-chart" class="level3" data-number="6.3.2"><h3 data-number="6.3.2" class="anchored" data-anchor-id="坡度图-slope-chart">
+<span class="header-section-number">6.3.2</span> 坡度图 Slope Chart</h3>
 <p>坡度图提供了比较两点在不同时间上的位置的极佳方法。目前，还没有内置函数来构建这种图表。下面的代码可作为您如何处理这一问题的指南。</p>
 <div class="cell">
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Prepare data</span></span>
@@ -573,8 +598,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section><section id="哑铃图-dumbbell-plot" class="level3" data-number="2.3.3"><h3 data-number="2.3.3" class="anchored" data-anchor-id="哑铃图-dumbbell-plot">
-<span class="header-section-number">2.3.3</span> 哑铃图 Dumbbell Plot</h3>
+</section><section id="哑铃图-dumbbell-plot" class="level3" data-number="6.3.3"><h3 data-number="6.3.3" class="anchored" data-anchor-id="哑铃图-dumbbell-plot">
+<span class="header-section-number">6.3.3</span> 哑铃图 Dumbbell Plot</h3>
 <p>哑铃图是一个针对以下问题的很好的数据可视化工具：</p>
 <ol type="1">
 <li>直观显示两个时间点之间的相对位置（如增长和下降）。</li>
@@ -622,11 +647,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section></section><section id="分布-distribution" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="分布-distribution">
-<span class="header-section-number">2.4</span> 分布 Distribution</h2>
+</section></section><section id="分布-distribution" class="level2" data-number="6.4"><h2 data-number="6.4" class="anchored" data-anchor-id="分布-distribution">
+<span class="header-section-number">6.4</span> 分布 Distribution</h2>
 <p>当你有大量的数据点，并且想研究数据点在哪里以及如何分布时。</p>
-<section id="tufte-boxplot" class="level3" data-number="2.4.1"><h3 data-number="2.4.1" class="anchored" data-anchor-id="tufte-boxplot">
-<span class="header-section-number">2.4.1</span> Tufte Boxplot</h3>
+<section id="tufte-boxplot" class="level3" data-number="6.4.1"><h3 data-number="6.4.1" class="anchored" data-anchor-id="tufte-boxplot">
+<span class="header-section-number">6.4.1</span> Tufte Boxplot</h3>
 <p>由 ggthemes 软件包提供的 Tufte 方框图灵感来自 Edward Tufte 的作品。Tufte 的盒状图只是一个盒状图，它的设计简约而具有视觉吸引力。</p>
 <div class="cell">
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">manufacturer</span>, <span class="va">cty</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -647,8 +672,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section><section id="人口金字塔-population-pyramid" class="level3" data-number="2.4.2"><h3 data-number="2.4.2" class="anchored" data-anchor-id="人口金字塔-population-pyramid">
-<span class="header-section-number">2.4.2</span> 人口金字塔 Population Pyramid</h3>
+</section><section id="人口金字塔-population-pyramid" class="level3" data-number="6.4.2"><h3 data-number="6.4.2" class="anchored" data-anchor-id="人口金字塔-population-pyramid">
+<span class="header-section-number">6.4.2</span> 人口金字塔 Population Pyramid</h3>
 <p>人口金字塔提供了一种独特的方式，可以直观地显示有多少人口或多大比例的人口属于某个类别。下面的金字塔就是一个很好的例子，说明在电子邮件营销活动中的每个阶段有多少用户被留住。</p>
 <div class="cell">
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>scipen <span class="op">=</span> <span class="fl">999</span><span class="op">)</span></span>
@@ -683,10 +708,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section></section><section id="组成-composition" class="level2" data-number="2.5"><h2 data-number="2.5" class="anchored" data-anchor-id="组成-composition">
-<span class="header-section-number">2.5</span> 组成 Composition</h2>
-<section id="华夫图-waffle-chart" class="level3" data-number="2.5.1"><h3 data-number="2.5.1" class="anchored" data-anchor-id="华夫图-waffle-chart">
-<span class="header-section-number">2.5.1</span> 华夫图 Waffle Chart</h3>
+</section></section><section id="组成-composition" class="level2" data-number="6.5"><h2 data-number="6.5" class="anchored" data-anchor-id="组成-composition">
+<span class="header-section-number">6.5</span> 组成 Composition</h2>
+<section id="华夫图-waffle-chart" class="level3" data-number="6.5.1"><h3 data-number="6.5.1" class="anchored" data-anchor-id="华夫图-waffle-chart">
+<span class="header-section-number">6.5.1</span> 华夫图 Waffle Chart</h3>
 <p>华夫图是显示总人口分类组成的一种好方法。虽然没有直接的函数，但可以通过使用 <code><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_tile()</a></code> 函数巧妙地操纵 ggplot2 来实现。下面的模板可以帮助你创建自己的华夫图。</p>
 <div class="cell">
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">var</span> <span class="op">&lt;-</span> <span class="va">mpg</span><span class="op">$</span><span class="va">class</span></span>
@@ -718,8 +743,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section><section id="树形图-treemap" class="level3" data-number="2.5.2"><h3 data-number="2.5.2" class="anchored" data-anchor-id="树形图-treemap">
-<span class="header-section-number">2.5.2</span> 树形图 Treemap</h3>
+</section><section id="树形图-treemap" class="level3" data-number="6.5.2"><h3 data-number="6.5.2" class="anchored" data-anchor-id="树形图-treemap">
+<span class="header-section-number">6.5.2</span> 树形图 Treemap</h3>
 <p>树形图是一种通过嵌套矩形显示分层数据的好方法。<code>treemapify</code> 软件包提供了将数据转换为所需格式（treemapify）以及绘制实际图形（ggplotify）的必要函数。</p>
 <p>要创建树形图，必须使用 <code><a href="https://wilkox.org/treemapify/reference/treemapify.html">treemapify()</a></code> 将数据转换为所需格式。您的数据必须分别包含一个变量，用于描述瓦片的面积、填充颜色、瓦片标签以及父组。</p>
 <p>数据格式化完成后，只需在树状地图数据上调用 <code>ggplotify()</code>。</p>
@@ -745,10 +770,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section></section><section id="分组-groups" class="level2" data-number="2.6"><h2 data-number="2.6" class="anchored" data-anchor-id="分组-groups">
-<span class="header-section-number">2.6</span> 分组 Groups</h2>
-<section id="分层树枝图-hierarchical-dendrogram" class="level3" data-number="2.6.1"><h3 data-number="2.6.1" class="anchored" data-anchor-id="分层树枝图-hierarchical-dendrogram">
-<span class="header-section-number">2.6.1</span> 分层树枝图 Hierarchical Dendrogram</h3>
+</section></section><section id="分组-groups" class="level2" data-number="6.6"><h2 data-number="6.6" class="anchored" data-anchor-id="分组-groups">
+<span class="header-section-number">6.6</span> 分组 Groups</h2>
+<section id="分层树枝图-hierarchical-dendrogram" class="level3" data-number="6.6.1"><h3 data-number="6.6.1" class="anchored" data-anchor-id="分层树枝图-hierarchical-dendrogram">
+<span class="header-section-number">6.6.1</span> 分层树枝图 Hierarchical Dendrogram</h3>
 <div class="cell">
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -763,8 +788,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section><section id="聚类-clusters" class="level3" data-number="2.6.2"><h3 data-number="2.6.2" class="anchored" data-anchor-id="聚类-clusters">
-<span class="header-section-number">2.6.2</span> 聚类 Clusters</h3>
+</section><section id="聚类-clusters" class="level3" data-number="6.6.2"><h3 data-number="6.6.2" class="anchored" data-anchor-id="聚类-clusters">
+<span class="header-section-number">6.6.2</span> 聚类 Clusters</h3>
 <p>可以使用 <code><a href="https://rdrr.io/pkg/ggalt/man/geom_encircle.html">geom_encircle()</a></code>来显示不同的聚类或分组。如果数据集具有多个弱特征，可以计算主成分，并以 PC1 和 PC2 为 X 轴和 Y 轴绘制散点图。</p>
 <div class="cell">
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
@@ -1226,7 +1251,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./top50en.html" class="pagination-link" aria-label="Top 50 ggplot2 Visualizations">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 Visualizations</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 Visualizations</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

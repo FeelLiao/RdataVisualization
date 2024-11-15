@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.6.33">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Feel Liao">
-<title>1&nbsp; Top 50 ggplot2 Visualizations – R语言数据可视化学习笔记</title>
+<title>5&nbsp; Top 50 ggplot2 Visualizations – R语言数据可视化学习笔记</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -62,7 +62,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./top50zh.html" rel="next">
-<link href="./ChangeLog.html" rel="prev">
+<link href="./ggplot2_spring1.html" rel="prev">
 <link href="./favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -107,7 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./top50en.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 Visualizations</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./top50en.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 Visualizations</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -150,14 +150,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./ggplot2intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">ggplot2简介</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ggplot2internal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">ggplot2工作原理</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ggplot2extend.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">编写ggplot2拓展</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ggplot2_spring1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">一个学习案例</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./top50en.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 Visualizations</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 Visualizations</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./top50zh.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 可视化</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 可视化</span></span></a>
   </div>
 </li>
     </ul>
@@ -169,57 +193,57 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
 <li>
-<a href="#correlation" id="toc-correlation" class="nav-link active" data-scroll-target="#correlation"><span class="header-section-number">1.1</span> Correlation</a>
+<a href="#correlation" id="toc-correlation" class="nav-link active" data-scroll-target="#correlation"><span class="header-section-number">5.1</span> Correlation</a>
   <ul class="collapse">
-<li><a href="#scatterplot" id="toc-scatterplot" class="nav-link" data-scroll-target="#scatterplot"><span class="header-section-number">1.1.1</span> Scatterplot</a></li>
-  <li><a href="#scatterplot-with-encircling" id="toc-scatterplot-with-encircling" class="nav-link" data-scroll-target="#scatterplot-with-encircling"><span class="header-section-number">1.1.2</span> Scatterplot With Encircling</a></li>
-  <li><a href="#counts-chart" id="toc-counts-chart" class="nav-link" data-scroll-target="#counts-chart"><span class="header-section-number">1.1.3</span> Counts Chart</a></li>
-  <li><a href="#bubble-plot" id="toc-bubble-plot" class="nav-link" data-scroll-target="#bubble-plot"><span class="header-section-number">1.1.4</span> Bubble plot</a></li>
-  <li><a href="#marginal-histogram-boxplot" id="toc-marginal-histogram-boxplot" class="nav-link" data-scroll-target="#marginal-histogram-boxplot"><span class="header-section-number">1.1.5</span> Marginal Histogram / Boxplot</a></li>
+<li><a href="#scatterplot" id="toc-scatterplot" class="nav-link" data-scroll-target="#scatterplot"><span class="header-section-number">5.1.1</span> Scatterplot</a></li>
+  <li><a href="#scatterplot-with-encircling" id="toc-scatterplot-with-encircling" class="nav-link" data-scroll-target="#scatterplot-with-encircling"><span class="header-section-number">5.1.2</span> Scatterplot With Encircling</a></li>
+  <li><a href="#counts-chart" id="toc-counts-chart" class="nav-link" data-scroll-target="#counts-chart"><span class="header-section-number">5.1.3</span> Counts Chart</a></li>
+  <li><a href="#bubble-plot" id="toc-bubble-plot" class="nav-link" data-scroll-target="#bubble-plot"><span class="header-section-number">5.1.4</span> Bubble plot</a></li>
+  <li><a href="#marginal-histogram-boxplot" id="toc-marginal-histogram-boxplot" class="nav-link" data-scroll-target="#marginal-histogram-boxplot"><span class="header-section-number">5.1.5</span> Marginal Histogram / Boxplot</a></li>
   </ul>
 </li>
   <li>
-<a href="#deviation" id="toc-deviation" class="nav-link" data-scroll-target="#deviation"><span class="header-section-number">1.2</span> Deviation</a>
+<a href="#deviation" id="toc-deviation" class="nav-link" data-scroll-target="#deviation"><span class="header-section-number">5.2</span> Deviation</a>
   <ul class="collapse">
-<li><a href="#diverging-bars" id="toc-diverging-bars" class="nav-link" data-scroll-target="#diverging-bars"><span class="header-section-number">1.2.1</span> Diverging bars</a></li>
-  <li><a href="#diverging-lollipop-chart" id="toc-diverging-lollipop-chart" class="nav-link" data-scroll-target="#diverging-lollipop-chart"><span class="header-section-number">1.2.2</span> Diverging Lollipop Chart</a></li>
-  <li><a href="#diverging-dot-plot" id="toc-diverging-dot-plot" class="nav-link" data-scroll-target="#diverging-dot-plot"><span class="header-section-number">1.2.3</span> Diverging Dot Plot</a></li>
+<li><a href="#diverging-bars" id="toc-diverging-bars" class="nav-link" data-scroll-target="#diverging-bars"><span class="header-section-number">5.2.1</span> Diverging bars</a></li>
+  <li><a href="#diverging-lollipop-chart" id="toc-diverging-lollipop-chart" class="nav-link" data-scroll-target="#diverging-lollipop-chart"><span class="header-section-number">5.2.2</span> Diverging Lollipop Chart</a></li>
+  <li><a href="#diverging-dot-plot" id="toc-diverging-dot-plot" class="nav-link" data-scroll-target="#diverging-dot-plot"><span class="header-section-number">5.2.3</span> Diverging Dot Plot</a></li>
   </ul>
 </li>
   <li>
-<a href="#ranking" id="toc-ranking" class="nav-link" data-scroll-target="#ranking"><span class="header-section-number">1.3</span> Ranking</a>
+<a href="#ranking" id="toc-ranking" class="nav-link" data-scroll-target="#ranking"><span class="header-section-number">5.3</span> Ranking</a>
   <ul class="collapse">
-<li><a href="#dot-plot" id="toc-dot-plot" class="nav-link" data-scroll-target="#dot-plot"><span class="header-section-number">1.3.1</span> Dot Plot</a></li>
-  <li><a href="#slope-chart" id="toc-slope-chart" class="nav-link" data-scroll-target="#slope-chart"><span class="header-section-number">1.3.2</span> Slope Chart</a></li>
-  <li><a href="#dumbbell-plot" id="toc-dumbbell-plot" class="nav-link" data-scroll-target="#dumbbell-plot"><span class="header-section-number">1.3.3</span> Dumbbell Plot</a></li>
+<li><a href="#dot-plot" id="toc-dot-plot" class="nav-link" data-scroll-target="#dot-plot"><span class="header-section-number">5.3.1</span> Dot Plot</a></li>
+  <li><a href="#slope-chart" id="toc-slope-chart" class="nav-link" data-scroll-target="#slope-chart"><span class="header-section-number">5.3.2</span> Slope Chart</a></li>
+  <li><a href="#dumbbell-plot" id="toc-dumbbell-plot" class="nav-link" data-scroll-target="#dumbbell-plot"><span class="header-section-number">5.3.3</span> Dumbbell Plot</a></li>
   </ul>
 </li>
   <li>
-<a href="#distribution" id="toc-distribution" class="nav-link" data-scroll-target="#distribution"><span class="header-section-number">1.4</span> Distribution</a>
+<a href="#distribution" id="toc-distribution" class="nav-link" data-scroll-target="#distribution"><span class="header-section-number">5.4</span> Distribution</a>
   <ul class="collapse">
-<li><a href="#tufte-boxplot" id="toc-tufte-boxplot" class="nav-link" data-scroll-target="#tufte-boxplot"><span class="header-section-number">1.4.1</span> Tufte Boxplot</a></li>
-  <li><a href="#population-pyramid" id="toc-population-pyramid" class="nav-link" data-scroll-target="#population-pyramid"><span class="header-section-number">1.4.2</span> Population Pyramid</a></li>
+<li><a href="#tufte-boxplot" id="toc-tufte-boxplot" class="nav-link" data-scroll-target="#tufte-boxplot"><span class="header-section-number">5.4.1</span> Tufte Boxplot</a></li>
+  <li><a href="#population-pyramid" id="toc-population-pyramid" class="nav-link" data-scroll-target="#population-pyramid"><span class="header-section-number">5.4.2</span> Population Pyramid</a></li>
   </ul>
 </li>
   <li>
-<a href="#composition" id="toc-composition" class="nav-link" data-scroll-target="#composition"><span class="header-section-number">1.5</span> Composition</a>
+<a href="#composition" id="toc-composition" class="nav-link" data-scroll-target="#composition"><span class="header-section-number">5.5</span> Composition</a>
   <ul class="collapse">
-<li><a href="#waffle-chart" id="toc-waffle-chart" class="nav-link" data-scroll-target="#waffle-chart"><span class="header-section-number">1.5.1</span> Waffle Chart</a></li>
-  <li><a href="#treemap" id="toc-treemap" class="nav-link" data-scroll-target="#treemap"><span class="header-section-number">1.5.2</span> Treemap</a></li>
+<li><a href="#waffle-chart" id="toc-waffle-chart" class="nav-link" data-scroll-target="#waffle-chart"><span class="header-section-number">5.5.1</span> Waffle Chart</a></li>
+  <li><a href="#treemap" id="toc-treemap" class="nav-link" data-scroll-target="#treemap"><span class="header-section-number">5.5.2</span> Treemap</a></li>
   </ul>
 </li>
   <li>
-<a href="#groups" id="toc-groups" class="nav-link" data-scroll-target="#groups"><span class="header-section-number">1.6</span> Groups</a>
+<a href="#groups" id="toc-groups" class="nav-link" data-scroll-target="#groups"><span class="header-section-number">5.6</span> Groups</a>
   <ul class="collapse">
-<li><a href="#hierarchical-dendrogram" id="toc-hierarchical-dendrogram" class="nav-link" data-scroll-target="#hierarchical-dendrogram"><span class="header-section-number">1.6.1</span> Hierarchical Dendrogram</a></li>
-  <li><a href="#clusters" id="toc-clusters" class="nav-link" data-scroll-target="#clusters"><span class="header-section-number">1.6.2</span> Clusters</a></li>
+<li><a href="#hierarchical-dendrogram" id="toc-hierarchical-dendrogram" class="nav-link" data-scroll-target="#hierarchical-dendrogram"><span class="header-section-number">5.6.1</span> Hierarchical Dendrogram</a></li>
+  <li><a href="#clusters" id="toc-clusters" class="nav-link" data-scroll-target="#clusters"><span class="header-section-number">5.6.2</span> Clusters</a></li>
   </ul>
 </li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/FeelLiao/R_in_ASLDV/edit/main/top50en.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/FeelLiao/R_in_ASLDV/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title"><span id="sec-top50ggplot2en" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 Visualizations</span></span></h1>
+<h1 class="title"><span id="sec-top50ggplot2en" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 Visualizations</span></span></h1>
 </div>
 
 
@@ -243,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>查看简体中文版本 <a href="top50zh.html" class="quarto-xref"><span>Chapter 2</span></a></p>
+<p>查看简体中文版本: Top 50 ggplot2 可视化 (<a href="top50zh.html" class="quarto-xref"><span>Chapter 6</span></a>)</p>
 <p><strong>An effective chart is one that:</strong></p>
 <ol type="1">
 <li>Conveys the right information without distorting facts.</li>
@@ -263,11 +287,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/andrie/ggdendro">ggdendro</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sinhrks/ggfortify">ggfortify</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="correlation" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="correlation">
-<span class="header-section-number">1.1</span> Correlation</h2>
+<section id="correlation" class="level2" data-number="5.1"><h2 data-number="5.1" class="anchored" data-anchor-id="correlation">
+<span class="header-section-number">5.1</span> Correlation</h2>
 <p>The following plots help to examine how well correlated two variables are.</p>
-<section id="scatterplot" class="level3" data-number="1.1.1"><h3 data-number="1.1.1" class="anchored" data-anchor-id="scatterplot">
-<span class="header-section-number">1.1.1</span> Scatterplot</h3>
+<section id="scatterplot" class="level3" data-number="5.1.1"><h3 data-number="5.1.1" class="anchored" data-anchor-id="scatterplot">
+<span class="header-section-number">5.1.1</span> Scatterplot</h3>
 <p>The most frequently used plot for data analysis is undoubtedly the scatterplot. Whenever you want to understand the nature of relationship between two variables, invariably the first choice is the scatterplot.</p>
 <div class="cell">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
@@ -291,8 +315,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section><section id="scatterplot-with-encircling" class="level3" data-number="1.1.2"><h3 data-number="1.1.2" class="anchored" data-anchor-id="scatterplot-with-encircling">
-<span class="header-section-number">1.1.2</span> Scatterplot With Encircling</h3>
+</section><section id="scatterplot-with-encircling" class="level3" data-number="5.1.2"><h3 data-number="5.1.2" class="anchored" data-anchor-id="scatterplot-with-encircling">
+<span class="header-section-number">5.1.2</span> Scatterplot With Encircling</h3>
 <p>When presenting the results, sometimes I would encirlce certain special group of points or region in the chart so as to draw the attention to those peculiar cases. This can be conveniently done using the <code><a href="https://rdrr.io/pkg/ggalt/man/geom_encircle.html">geom_encircle()</a></code> in <code>ggalt</code> package.</p>
 <div class="cell">
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">midwest_select</span> <span class="op">&lt;-</span> <span class="va">midwest</span><span class="op">[</span></span>
@@ -328,8 +352,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section><section id="counts-chart" class="level3" data-number="1.1.3"><h3 data-number="1.1.3" class="anchored" data-anchor-id="counts-chart">
-<span class="header-section-number">1.1.3</span> Counts Chart</h3>
+</section><section id="counts-chart" class="level3" data-number="5.1.3"><h3 data-number="5.1.3" class="anchored" data-anchor-id="counts-chart">
+<span class="header-section-number">5.1.3</span> Counts Chart</h3>
 <p>The second option to overcome the problem of data points overlap is to use what is called a counts chart. Whereever there is more points overlap, the size of the circle gets bigger.</p>
 <div class="cell">
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">cty</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -347,8 +371,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section><section id="bubble-plot" class="level3" data-number="1.1.4"><h3 data-number="1.1.4" class="anchored" data-anchor-id="bubble-plot">
-<span class="header-section-number">1.1.4</span> Bubble plot</h3>
+</section><section id="bubble-plot" class="level3" data-number="5.1.4"><h3 data-number="5.1.4" class="anchored" data-anchor-id="bubble-plot">
+<span class="header-section-number">5.1.4</span> Bubble plot</h3>
 <p>While scatterplot lets you compare the relationship between 2 continuous variables, bubble chart serves well if you want to understand relationship within the underlying groups based on:</p>
 <p>A Categorical variable (by changing the color) and Another continuous variable (by changing the size of points). In simpler words, bubble charts are more suitable if you have 4-Dimensional data where two of them are numeric (X and Y) and one other categorical (color) and another numeric variable (size).</p>
 <p>The bubble chart clearly distinguishes the range of <code>displ</code> between the manufacturers and how the slope of lines-of-best-fit varies, providing a better visual comparison between the groups.</p>
@@ -368,8 +392,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section><section id="marginal-histogram-boxplot" class="level3" data-number="1.1.5"><h3 data-number="1.1.5" class="anchored" data-anchor-id="marginal-histogram-boxplot">
-<span class="header-section-number">1.1.5</span> Marginal Histogram / Boxplot</h3>
+</section><section id="marginal-histogram-boxplot" class="level3" data-number="5.1.5"><h3 data-number="5.1.5" class="anchored" data-anchor-id="marginal-histogram-boxplot">
+<span class="header-section-number">5.1.5</span> Marginal Histogram / Boxplot</h3>
 <p>If you want to show the relationship as well as the distribution in the same chart, use the marginal histogram. It has a histogram of the X and Y variables at the margins of the scatterplot.</p>
 <p>This can be implemented using the <code><a href="https://rdrr.io/pkg/ggExtra/man/ggMarginal.html">ggMarginal()</a></code> function from the <code>ggExtra</code> package. Apart from a histogram, you could choose to draw a marginal boxplot or density plot by setting the respective type option.</p>
 <div class="cell">
@@ -386,11 +410,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section></section><section id="deviation" class="level2" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="deviation">
-<span class="header-section-number">1.2</span> Deviation</h2>
+</section></section><section id="deviation" class="level2" data-number="5.2"><h2 data-number="5.2" class="anchored" data-anchor-id="deviation">
+<span class="header-section-number">5.2</span> Deviation</h2>
 <p>Compare variation in values between small number of items (or categories) with respect to a fixed reference.</p>
-<section id="diverging-bars" class="level3" data-number="1.2.1"><h3 data-number="1.2.1" class="anchored" data-anchor-id="diverging-bars">
-<span class="header-section-number">1.2.1</span> Diverging bars</h3>
+<section id="diverging-bars" class="level3" data-number="5.2.1"><h3 data-number="5.2.1" class="anchored" data-anchor-id="diverging-bars">
+<span class="header-section-number">5.2.1</span> Diverging bars</h3>
 <p>Diverging Bars is a bar chart that can handle both negative and positive values. This can be implemented by a smart tweak with <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code>. But the usage of <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code> can be quite confusing. Thats because, it can be used to make a bar chart as well as a histogram. Let me explain.</p>
 <p>By default, <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code> has the stat set to count. That means, when you provide just a continuous X variable (and no Y variable), it tries to make a histogram out of the data.</p>
 <p>In order to make a bar chart create bars instead of histogram, you need to do two things.</p>
@@ -426,8 +450,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section><section id="diverging-lollipop-chart" class="level3" data-number="1.2.2"><h3 data-number="1.2.2" class="anchored" data-anchor-id="diverging-lollipop-chart">
-<span class="header-section-number">1.2.2</span> Diverging Lollipop Chart</h3>
+</section><section id="diverging-lollipop-chart" class="level3" data-number="5.2.2"><h3 data-number="5.2.2" class="anchored" data-anchor-id="diverging-lollipop-chart">
+<span class="header-section-number">5.2.2</span> Diverging Lollipop Chart</h3>
 <p>Lollipop chart conveys the same information as bar chart and diverging bar. Except that it looks more modern. Instead of <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code>, I use <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point()</a></code> and <code><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment()</a></code> to get the lollipops right. Let’s draw a lollipop using the same data I prepared in the previous example of diverging bars.</p>
 <div class="cell">
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mtcars_new</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">car_name</span>, y <span class="op">=</span> <span class="va">mpg_z</span>, label <span class="op">=</span> <span class="va">mpg_z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -454,8 +478,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section><section id="diverging-dot-plot" class="level3" data-number="1.2.3"><h3 data-number="1.2.3" class="anchored" data-anchor-id="diverging-dot-plot">
-<span class="header-section-number">1.2.3</span> Diverging Dot Plot</h3>
+</section><section id="diverging-dot-plot" class="level3" data-number="5.2.3"><h3 data-number="5.2.3" class="anchored" data-anchor-id="diverging-dot-plot">
+<span class="header-section-number">5.2.3</span> Diverging Dot Plot</h3>
 <p>Dot plot conveys similar information. The principles are same as what we saw in Diverging bars, except that only point are used. Below example uses the same data prepared in the diverging bars example.</p>
 <div class="cell">
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mtcars_new</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">car_name</span>, y <span class="op">=</span> <span class="va">mpg_z</span>, label <span class="op">=</span> <span class="va">mpg_z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -479,11 +503,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section></section><section id="ranking" class="level2" data-number="1.3"><h2 data-number="1.3" class="anchored" data-anchor-id="ranking">
-<span class="header-section-number">1.3</span> Ranking</h2>
+</section></section><section id="ranking" class="level2" data-number="5.3"><h2 data-number="5.3" class="anchored" data-anchor-id="ranking">
+<span class="header-section-number">5.3</span> Ranking</h2>
 <p>Used to compare the position or performance of multiple items with respect to each other. Actual values matters somewhat less than the ranking.</p>
-<section id="dot-plot" class="level3" data-number="1.3.1"><h3 data-number="1.3.1" class="anchored" data-anchor-id="dot-plot">
-<span class="header-section-number">1.3.1</span> Dot Plot</h3>
+<section id="dot-plot" class="level3" data-number="5.3.1"><h3 data-number="5.3.1" class="anchored" data-anchor-id="dot-plot">
+<span class="header-section-number">5.3.1</span> Dot Plot</h3>
 <p>Dot plots are very similar to lollipops, but without the line and is flipped to horizontal position. It emphasizes more on the rank ordering of items with respect to actual values and how far apart are the entities with respect to each other.</p>
 <div class="cell">
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Prepare data: group mean city mileage by manufacturer.</span></span>
@@ -517,8 +541,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section><section id="slope-chart" class="level3" data-number="1.3.2"><h3 data-number="1.3.2" class="anchored" data-anchor-id="slope-chart">
-<span class="header-section-number">1.3.2</span> Slope Chart</h3>
+</section><section id="slope-chart" class="level3" data-number="5.3.2"><h3 data-number="5.3.2" class="anchored" data-anchor-id="slope-chart">
+<span class="header-section-number">5.3.2</span> Slope Chart</h3>
 <p>Slope charts are an excellent way of comparing the positional placements between 2 points on time. At the moment, there is no builtin function to construct this. Following code serves as a pointer about how you may approach this.</p>
 <div class="cell">
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Prepare data</span></span>
@@ -576,8 +600,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section><section id="dumbbell-plot" class="level3" data-number="1.3.3"><h3 data-number="1.3.3" class="anchored" data-anchor-id="dumbbell-plot">
-<span class="header-section-number">1.3.3</span> Dumbbell Plot</h3>
+</section><section id="dumbbell-plot" class="level3" data-number="5.3.3"><h3 data-number="5.3.3" class="anchored" data-anchor-id="dumbbell-plot">
+<span class="header-section-number">5.3.3</span> Dumbbell Plot</h3>
 <p>Dumbbell charts are a great tool if you wish to: 1. Visualize relative positions (like growth and decline) between two points in time. 2. Compare distance between two categories.</p>
 <p>In order to get the correct ordering of the dumbbells, the Y variable should be a factor and the levels of the factor variable should be in the same order as it should appear in the plot.</p>
 <div class="cell">
@@ -621,11 +645,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section></section><section id="distribution" class="level2" data-number="1.4"><h2 data-number="1.4" class="anchored" data-anchor-id="distribution">
-<span class="header-section-number">1.4</span> Distribution</h2>
+</section></section><section id="distribution" class="level2" data-number="5.4"><h2 data-number="5.4" class="anchored" data-anchor-id="distribution">
+<span class="header-section-number">5.4</span> Distribution</h2>
 <p>When you have lots and lots of data points and want to study where and how the data points are distributed.</p>
-<section id="tufte-boxplot" class="level3" data-number="1.4.1"><h3 data-number="1.4.1" class="anchored" data-anchor-id="tufte-boxplot">
-<span class="header-section-number">1.4.1</span> Tufte Boxplot</h3>
+<section id="tufte-boxplot" class="level3" data-number="5.4.1"><h3 data-number="5.4.1" class="anchored" data-anchor-id="tufte-boxplot">
+<span class="header-section-number">5.4.1</span> Tufte Boxplot</h3>
 <p>Tufte box plot, provided by ggthemes package is inspired by the works of Edward Tufte. Tufte’s Box plot is just a box plot made minimal and visually appealing.</p>
 <div class="cell">
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">manufacturer</span>, <span class="va">cty</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -646,8 +670,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section><section id="population-pyramid" class="level3" data-number="1.4.2"><h3 data-number="1.4.2" class="anchored" data-anchor-id="population-pyramid">
-<span class="header-section-number">1.4.2</span> Population Pyramid</h3>
+</section><section id="population-pyramid" class="level3" data-number="5.4.2"><h3 data-number="5.4.2" class="anchored" data-anchor-id="population-pyramid">
+<span class="header-section-number">5.4.2</span> Population Pyramid</h3>
 <p>Population pyramids offer a unique way of visualizing how much population or what percentage of population fall under a certain category. The below pyramid is an excellent example of how many users are retained at each stage of a email marketing campaign funnel.</p>
 <div class="cell">
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>scipen <span class="op">=</span> <span class="fl">999</span><span class="op">)</span></span>
@@ -682,10 +706,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section></section><section id="composition" class="level2" data-number="1.5"><h2 data-number="1.5" class="anchored" data-anchor-id="composition">
-<span class="header-section-number">1.5</span> Composition</h2>
-<section id="waffle-chart" class="level3" data-number="1.5.1"><h3 data-number="1.5.1" class="anchored" data-anchor-id="waffle-chart">
-<span class="header-section-number">1.5.1</span> Waffle Chart</h3>
+</section></section><section id="composition" class="level2" data-number="5.5"><h2 data-number="5.5" class="anchored" data-anchor-id="composition">
+<span class="header-section-number">5.5</span> Composition</h2>
+<section id="waffle-chart" class="level3" data-number="5.5.1"><h3 data-number="5.5.1" class="anchored" data-anchor-id="waffle-chart">
+<span class="header-section-number">5.5.1</span> Waffle Chart</h3>
 <p>Waffle charts is a nice way of showing the categorical composition of the total population. Though there is no direct function, it can be articulated by smartly maneuvering the ggplot2 using <code><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_tile()</a></code> function. The below template should help you create your own waffle.</p>
 <div class="cell">
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">var</span> <span class="op">&lt;-</span> <span class="va">mpg</span><span class="op">$</span><span class="va">class</span></span>
@@ -717,8 +741,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section><section id="treemap" class="level3" data-number="1.5.2"><h3 data-number="1.5.2" class="anchored" data-anchor-id="treemap">
-<span class="header-section-number">1.5.2</span> Treemap</h3>
+</section><section id="treemap" class="level3" data-number="5.5.2"><h3 data-number="5.5.2" class="anchored" data-anchor-id="treemap">
+<span class="header-section-number">5.5.2</span> Treemap</h3>
 <p>Treemap is a nice way of displaying hierarchical data by using nested rectangles. The treemapify package provides the necessary functions to convert the data in desired format (treemapify) as well as draw the actual plot (ggplotify).</p>
 <p>In order to create a treemap, the data must be converted to desired format using <code><a href="https://wilkox.org/treemapify/reference/treemapify.html">treemapify()</a></code>. The important requirement is, your data must have one variable each that describes the area of the tiles, variable for fill color, variable that has the tile’s label and finally the parent group.</p>
 <p>Once the data formatting is done, just call <code>ggplotify()</code> on the treemapified data.</p>
@@ -744,10 +768,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section></section><section id="groups" class="level2" data-number="1.6"><h2 data-number="1.6" class="anchored" data-anchor-id="groups">
-<span class="header-section-number">1.6</span> Groups</h2>
-<section id="hierarchical-dendrogram" class="level3" data-number="1.6.1"><h3 data-number="1.6.1" class="anchored" data-anchor-id="hierarchical-dendrogram">
-<span class="header-section-number">1.6.1</span> Hierarchical Dendrogram</h3>
+</section></section><section id="groups" class="level2" data-number="5.6"><h2 data-number="5.6" class="anchored" data-anchor-id="groups">
+<span class="header-section-number">5.6</span> Groups</h2>
+<section id="hierarchical-dendrogram" class="level3" data-number="5.6.1"><h3 data-number="5.6.1" class="anchored" data-anchor-id="hierarchical-dendrogram">
+<span class="header-section-number">5.6.1</span> Hierarchical Dendrogram</h3>
 <div class="cell">
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -762,8 +786,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section><section id="clusters" class="level3" data-number="1.6.2"><h3 data-number="1.6.2" class="anchored" data-anchor-id="clusters">
-<span class="header-section-number">1.6.2</span> Clusters</h3>
+</section><section id="clusters" class="level3" data-number="5.6.2"><h3 data-number="5.6.2" class="anchored" data-anchor-id="clusters">
+<span class="header-section-number">5.6.2</span> Clusters</h3>
 <p>It is possible to show the distinct clusters or groups using <code><a href="https://rdrr.io/pkg/ggalt/man/geom_encircle.html">geom_encircle()</a></code>. If the dataset has multiple weak features, you can compute the principal components and draw a scatterplot using PC1 and PC2 as X and Y axis.</p>
 <div class="cell">
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
@@ -1224,13 +1248,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="./ChangeLog.html" class="pagination-link" aria-label="更新日志">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">更新日志</span>
+      <a href="./ggplot2_spring1.html" class="pagination-link" aria-label="一个学习案例">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">一个学习案例</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./top50zh.html" class="pagination-link" aria-label="Top 50 ggplot2 可视化">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 可视化</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 可视化</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

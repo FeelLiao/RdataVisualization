@@ -4,7 +4,7 @@
 This article and code is from [r-statistics.co](https://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html)
 :::
 
-查看简体中文版本 @sec-top50ggplot2zh
+查看简体中文版本: Top 50 ggplot2 可视化 (@sec-top50ggplot2zh)
 
 **An effective chart is one that:**
 

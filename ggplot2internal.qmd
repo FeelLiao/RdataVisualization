@@ -1,0 +1,423 @@
+# ggplot2工作原理 {#sec-ggplot2internal}
+
+::: callout-note
+1.  本篇文章的内容来自于[Internals of ggplot2](https://ggplot2-book.org/internals)，如果翻译有误，恳请指出！
+2.  文章介绍的内容基于 ggplot2 3.3.0 版本，如果使用其他版本，代码可能出错。
+:::
+
+```{r}
+#| include: false
+#| label: internal-loading-packages
+library(dplyr)
+source("scripts/internals_ggbuild.R")
+source("scripts/internals_ggtable.R")
+```
+
+当从用户转到开发人员时，遇到挫折是很常见的，因为在 ggplot2 中，用户的交互方式与其底层工作原理截然不同。随着 ggplot2 的扩展变得越来越常见，在理解如何将拓展的功能整合在一起上也会遇到挫折。本章将介绍 ggplot2 如何在 “幕后 ”工作。我们将重点放在系统的设计上，而不是其实现的技术细节，目的是让读者从概念上理解各部分是如何组合在一起的。首先，我们将概述绘制 ggplot 对象时的过程，然后深入细节，描述数据如何在整个过程中流动，并最终成为绘图中的可视化元素。
+
+## The `plot` method {#sec-plot-method}
+
+在了解 ggplot2 的底层机制时，重要的是要认识到与绘图相关的几乎所有内容都是在打印 ggplot 对象时发生的，而不是在构建对象时发生的。例如，下面的代码中，对象 `p` 是绘图数据的抽象表示，如图层等。它并没有构造图像本身：
+
+```{r}
+p <- ggplot(mpg, aes(displ, hwy, color = drv)) + 
+  geom_point(position = "jitter") +
+  geom_smooth(method = "lm", formula = y ~ x) + 
+  facet_wrap(vars(year)) + 
+  ggtitle("A plot for expository purposes")
+```
+
+ggplot2 被设计成允许用户向图中添加新元素，而无需重新计算任何内容。这种设计的一个含义是，如果你想了解 ggplot2 的机制，你必须跟踪你的绘图是如何进入 `plot()`[^ggplot2internal-1]的。你可以通过在控制台中输入 `ggplot2:::plot.ggplot` 来检查 ggplot 对象的打印方法，但本章我们将使用一个简化的版本。剥离到最基本的形式，ggplot2 的绘图方法与以下 `ggprint()` 函数的结构相同：
+
+[^ggplot2internal-1]: 你通常不会直接调用这个 `plot()` 方法，因为它是由打印方法调用的，因此每当打印 ggplot 对象时都会调用它。
+
+```{r}
+ggprint <- function(x) {
+  data <- ggplot_build(x)
+  gtable <- ggplot_gtable(data)
+  grid::grid.newpage()
+  grid::grid.draw(gtable)
+  return(invisible(x))
+}
+```
+
+这个函数并不处理所有可能的情况，但它足以绘制上面指定的图表：
+
+```{r}
+ggprint(p) 
+```
+
+在我们简化的打印方法的代码中，显示了四个不同的步骤：
+
+-   首先，调用 `ggplot_build()`，这一步会准备每个图层的数据并整理成适合绘图的标准格式。
+
+-   其次，将准备好的数据传递给 `ggplot_gtable()`，并将其转化为存储在 gtable 中的图形元素（我们稍后再讨论 gtable 是什么）。
+
+-   第三，在 grid 软件包的帮助下，将 gtable 对象转换为图像。
+
+-   第四，将原始 ggplot 对象隐形返回给用户。
+
+这个过程揭示了 ggplot2 本身并不进行底层绘图：当创建了 `gtable` 对象后，它的责任就结束了。 gtable 包（实现了 gtable 类）也不进行任何绘制。 所有绘图工作都由 grid 软件包和激活的图形设备共同完成。 这是非常重要的一点，因为这意味着 ggplot2 或 ggplot2 的任何扩展都不会关心可视化输出的细枝末节。 相反，它的工作是将用户数据转换为一个或多个图形基元，如多边形、线、点等，然后将责任移交给 grid 包。
+
+尽管严格来说并不正确，但我们将称这个过程为**渲染过程**。接下来的两个部分数据将沿着渲染过程向下推进，通过 build step（@sec-ggplotbuild）和 gtable step（@sec-ggplotgtable），最终在图形基元的集合中到达 grid 。
+
+## The build step {#sec-ggplotbuild}
+
+正如上面讨论的，`ggplot_build()` 接受使用公共 API 构建的声明性表示，并通过准备数据以将其转换为图形基元来增强它。
+
+### 数据准备
+
+处理的第一部分是获取与每个图层相关的数据，并将其转换成可预测的格式。 图层可以通过以下三种方式之一提供数据：提供自己的数据（geom 的 `data` 参数是一个data frame），继承提供给 `ggplot()` 的全局数据，或者是一个函数，在应用到全局时返回一个data frame。 在所有三种情况下，结果都是一个data frame，它将传递给绘图布局，后者将协调坐标系和分面。 在这种情况下，数据首先被传递到绘图坐标系，坐标系可能会改变数据（但通常不会），然后被传递到分面，分面会检查数据以确定绘图应该有多少个面板以及如何组织这些面板。 在这个过程中，与每个图层相关的数据都会增加名叫 “PANEL” 一列数据。 这一列数据将（必须）在整个渲染过程中保留，用于将数据的每一行链接到最终绘图中的特定面板。
+
+数据准备的最后一部分是将图层数据转换为计算出的美学（aesthetic）值。 这包括在图层数据上评估来自 `aes()` 的所有美学表达式。 此外，如果没有明确给出，`group`美学值会从所有非连续美学值的交互中计算出来。 `group`美学和`PANEL`一样，是必须在整个处理过程中保留的特殊列。 例如，前面创建的`p`图只包含`geom_point()`指定的一个图层，在数据准备过程结束时，与该图层相关的前 10 行数据是这样的：
+
+```{r}
+#| echo: false
+data_prepped <- ggplot_build(p)$prepared %>%
+head(data_prepped[[1]], n = 10)
+```
+
+### 数据转换
+
+提取图层数据并将其转换为可预测的格式后，需要进行一系列转换，直到转换为图层的几何图形所需的格式。 第一步是对数据中的列进行标度（scale）转换。 正是在这一阶段，标度中的任何 `trans` 参数都会产生影响，所有后续的渲染都将在这一转换后的空间中进行。 这就是在标度中设置位置变换与在坐标系中设置位置变换效果不同的原因。 如果在标度中指定变换，则变换会在任何其他计算*之前*应用，但如果在坐标系中指定变换，则变换会在这些计算*之后*应用。 例如，我们最初绘制的`p`图不涉及标度变换，因此图层数据在此阶段保持不变。 前三行如下所示：
+
+```{r}
+#| echo: false
+ggbuild(p)$transformed[[1]] %>% head(n = 3)
+```
+
+相反，如果我们的绘图对象是 `p + scale_x_log10()`，并在处理过程中检查此时的图层数据，我们就会看到 `x` 变量已进行了适当的转换：
+
+```{r}
+#| echo: false
+ggbuild(p + scale_x_log10())$transformed[[1]] %>% head(n = 3)
+```
+
+该过程的第二步是使用位置标度映射位置美学，根据所涉及的标度类型，映射过程会有不同的发生方式。 对于连续位置标度（例如我们示例中使用的标度），此时会应用 `oob` 参数中指定的出界函数，并删除图层数据中的 `NA` 值。 这对 `p` 没有什么影响，但如果我们绘制的是 `p + xlim(2, 8)`，则 `oob` 函数 -- 本例中的 `scales::censor()` -- 会用 `NA` 替换 2 以下的 `x` 值，如下图所示：
+
+```{r}
+#| echo: false
+ggbuild(p + xlim(2, 8))$positioned[[1]] %>% head(n = 3)
+```
+
+对于离散位置，变化则更为剧烈，因为数值会与用户提供的 “limits ”值或 “breaks ”规范相匹配，然后转换为整数值位置。 最后，对于 binned 位置标度，首先使用 `breaks` 参数将连续数据切成 bins，然后将每个 bin 的位置设置为其范围的中点。 在这一阶段进行映射的原因是保持一致性：无论使用哪种位置标度，在 stat 和 geom 计算中看起来都是连续的。 这一点非常重要，否则离散标度的闪避和抖动等计算都会失败。
+
+在转换的第三阶段，数据被移交给统计变换（stat），由统计变换进行统计转换。程序如下：首先，统计变换可以检查数据并修改其参数，然后对数据进行一次性处理。接下来，按 “PANEL ”和 “group ”对图层数据进行拆分，并在数据重新组合之前计算统计数据。\[\^ggplot2-internal-2\] 一旦数据以新的形式重新组合，就会经过另一个美学映射过程。在这个过程中，使用 `stat()`（或旧的 `...var...`符号）延迟计算的任何美学数据都会被添加到数据中。请注意，这就是为什么`stat()`表达式（包括用于在示例图`p`的`geom_smooth()`层中指定回归模型的公式）不能引用原始数据。此时，原始数据根本不存在。
+
+举例来说，我们可以看一下图中的第二图层，它可以产生线性回归结果。在进行统计计算之前，该图层的数据只包含坐标以及所需的 “PANEL ”和 “group ”列。
+
+```{r}
+#| echo: false
+#| message: false
+bb <- ggbuild(p)
+bb$positioned[[2]] %>% head(n = 3)
+```
+
+在统计计算结束后，图层数据也会相应的改变：
+
+```{r}
+#| echo: false
+bb$poststat[[2]] %>% head(n = 3)
+```
+
+此时，geom 接管了 stat 的工作（几乎）。它要做的第一件事就是检查数据、更新参数，并可能对数据进行第一次修改（与 stat 的设置相同）。这可能会对某些列进行重新参数化，例如将 `x`+`width` 改为 `xmin`+`xmax`。之后，位置调整将被应用，例如，重叠的条形图将被堆叠等。对于我们的示例图 `p` 来说，这一步是在图的第一层应用抖动，并对 `x` 和 `y` 坐标进行扰动：
+
+```{r}
+#| echo: false
+ggbuild(p)$geompos[[1]] %>% head(n = 3)
+```
+
+接下来--也许令人惊讶的是--位置标度将全部重置、重新训练并应用于图层数据。仔细想想，这绝对是必要的，因为，例如，堆叠会极大地改变其中一个坐标轴的范围。在某些情况下（例如在上面的直方图示例中），其中一个位置美学可能甚至要到统计计算之后才能获得，如果不对刻度进行重新训练，它就永远不会得到训练。
+
+数据转换的最后一部分是训练和映射所有非位置美学，即把映射的离散或连续输入转换成图形参数，如颜色、线型、大小等。此外，还将添加地形图中的任何默认美学，以便数据现在处于地形图的可预测状态。在最后一步，在构建步骤完成之前，stat 和 facet 都有最后一次机会使用它们的 “finish_data() ”方法修改数据的最终映射形式。对于绘图对象 `p` 来说，图层数据最终状态的前几行是这样的：
+
+```{r}
+#| echo: false
+ggbuild(p)$built$data[[1]] %>% head(n = 3)
+```
+
+### 输出
+
+ggplot_build()`的返回值是一个包含`ggplot_built`类的列表结构。它包含计算数据以及一个`Layout\` 对象，该对象包含有关训练过的坐标系和切面的信息。此外，它还包含一个原始绘图对象的副本，使用经过训练的标度。
+
+## The gtable step {#sec-ggplotgtable}
+
+`ggplot_gtable()`的目的是获取 build step 的输出，并在 gtable 软件包的帮助下将其转化为可以使用grid绘制的对象。此时，负责进一步计算的主要元素是地形、坐标系、切面和主题。统计和位置调整已经不再发挥了它们的作用。
+
+### 渲染面板
+
+首先是将数据转换成图形表示。这分两步进行。首先，将每个图层转换为图形对象列表（“grobs”）。与统计一样，转换是通过分割数据进行的，首先是按 “PANEL ”分割，然后是按 “group ”分割，出于性能考虑，geom 可能会拦截这种分割。虽然很多数据准备工作已经完成，但在这一步中，geom 还会对数据进行一些额外的转换，这种情况并不少见。其中最关键的部分是位置数据的转换和归一化。这是由坐标系完成的，虽然这通常只是意味着根据坐标系的限制对数据进行归一化，但也可能包括激进的转换，如将位置转换为极坐标。这样做的结果是为每个图层生成一个`gList`对象列表，该列表与切面布局中的每个面板相对应。之后，切面接手并组装面板。它首先从图层中收集每个面板的凹槽，以及基于主题的渲染条、背景、网格线和坐标轴，并将所有这些合并到每个面板的单个 gList 中。然后，它会根据计算出的面板布局将所有这些面板排列到一个 gtable 中。对于大多数绘图来说，这很简单，因为只有一个面板，但对于使用了 “facet_wrap() ”的绘图来说，这可能会相当复杂。输出结果是最终 gtable 对象的基础。在处理过程的这一阶段，我们的示例图 `p` 看起来是这样的：
+
+```{r}
+#| echo: false
+d <- ggplot_build(p)
+x <- gggtable(d)
+grid::grid.newpage()
+grid::grid.draw(x$panels)
+```
+
+### 添加导图
+
+ggplot2 中有两种类型的导图：坐标轴和图例。正如我们的图 `p` 所示，此时坐标轴已经渲染完成，并与面板组装在一起，但图例仍然缺失。渲染图例是一个复杂的过程，首先要为每个比例尺训练一个向导。然后，如果映射允许，可能会合并多个导引器，然后再要求为图例作出贡献的图层为图例中的每个键提供键槽。然后，这些键槽会在各图层之间进行组合，并合并成最终的图例，这个过程让人想起图层是如何合并成面板的 gtable 的。最后输出的是一个 gtable，其中包含根据主题和指南规格排列和样式的每个图例框。创建完成后，会根据 `legend.position`主题设置将引导 gtable 添加到主 gtable 中。至此，我们的示例绘图在大多数方面都已完成：唯一缺少的就是标题。
+
+```{r}
+#| echo: false
+d <- ggplot_build(p)
+x <- gggtable(d)
+grid::grid.newpage()
+grid::grid.draw(x$legend)
+```
+
+### 添加修饰
+
+剩下的工作就是添加标题、副标题、标题和标签，以及添加背景和页边距，这样最终的表格就完成了。
+
+### Output
+
+至此，ggplot2 已准备好移交给 grid。我们的渲染过程大致相当于下面的代码，最终结果如上所述，是一个 gtable：
+
+```{r}
+p_built <- ggplot_build(p)
+p_gtable <- ggplot_gtable(p_built)
+
+class(p_gtable)
+```
+
+不那么明显的是，对象的尺寸是不可预测的，将取决于切面、图例位置和绘制的标题。因此，如果要进一步修改 gtable，建议不要在代码中依赖行和列的位置。不过，gtable 中的所有元素都已命名，因此仍可以通过一些工作可靠地检索到，例如左上角 y 轴的槽。下面的代码显示了我们的绘图 `p` 的 gtable：
+
+```{r}
+p_gtable
+```
+
+正如人们所希望的那样，最终的情节看起来与原作完全相同：
+
+```{r}
+grid::grid.newpage()
+grid::grid.draw(p_gtable)
+```
+
+## ggproto 简介 {#sec-ggproto}
+
+@sec-plot-method 到 @sec-ggplotgtable 的重点是构建 ggplot 所涉及的事件顺序，但对于执行这项工作的编程对象类型却有意含糊其辞。
+
+所有的ggplot2对象都是使用面向对象编程的**ggproto**系统构建的。这是一个历史性的意外：ggplot2 最初使用 proto 进行面向对象编程，但由于 proto 系统的局限性，需要一个正式的扩展机制，这就成了一个问题。试图将 ggplot2 转换到其他系统（如 R6）的尝试被证明是困难的，而创建一个专门针对 ggplot2 需求的面向对象系统被证明是最不坏的解决方案。
+
+如果你想编写 ggplot2 扩展程序，了解 ggproto 面向对象编程系统是非常重要的。我们将在\@sec-ggplot2extend和\@sec-spring1 中遇到 ggplot2 使用的 ggproto 对象。与更著名的 R6 系统一样，ggproto 使用引用语义，允许继承和访问父类的方法。虽然 ggproto 并不强制执行这些设计原则，但它们对于理解如何在 ggplot2 中使用该系统至关重要。为了说明这些概念，本节将以简化的形式介绍 ggproto 的核心机制。
+
+### ggproto 对象
+
+创建一个新的ggproto对象需要使用`ggproto()`函数，该函数的第一个参数是新类的名称，第二个参数是新类继承的另一个ggproto对象。例如，我们可以用下面的命令创建一个ggproto对象--尽管它没有任何有用的功能：
+
+```{r}
+NewObject <- ggproto(
+  `_class` = NULL, 
+  `_inherits` = NULL
+)
+```
+
+按照惯例，ggproto 对象使用 "UpperCamelCase"（大写字母）命名，每个单词都以大写字母开头。省略`` `_class` ``和`` `_inherits` ``参数的名称也是惯例，因此该命令的常规形式如下：
+
+```{r}
+NewObject <- ggproto(NULL, NULL)
+```
+
+如果我们打印这个对象，就会发现它确实是一个 ggproto 对象，但没有显示其他信息。
+
+```{r}
+NewObject 
+```
+
+### 创建新类
+
+要创建一个新的 ggproto 类，唯一严格需要做的就是提供一个类名作为 `ggproto()` 的第一个参数。定义一个新类的最简单命令可能是这样的
+
+```{r}
+NewClass <- ggproto("NewClass", NULL)
+```
+
+`NewClass`变量仍然指向一个 ggproto 对象，但我们可以通过打印它来验证它是否具有所需的类名：
+
+```{r}
+NewClass
+```
+
+然而，到目前为止，我们所做的唯一一件事就是创建一个指定类的对象。`NewClass`对象什么也不做。要创建一个有用的 ggproto 类，我们需要在定义类时提供一个字段和方法列表。在这里，“字段 ”用于存储与对象相关的数据，而 “方法 ”则是可以使用对象中存储的数据的函数。字段和方法的构造是一样的，从用户的角度来看，它们不会被区别对待。
+
+为了说明这一点，我们将创建一个名为 `Person` 的新类，用来存储和操作一个人的信息。我们可以通过向 `ggproto()` 函数提供名称/值对来实现这一点：
+
+```{r}
+Person <- ggproto("Person", NULL,
+  
+  # fields                  
+  given_name = NA,
+  family_name = NA,
+  birth_date = NA,
+  
+  # methods
+  full_name = function(self, family_last = TRUE) {
+    if(family_last == TRUE) {
+      return(paste(self$given_name, self$family_name))
+    }
+    return(paste(self$family_name, self$given_name))
+  },
+  age = function(self) {
+    days_old <- Sys.Date() - self$birth_date
+    floor(as.integer(days_old) / 365.25)
+  },
+  description = function(self) {
+    paste(self$full_name(), "is", self$age(), "years old")
+  }
+)
+```
+
+现在，`Person`类有三个字段，分别对应人的 `given_name`, `family_name`和`birth_date`。它还拥有三个方法：`full_name()`方法是一个构造人的全名的函数，使用的惯例是将给名放在前面，姓氏放在后面；`age()`方法以年为单位计算人的年龄；`description()`方法打印出人的简短描述。
+
+打印对象会显示与其相关的字段和方法：
+
+```{r}
+Person
+```
+
+`Person`这个 ggproto 对象本质上是类的模板，我们可以用它来创建单个人的特定记录（在\@sec-ggproto-instances 中讨论）。如果你熟悉其他面向对象编程系统，你可能会期待一些不同的东西：通常新类的定义有一个专门的构造函数。ggproto的一个怪癖是`ggproto()`不会这样做：相反，类的构造函数本身就是一个对象。
+
+定义方法时需要注意的另一点是使用 `self` 作为第一个参数。这是一个特殊参数，用于让方法访问与 ggproto 对象相关的字段和方法（示例参见\@sec-ggproto-subclass）。这个参数的特殊地位在打印 ggproto 方法时显而易见：
+
+```{r}
+Person$full_name
+```
+
+这个输出结果似乎有点出人意料：当我们之前定义 `full_name()` 时，我们只提供了作为 “内部函数 ”列出的代码。现在的情况是，`ggproto()` 自动将我的函数封装在一个封装函数中，该封装函数调用我的代码作为内部函数，同时确保使用了适当的 `self` 定义。当打印该方法时，控制台会同时显示封装函数（通常没什么意义）和内部函数。这种格式的输出出现在\@sec-extensions和\@sec-spring1 中。
+
+### 创建新的实例 {#sec-ggproto-instances}
+
+既然已经定义了 `Person` 类，我们就可以创建该类的实例了。方法是将一个 ggproto 对象作为第二个参数传递给 `ggproto()`，而不在第一个参数中指定一个新的类名。例如，我们可以如下创建新对象 `Thomas` 和 `Danielle` ，它们都是 `Person` 类的实例：
+
+```{r}
+Thomas <- ggproto(NULL, Person,
+  given_name = "Thomas Lin",
+  family_name = "Pedersen",
+  birth_date = as.Date("1985/10/12")
+)
+
+Danielle <- ggproto(NULL, Person,
+  given_name = "Danielle Jasmine",
+  family_name = "Navarro",
+  birth_date = as.Date("1977/09/12")
+)
+```
+
+将 `NULL` 指定为第一个参数，将指示 `ggproto()` 不定义一个新类，而是创建第二个参数中指定的类的新实例。由于 `Thomas` 和 `Danielle` 都是 `Person` 类的实例，它们自动继承了 `age()`, `full_name()` 和 `description()` 方法：
+
+```{r}
+Thomas$description()
+
+Danielle$description()
+```
+
+### 创建子类 {#sec-ggproto-subclass}
+
+在前面的示例中，我们创建了一个全新的类 `Person`。在实践中，你几乎永远不需要这样做：相反，你可能会使用现有的 ggproto 对象创建一个子类。为此，您可以在调用 `ggproto()` 时指定子类的名称及其继承对象：
+
+```{r}
+# define the subclass
+NewSubClass <- ggproto("NewSubClass", Person)
+
+# verify that this works
+NewSubClass
+```
+
+上面的输出显示，`NewSubClass`现在提供了自己的类，它继承了我们之前创建的 `Person`对象的所有字段和方法。但是，这个新的子类并没有添加任何新功能。
+
+在创建子类时，我们经常要添加新的字段或方法，并覆盖一些已有的字段或方法。例如，假设我们要将 `Royalty`定义为`Person`的子类，并添加与相关皇室成员的 `rank`及其统治的`territory`相对应的字段。由于皇室成员通常以头衔和领地而不是姓氏和名字来称呼，因此我们还需要更改 `full_name()` 方法的定义方式：
+
+```{r}
+Royalty <- ggproto("Royalty", Person,
+  rank = NA,
+  territory = NA,
+  full_name = function(self) {
+    paste(self$rank, self$given_name, "of", self$territory)
+  }
+)
+```
+
+The `Royalty` object now defines a subclass of person that inherits some fields (`given_name`, `family_name`, `birth_date`) from the `Person` class, and supplies other fields (`rank`, `territory`). It inherits the `age()` and `description()` methods from `Person`, but it overwrites the `full_name()` method.
+
+`Royalty` 对象现在定义了一个 `Person` 类的子类，它从 `Person` 类继承了一些字段（`given_name`、`family_name`、`birth_date`），并提供其他字段（`rank`、`territory`）。它从 `Person` 类继承了 `age()` 和 `description()` 方法，但它重写了 `full_name()` 方法。
+
+我们可以使用 `ggproto()` 创建 `Royalty` 类的实例，如下所示：
+
+```{r}
+Victoria <- ggproto(NULL, Royalty,
+  given_name = "Victoria",
+  family_name = "Hanover",
+  rank = "Queen",
+  territory = "the United Kingdom",
+  birth_date = as.Date("1819/05/24")
+)
+```
+
+因此，当我们调用 `Victoria` 的 `full_name()` 方法时，输出结果会使用 `Royalty` 类中指定的方法，而不是 `Person` 类中定义的方法：
+
+```{r}
+Victoria$full_name()
+```
+
+值得注意的是，当我们调用 `description()` 方法时会发生什么。该方法继承自 `Person`，但该方法的定义调用了 `self$full_name()`。尽管 `description()` 是在 `Person` 中定义的，但在此上下文中，`self` 仍然指的是 `Victoria`，她仍然是 `Royalty`。这意味着继承的 `description()` 方法的输出将使用为子类定义的 `full_name()` 方法：
+
+```{r}
+Victoria$description()
+```
+
+创建子类有时需要访问父类及其方法，我们可以借助 `ggproto_parent()` 函数来实现。例如，我们可以定义一个 `Police`子类，该子类与 `Royalty`子类一样包含一个 `rank`字段，但只将该rank用作 `description()`方法的一部分：
+
+```{r}
+Police <- ggproto("Police", Person,
+  rank = NA, 
+  description = function(self) {
+    paste(
+      self$rank,
+      ggproto_parent(Person, self)$description()
+    )
+  }
+)
+```
+
+在这个例子中，`Police` 子类的 `description()` 方法被定义成明确引用 `Person` 父类的 `description()` 方法。通过使用 `ggproto_parent(Person, self)` 的这种方式，我们能够引用父类内的方法，同时仍然保留 `self` 的适当本地定义。和之前一样，我们将创建一个特定的实例并验证这如预期般工作：
+
+```{r}
+John <- ggproto(NULL, Police,
+  given_name = "John",
+  family_name = "McClane",
+  rank = "Detective",
+  birth_date = as.Date("1955/03/19")
+)
+
+John$full_name() 
+
+John$description()
+```
+
+由于我们将在下文讨论的原因，`ggprot_parent()` 的使用在 ggplot2 源代码中并不普遍。
+
+### ggproto 代码风格 {#sec-ggproto-style}
+
+由于 ggproto 是一个最小化的类系统，专门为 ggplot2 设计，不涉及其他任何内容，因此重要的是要认识到 ggproto 在 ggplot2 中的使用方式是非常特定的。它存在的目的是支持 ggplot2 的扩展系统，您不太可能在编写 ggplot2 扩展以外的任何环境中遇到 ggproto。考虑到这一点，了解 ggplot2 如何使用 ggproto 是有用的：
+
+-   **ggproto 类被有选择地使用**。在 ggplot2 中使用 ggproto 并不是全面的。只有选择性的功能是基于 ggproto 的，并且既不期望也不建议在您的扩展中创建完全新的 ggproto 类。作为扩展开发者，您永远不会创建完全的 ggproto 对象，而是需要继承 ggplot2 提供的某个主要的 ggproto 类。@sec-extensions 和 @sec-spring1 将详细介绍如何做到这一点。
+
+-   **ggproto 类是无状态的**。除了用于编排渲染的少数内部类之外，ggplot2 中的 ggproto 类被认为是“无状态的”。这意味着 ggplot2 预期在它们被构建之后，它们不会改变。这打破了对于基于引用的类（其中的方法通常可以安全地改变对象的状态）的常见期望，但在 ggplot2 中这样做是不安全的。如果您的代码违反了这个原则，并在渲染过程中改变了 Stat 或 Geom 的状态，那么绘制已保存的 ggplot 对象将会影响 *所有* 该 Stat 或 Geom 的实例（即使那些在其他图表中使用的实例），因为它们都指向同一个 ggproto 父对象。考虑到这一点，您应该只在两种情况下指定 ggplot2 中 ggproto 对象的状态。首先，您可以在创建对象时指定状态：这是可以接受的，因为此状态应该在任何实例之间共享。其次，您可以通过在别处管理的 params 对象来指定状态。正如您将在后面看到的（参见 @sec-new-stats 和 @sec-new-geoms），大多数 ggproto 类都有一个 `setup_params()` 方法，在那里可以检查数据并计算和存储特定的属性。
+
+-   **ggproto 类有简单的继承**。由于 ggproto 类实例是无状态的，调用定义在其他类内部的方法，而不是显式地从该类继承，是相对安全的。这就是为什么在 ggplot2 源代码中很少调用 `ggproto_parent()` 函数的原因。例如，`GeomErrorbar` 中的 `setup_params()` 方法被定义为：
+
+```{r}
+    #| eval: false
+    GeomErrorbar <- ggproto(
+      # ...
+      setup_params = function(data, params) {
+        GeomLinerange$setup_params(data, params)
+      }
+      # ...
+    )
+```
+
+这种模式通常比使用 `ggproto_parent()` 更容易读取，而且因为 ggproto 对象是无状态的，所以也同样安全。

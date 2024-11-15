@@ -1,10 +1,12 @@
 # Top 50 ggplot2 可视化 {#sec-top50ggplot2zh}
 
 ::: callout-note
-该文章来自 [r-statistics.co](https://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html) 翻译参考了[知乎-数据分析、特征工程的可视化](https://zhuanlan.zhihu.com/p/364735713)
+该文章来自 [r-statistics.co](https://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html) 
+
+翻译参考了[知乎-数据分析、特征工程的可视化](https://zhuanlan.zhihu.com/p/364735713)
 :::
 
-英文原版 For original version in English @sec-top50ggplot2en
+英文原版 For original version in English: Top 50 ggplot2 Visualizations (@sec-top50ggplot2en)
 
 **一个好的图形包含以下要素:**
 

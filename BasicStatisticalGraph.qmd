@@ -1,7 +1,7 @@
 # 基础统计绘图 {#sec-BasicStatisticalGraph}
 
 ::: callout-warning
-这一小节的内容将会持续更新，详情请关注[更新日志](Advancedggplot2.qmd)。
+这一小节的内容将会持续更新，详情请关注[更新日志](ChangeLog.qmd)。
 :::
 
 ## 曼哈顿图
@@ -135,7 +135,7 @@ ggplot(gwas_data, aes(
 
 ### 加载R包
 
-```{R}
+```{r}
 # | warning: false
 
 library(tidyverse)
@@ -147,7 +147,7 @@ library(patchwork)
 
 ### 加载数据
 
-```{R}
+```{r}
 df1 <- read_tsv("data/F1ag.txt") |>
   select(2, 3, -1) |>
   separate(`Treatment`, into = c("A", "B"), sep = "-", convert = TRUE) |>
@@ -174,91 +174,91 @@ df3 <- read_tsv("data/F1BC.txt") |>
 ### 画图
 
 ```{r}
-theme_cus <- function(...) {
-  theme_cus <- theme(
-    axis.text.x = element_text(
-      angle = 0, hjust = 0.5, vjust = 0.5, colour = "black",
-      size = 10, margin = margin(b = 2)
-    ),
-    axis.text.y = element_text(
-      color = "black", size = 10,
-      margin = margin(r = 1)
-    ),
-    panel.background = element_rect(fill = NA, color = NA),
-    panel.grid.minor = element_line(linewidth = 0.2, color = "#e5e5e5"),
-    panel.grid.major = element_line(linewidth = 0.2, color = "#e5e5e5"),
-    panel.border = element_rect(
-      fill = NA, color = "black",
-      linewidth = 1, linetype = "solid"
-    ),
-    legend.key = element_blank(),
-    legend.title = element_blank(),
-    legend.text = element_text(color = "black", size = 8),
-    legend.spacing.x = unit(0.1, "cm"),
-    legend.key.width = unit(0.5, "cm"),
-    legend.key.height = unit(0.5, "cm"),
-    legend.justification = c(1, 0),
-    legend.background = element_blank(),
-    ...
-  )
-  return(theme_cus)
-}
-a <- ggplot(df1, aes(x = A, y = `SOC (g kg-1)`, fill = B)) +
-  geom_split_violin(trim = FALSE, color = NA) +
-  guides(fill = guide_legend(title = "group")) +
-  stat_summary(
-    fun.data = "mean_sd", position = position_dodge(0.15),
-    geom = "errorbar", width = 0.1
-  ) +
-  stat_summary(
-    fun = mean, geom = "point",
-    position = position_dodge(0.15), show.legend = FALSE
-  ) +
-  stat_compare_means(aes(group = B),
-    label = "p.signif", label.y = 15.1,
-    method = "t.test", size = 5
-  ) +
-  scale_fill_manual(values = c("#788FCE", "#e6956f")) +
-  labs(x = NULL, y = "SOC (g kg-1)") +
-  theme_cus(legend.position = c(1, 0))
-g <- ggplot(df2, aes(x = A, y = `DOC(mg kg-1)`, fill = B)) +
-  geom_split_violin(trim = F, color = NA, adjust = 1.5) +
-  guides(fill = guide_legend(title = "group")) +
-  stat_summary(
-    fun.data = "mean_sd",
-    position = position_dodge(0.15), geom = "errorbar", width = .1
-  ) +
-  stat_summary(
-    fun = "mean", geom = "point",
-    position = position_dodge(0.15), show.legend = F
-  ) +
-  stat_compare_means(aes(group = B),
-    label = "p.signif",
-    label.y = 210, method = "t.test", size = 5
-  ) +
-  scale_fill_manual(values = c("#788FCE", "#E6956F")) +
-  labs(x = NULL, y = "DOC(mg kg-1)") +
-  theme_cus(legend.position = "non")
-b <- ggplot(df3, aes(x = A, y = `Soil temperate (℃)`, fill = B)) +
-  geom_split_violin(trim = F, color = NA, adjust = 1.5) +
-  guides(fill = guide_legend(title = "group")) +
-  stat_summary(
-    fun.data = "mean_sd", position = position_dodge(0.15),
-    geom = "errorbar", width = .1
-  ) +
-  stat_summary(
-    fun = "mean", geom = "point",
-    position = position_dodge(0.15), show.legend = F
-  ) +
-  stat_compare_means(aes(group = B),
-    label = "p.signif",
-    label.y = 17.1, method = "t.test", size = 5
-  ) +
-  scale_fill_manual(values = c("#788FCE", "#E6956F")) +
-  labs(x = NULL, y = "Soil temperate") +
-  theme_cus(legend.position = "non")
+# theme_cus <- function(...) {
+#   theme_cus <- theme(
+#     axis.text.x = element_text(
+#       angle = 0, hjust = 0.5, vjust = 0.5, colour = "black",
+#       size = 10, margin = margin(b = 2)
+#     ),
+#     axis.text.y = element_text(
+#       color = "black", size = 10,
+#       margin = margin(r = 1)
+#     ),
+#     panel.background = element_rect(fill = NA, color = NA),
+#     panel.grid.minor = element_line(linewidth = 0.2, color = "#e5e5e5"),
+#     panel.grid.major = element_line(linewidth = 0.2, color = "#e5e5e5"),
+#     panel.border = element_rect(
+#       fill = NA, color = "black",
+#       linewidth = 1, linetype = "solid"
+#     ),
+#     legend.key = element_blank(),
+#     legend.title = element_blank(),
+#     legend.text = element_text(color = "black", size = 8),
+#     legend.spacing.x = unit(0.1, "cm"),
+#     legend.key.width = unit(0.5, "cm"),
+#     legend.key.height = unit(0.5, "cm"),
+#     legend.justification = c(1, 0),
+#     legend.background = element_blank(),
+#     ...
+#   )
+#   return(theme_cus)
+# }
+# a <- ggplot(df1, aes(x = A, y = `SOC (g kg-1)`, fill = B)) +
+#   geom_split_violin(trim = FALSE, color = NA) +
+#   guides(fill = guide_legend(title = "group")) +
+#   stat_summary(
+#     fun.data = "mean_sd", position = position_dodge(0.15),
+#     geom = "errorbar", width = 0.1
+#   ) +
+#   stat_summary(
+#     fun = mean, geom = "point",
+#     position = position_dodge(0.15), show.legend = FALSE
+#   ) +
+#   stat_compare_means(aes(group = B),
+#     label = "p.signif", label.y = 15.1,
+#     method = "t.test", size = 5
+#   ) +
+#   scale_fill_manual(values = c("#788FCE", "#e6956f")) +
+#   labs(x = NULL, y = "SOC (g kg-1)") +
+#   theme_cus(legend.position = c(1, 0))
+# g <- ggplot(df2, aes(x = A, y = `DOC(mg kg-1)`, fill = B)) +
+#   geom_split_violin(trim = F, color = NA, adjust = 1.5) +
+#   guides(fill = guide_legend(title = "group")) +
+#   stat_summary(
+#     fun.data = "mean_sd",
+#     position = position_dodge(0.15), geom = "errorbar", width = .1
+#   ) +
+#   stat_summary(
+#     fun = "mean", geom = "point",
+#     position = position_dodge(0.15), show.legend = F
+#   ) +
+#   stat_compare_means(aes(group = B),
+#     label = "p.signif",
+#     label.y = 210, method = "t.test", size = 5
+#   ) +
+#   scale_fill_manual(values = c("#788FCE", "#E6956F")) +
+#   labs(x = NULL, y = "DOC(mg kg-1)") +
+#   theme_cus(legend.position = "non")
+# b <- ggplot(df3, aes(x = A, y = `Soil temperate (℃)`, fill = B)) +
+#   geom_split_violin(trim = F, color = NA, adjust = 1.5) +
+#   guides(fill = guide_legend(title = "group")) +
+#   stat_summary(
+#     fun.data = "mean_sd", position = position_dodge(0.15),
+#     geom = "errorbar", width = .1
+#   ) +
+#   stat_summary(
+#     fun = "mean", geom = "point",
+#     position = position_dodge(0.15), show.legend = F
+#   ) +
+#   stat_compare_means(aes(group = B),
+#     label = "p.signif",
+#     label.y = 17.1, method = "t.test", size = 5
+#   ) +
+#   scale_fill_manual(values = c("#788FCE", "#E6956F")) +
+#   labs(x = NULL, y = "Soil temperate") +
+#   theme_cus(legend.position = "non")
 
-a + b + g + plot_annotation(tag_levels = "A")
+# a + b + g + plot_annotation(tag_levels = "A")
 ```
 
 ## 阴影条带哑铃图
@@ -385,6 +385,3 @@ ggplot(df, aes(y = cont)) +
   ) + # 设置坐标轴范围和裁剪行为
   theme_cus # 应用自定义主题
 ```
-
-
-
