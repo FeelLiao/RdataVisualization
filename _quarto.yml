@@ -15,7 +15,7 @@ book:
   favicon: "favicon.png"
   cover-image: "logo.png"
   site-url: https://bookr.stariverfeel.eu.org/
-  repo-url: https://github.com/FeelLiao/R_in_ASLDV
+  repo-url: https://github.com/FeelLiao/RdataVisualization
   repo-branch: main
   repo-actions: [edit, issue]
   chapters:
@@ -24,7 +24,7 @@ book:
     - ggplot2intro.qmd
     - ggplot2internal.qmd
     - ggplot2extend.qmd
-    - ggplot2_spring1.qmd
+    - ggplot2_spring.qmd
     - top50en.qmd
     - top50zh.qmd
     # - BasicStatisticalGraph.qmd
