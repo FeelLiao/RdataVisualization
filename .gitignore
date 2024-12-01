@@ -2,4 +2,6 @@
 
 /.quarto/
 /rp_ggplot2/
+/renv/
+.Rhistory
 .Rproj.user
