@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.33">
+<meta name="generator" content="quarto-1.5.57">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
 <meta name="author" content="Feel Liao">
-<title>3&nbsp; 编写ggplot2拓展 – R语言数据可视化学习笔记</title>
+
+<title>3&nbsp; 编写ggplot2扩展 – R语言数据可视化学习笔记</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -54,6 +57,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
+
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
@@ -61,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./ggplot2_spring1.html" rel="next">
+<link href="./ggplot2_spring.html" rel="next">
 <link href="./ggplot2internal.html" rel="prev">
 <link href="./favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -69,10 +73,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-07ba0ad10f5680c660e360ac31d2f3b6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5b63201b283509340feecb78f0a904f5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -99,28 +104,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+
+
 </head>
+
 <body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ggplot2extend.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">编写ggplot2拓展</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ggplot2extend.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">编写ggplot2扩展</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">R语言数据可视化学习笔记</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/FeelLiao/R_in_ASLDV" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/FeelLiao/RdataVisualization" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -136,7 +150,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-<li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">欢迎</span></a>
@@ -163,13 +177,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ggplot2extend.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">编写ggplot2拓展</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">编写ggplot2扩展</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ggplot2_spring1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">一个学习案例</span></span></a>
+  <a href="./ggplot2_spring.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ggplot2_spring.html</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -185,50 +199,48 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
     </ul>
-</div>
-</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li>
-<a href="#sec-extensions" id="toc-sec-extensions" class="nav-link active" data-scroll-target="#sec-extensions"><span class="header-section-number">4</span> 扩展 ggplot2</a>
+  <li><a href="#sec-extensions" id="toc-sec-extensions" class="nav-link active" data-scroll-target="#sec-extensions"><span class="header-section-number">4</span> 扩展 ggplot2</a>
   <ul class="collapse">
-<li>
-<a href="#%E6%96%B0%E4%B8%BB%E9%A2%98-new-themes" id="toc-新主题-new-themes" class="nav-link" data-scroll-target="#%E6%96%B0%E4%B8%BB%E9%A2%98-new-themes"><span class="header-section-number">4.1</span> 新主题 New themes</a>
+  <li><a href="#新主题-new-themes" id="toc-新主题-new-themes" class="nav-link" data-scroll-target="#新主题-new-themes"><span class="header-section-number">4.1</span> 新主题 New themes</a>
   <ul class="collapse">
-<li><a href="#%E4%BF%AE%E6%94%B9%E4%B8%BB%E9%A2%98" id="toc-修改主题" class="nav-link" data-scroll-target="#%E4%BF%AE%E6%94%B9%E4%B8%BB%E9%A2%98"><span class="header-section-number">4.1.1</span> 修改主题</a></li>
-  <li><a href="#%E5%AE%8C%E6%95%B4%E7%9A%84%E4%B8%BB%E9%A2%98" id="toc-完整的主题" class="nav-link" data-scroll-target="#%E5%AE%8C%E6%95%B4%E7%9A%84%E4%B8%BB%E9%A2%98"><span class="header-section-number">4.1.2</span> 完整的主题</a></li>
+  <li><a href="#修改主题" id="toc-修改主题" class="nav-link" data-scroll-target="#修改主题"><span class="header-section-number">4.1.1</span> 修改主题</a></li>
+  <li><a href="#完整的主题" id="toc-完整的主题" class="nav-link" data-scroll-target="#完整的主题"><span class="header-section-number">4.1.2</span> 完整的主题</a></li>
   <li><a href="#sec-defining-theme-elements" id="toc-sec-defining-theme-elements" class="nav-link" data-scroll-target="#sec-defining-theme-elements"><span class="header-section-number">4.1.3</span> 定义主题元素</a></li>
-  </ul>
-</li>
-  <li>
-<a href="#sec-new-stats" id="toc-sec-new-stats" class="nav-link" data-scroll-target="#sec-new-stats"><span class="header-section-number">4.2</span> 新统计</a>
+  </ul></li>
+  <li><a href="#sec-new-stats" id="toc-sec-new-stats" class="nav-link" data-scroll-target="#sec-new-stats"><span class="header-section-number">4.2</span> 新统计</a>
   <ul class="collapse">
-<li><a href="#%E5%88%9B%E5%BB%BA%E7%BB%9F%E8%AE%A1" id="toc-创建统计" class="nav-link" data-scroll-target="#%E5%88%9B%E5%BB%BA%E7%BB%9F%E8%AE%A1"><span class="header-section-number">4.2.1</span> 创建统计</a></li>
+  <li><a href="#创建统计" id="toc-创建统计" class="nav-link" data-scroll-target="#创建统计"><span class="header-section-number">4.2.1</span> 创建统计</a></li>
   <li><a href="#sec-modifying-stat-params" id="toc-sec-modifying-stat-params" class="nav-link" data-scroll-target="#sec-modifying-stat-params"><span class="header-section-number">4.2.2</span> 修改参数和数据</a></li>
-  </ul>
-</li>
-  <li>
-<a href="#sec-new-geoms" id="toc-sec-new-geoms" class="nav-link" data-scroll-target="#sec-new-geoms"><span class="header-section-number">4.3</span> 新 geoms</a>
+  </ul></li>
+  <li><a href="#sec-new-geoms" id="toc-sec-new-geoms" class="nav-link" data-scroll-target="#sec-new-geoms"><span class="header-section-number">4.3</span> 新 geoms</a>
   <ul class="collapse">
-<li><a href="#sec-modifying-geom-defaults" id="toc-sec-modifying-geom-defaults" class="nav-link" data-scroll-target="#sec-modifying-geom-defaults"><span class="header-section-number">4.3.1</span> 修改 geom 默认值</a></li>
+  <li><a href="#sec-modifying-geom-defaults" id="toc-sec-modifying-geom-defaults" class="nav-link" data-scroll-target="#sec-modifying-geom-defaults"><span class="header-section-number">4.3.1</span> 修改 geom 默认值</a></li>
   <li><a href="#sec-modifying-geom-data" id="toc-sec-modifying-geom-data" class="nav-link" data-scroll-target="#sec-modifying-geom-data"><span class="header-section-number">4.3.2</span> 修改 geom 数据</a></li>
   <li><a href="#sec-combining-multiple-geoms" id="toc-sec-combining-multiple-geoms" class="nav-link" data-scroll-target="#sec-combining-multiple-geoms"><span class="header-section-number">4.3.3</span> 组合多个 geoms</a></li>
-  </ul>
-</li>
+  </ul></li>
   <li><a href="#sec-new-coords" id="toc-sec-new-coords" class="nav-link" data-scroll-target="#sec-new-coords"><span class="header-section-number">4.4</span> 新坐标</a></li>
   <li><a href="#sec-new-scales" id="toc-sec-new-scales" class="nav-link" data-scroll-target="#sec-new-scales"><span class="header-section-number">4.5</span> 新比例尺</a></li>
-  <li><a href="#%E6%96%B0%E4%BD%8D%E7%BD%AE" id="toc-新位置" class="nav-link" data-scroll-target="#%E6%96%B0%E4%BD%8D%E7%BD%AE"><span class="header-section-number">4.6</span> 新位置</a></li>
-  <li><a href="#%E6%96%B0%E5%88%86%E9%9D%A2" id="toc-新分面" class="nav-link" data-scroll-target="#%E6%96%B0%E5%88%86%E9%9D%A2"><span class="header-section-number">4.7</span> 新分面</a></li>
+  <li><a href="#新位置" id="toc-新位置" class="nav-link" data-scroll-target="#新位置"><span class="header-section-number">4.6</span> 新位置</a></li>
+  <li><a href="#新分面" id="toc-新分面" class="nav-link" data-scroll-target="#新分面"><span class="header-section-number">4.7</span> 新分面</a></li>
+  </ul></li>
   </ul>
-</li>
-  </ul><div class="toc-actions"><ul><li><a href="https://github.com/FeelLiao/R_in_ASLDV/edit/main/ggplot2extend.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/FeelLiao/R_in_ASLDV/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/FeelLiao/RdataVisualization/edit/main/ggplot2extend.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/FeelLiao/RdataVisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title"><span id="sec-ggplot2extend" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">编写ggplot2拓展</span></span></h1>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-ggplot2extend" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">编写ggplot2扩展</span></span></h1>
 </div>
 
 
@@ -242,7 +254,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 
-</header><div class="callout callout-style-simple callout-note">
+</header>
+
+
+<div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -255,53 +270,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<section id="sec-extensions" class="level1" data-number="4"><h1 data-number="4">
-<span class="header-section-number">4</span> 扩展 ggplot2</h1>
-<p>ggplot2 包的设计使其能够相对容易的通过通用语法组件来构建新的绘图类型，以扩展其功能。ggplot2 允许拓展开发者将其拓展作为包进行分发，拓展的易制作性也使编写一次性拓展来解决特定的绘图问题成为可能。本章讨论了编写 ggplot2 拓展的不同方式，并强调了需要注意的特定问题。我们将在整章中提供小示例，但要从头到尾查看一个完整的示例，请参见 <a href="ggplot2_spring1.html" class="quarto-xref"><span>Chapter 4</span></a>。</p>
-<section id="新主题-new-themes" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="新主题-new-themes">
-<span class="header-section-number">4.1</span> 新主题 New themes</h2>
-<section id="修改主题" class="level3" data-number="4.1.1"><h3 data-number="4.1.1" class="anchored" data-anchor-id="修改主题">
-<span class="header-section-number">4.1.1</span> 修改主题</h3>
+<section id="sec-extensions" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> 扩展 ggplot2</h1>
+<p>ggplot2 包的设计使其能够相对容易的通过通用语法组件来构建新的绘图类型，以扩展其功能。ggplot2 允许拓展开发者将其拓展作为包进行分发，拓展的易制作性也使编写一次性拓展来解决特定的绘图问题成为可能。本章讨论了编写 ggplot2 拓展的不同方式，并强调了需要注意的特定问题。我们将在整章中提供小示例，但要从头到尾查看一个完整的示例，请参见 <span class="quarto-unresolved-ref">?sec-spring1</span>。</p>
+<section id="新主题-new-themes" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="新主题-new-themes"><span class="header-section-number">4.1</span> 新主题 New themes</h2>
+<section id="修改主题" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="修改主题"><span class="header-section-number">4.1.1</span> 修改主题</h3>
 <p>主题可能是最简单的拓展形式，它们只需要使用在 ggplot2 创建图表时会使用的代码。虽然可以从零开始构建新主题，但通常修改现有主题更简单且不易出错。ggplot2 源代码中通常采用这种方法。例如，这是 <code>theme_minimal()</code> 的源代码：</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">theme_minimal</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">base_size</span> <span class="op">=</span> <span class="fl">11</span>, </span>
-<span>                          <span class="va">base_family</span> <span class="op">=</span> <span class="st">""</span>, </span>
-<span>                          <span class="va">base_line_size</span> <span class="op">=</span> <span class="va">base_size</span><span class="op">/</span><span class="fl">22</span>, </span>
-<span>                          <span class="va">base_rect_size</span> <span class="op">=</span> <span class="va">base_size</span><span class="op">/</span><span class="fl">22</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="fu">theme_bw</span><span class="op">(</span></span>
-<span>      base_size <span class="op">=</span> <span class="va">base_size</span>, </span>
-<span>      base_family <span class="op">=</span> <span class="va">base_family</span>, </span>
-<span>      base_line_size <span class="op">=</span> <span class="va">base_line_size</span>, </span>
-<span>      base_rect_size <span class="op">=</span> <span class="va">base_rect_size</span></span>
-<span>    <span class="op">)</span> <span class="op">%+replace%</span> </span>
-<span>    <span class="fu">theme</span><span class="op">(</span></span>
-<span>      axis.ticks <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>, </span>
-<span>      legend.background <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>, </span>
-<span>      legend.key <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>, </span>
-<span>      panel.background <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>, </span>
-<span>      panel.border <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>, </span>
-<span>      strip.background <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>, </span>
-<span>      plot.background <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>, </span>
-<span>      complete <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span>    <span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>theme_minimal <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">base_size =</span> <span class="dv">11</span>, </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">base_family =</span> <span class="st">""</span>, </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">base_line_size =</span> base_size<span class="sc">/</span><span class="dv">22</span>, </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">base_rect_size =</span> base_size<span class="sc">/</span><span class="dv">22</span>) {</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>(</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">base_size =</span> base_size, </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">base_family =</span> base_family, </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">base_line_size =</span> base_line_size, </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">base_rect_size =</span> base_rect_size</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%+replace%</span> </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.background =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.key =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">panel.background =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">panel.border =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">strip.background =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.background =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">complete =</span> <span class="cn">TRUE</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>如你所见，代码与在为图表添加样式时写的代码没有太大不同。<code>theme_minimal()</code> 函数使用 <code>theme_bw()</code> 作为基础主题，然后使用 <code>%+replace%</code> 运算符替换了其中某些参数的值。在创建新主题时，为用户提供一些参数来自定义主题是比较好的做法，比如文本、线条的粗细和主题辅助颜色等。例如，我们可以创建一个 <code>theme_minimal()</code> 的变体，允许用户指定图表的背景颜色：</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">theme_background</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">background</span> <span class="op">=</span> <span class="st">"white"</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu">theme_minimal</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">%+replace%</span></span>
-<span>    <span class="fu">theme</span><span class="op">(</span></span>
-<span>      plot.background <span class="op">=</span> <span class="fu">element_rect</span><span class="op">(</span></span>
-<span>        fill <span class="op">=</span> <span class="va">background</span>,</span>
-<span>        colour <span class="op">=</span> <span class="va">background</span></span>
-<span>      <span class="op">)</span>,</span>
-<span>      complete <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span>    <span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme_minimal</span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme_background</span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme_background</span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span>, background <span class="op">=</span> <span class="st">"grey70"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>theme_background <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">background =</span> <span class="st">"white"</span>, ...) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(...) <span class="sc">%+replace%</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.background =</span> <span class="fu">element_rect</span>(</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">fill =</span> background,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">colour =</span> background</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">complete =</span> <span class="cn">TRUE</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>base <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(displ, hwy)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>base <span class="sc">+</span> <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>base <span class="sc">+</span> <span class="fu">theme_background</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>base <span class="sc">+</span> <span class="fu">theme_background</span>(<span class="at">base_size =</span> <span class="dv">14</span>, <span class="at">background =</span> <span class="st">"grey70"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -315,33 +330,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section><section id="完整的主题" class="level3" data-number="4.1.2"><h3 data-number="4.1.2" class="anchored" data-anchor-id="完整的主题">
-<span class="header-section-number">4.1.2</span> 完整的主题</h3>
+</section>
+<section id="完整的主题" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="完整的主题"><span class="header-section-number">4.1.2</span> 完整的主题</h3>
 <p>需要注意的是， <code>theme_minimal()</code> 和 <code>theme_background()</code> 的代码中 <code>complete = TRUE</code> 的使用。在创建自己的 ggplot2 主题时，<code>complete = TRUE</code>将确保你的主题的行为与默认主题相同，因此不太可能让用户很惊讶。为了理解为什么这是必要的，比较这两个主题：</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># good </span></span>
-<span><span class="va">theme_predictable</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu">theme_classic</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">%+replace%</span> </span>
-<span>    <span class="fu">theme</span><span class="op">(</span></span>
-<span>      axis.line.x <span class="op">=</span> <span class="fu">element_line</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span>,</span>
-<span>      axis.line.y <span class="op">=</span> <span class="fu">element_line</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"orange"</span><span class="op">)</span>,</span>
-<span>      complete <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span>    <span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="co"># bad</span></span>
-<span><span class="va">theme_surprising</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu">theme_classic</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">%+replace%</span> </span>
-<span>    <span class="fu">theme</span><span class="op">(</span></span>
-<span>      axis.line.x <span class="op">=</span> <span class="fu">element_line</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span>,</span>
-<span>      axis.line.y <span class="op">=</span> <span class="fu">element_line</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"orange"</span><span class="op">)</span></span>
-<span>    <span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># good </span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>theme_predictable <span class="ot">&lt;-</span> <span class="cf">function</span>(...) {</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(...) <span class="sc">%+replace%</span> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.line.x =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.line.y =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"orange"</span>),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">complete =</span> <span class="cn">TRUE</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># bad</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>theme_surprising <span class="ot">&lt;-</span> <span class="cf">function</span>(...) {</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(...) <span class="sc">%+replace%</span> </span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.line.x =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>),</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.line.y =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"orange"</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>两个主题都打算做同一件事：更改默认的 <code>theme_classic()</code>主题，以便 x 轴用蓝色线条绘制，y 轴用橙色线条绘制。乍一看，两个版本似乎都符合用户期望：</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme_predictable</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme_surprising</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>base <span class="sc">+</span> <span class="fu">theme_classic</span>()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>base <span class="sc">+</span> <span class="fu">theme_predictable</span>()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>base <span class="sc">+</span> <span class="fu">theme_surprising</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -356,9 +372,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>然而，假设你的主题用户想要移除轴线条：</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme</span><span class="op">(</span>axis.line <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme_predictable</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme</span><span class="op">(</span>axis.line <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme_surprising</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme</span><span class="op">(</span>axis.line <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>base <span class="sc">+</span> <span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.line =</span> <span class="fu">element_blank</span>())</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>base <span class="sc">+</span> <span class="fu">theme_predictable</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.line =</span> <span class="fu">element_blank</span>())</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>base <span class="sc">+</span> <span class="fu">theme_surprising</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.line =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -374,38 +390,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><code>theme_predictable()</code> 的行为与 <code>theme_classic()</code> 相同，轴线条被移除，但对于 <code>theme_surprising()</code> 则不是这样。原因是 ggplot2 将完整主题视为一系列“后备”值：当用户向完整主题添加 <code>theme(axis.line = element_blank())</code> 时，不需要依赖 <code>axis.line.x</code> 或 <code>axis.line.y</code> 的后备值，因为这些是从用户命令中的 <code>axis.line</code> 继承的。这是对用户的善意，因为它允许他们使用像 <code>theme_predictable() + theme(axis.line = ...)</code> 这样的命令覆盖所有从 <code>axis.line</code> 继承的内容。相比之下，<code>theme_surprising()</code> 没有指定一个完整主题。当用户调用 <code>theme_surprising()</code> 时，后备值来自 <code>theme_classic()</code>，但更重要的是，ggplot2 将设置 <code>axis.line.x</code> 和 <code>axis.line.y</code> 的 <code>theme()</code> 命令完全视为用户输入的命令。因此，图表规范等效于此：</p>
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> </span>
-<span>  <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme</span><span class="op">(</span></span>
-<span>      axis.line.x <span class="op">=</span> <span class="fu">element_line</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span>,</span>
-<span>      axis.line.y <span class="op">=</span> <span class="fu">element_line</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"orange"</span><span class="op">)</span>,</span>
-<span>      axis.line <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>base <span class="sc">+</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.line.x =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.line.y =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"orange"</span>),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.line =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="ggplot2extend_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="2100"></p>
+<figure class="figure">
+<p><img src="ggplot2extend_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="2100"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>在这段代码中，特定优先继承规则适用，因此设置 <code>axis.line</code> 不会覆盖更具体的 <code>axis.line.x</code>。</p>
-</section><section id="sec-defining-theme-elements" class="level3" data-number="4.1.3"><h3 data-number="4.1.3" class="anchored" data-anchor-id="sec-defining-theme-elements">
-<span class="header-section-number">4.1.3</span> 定义主题元素</h3>
+</section>
+<section id="sec-defining-theme-elements" class="level3" data-number="4.1.3">
+<h3 data-number="4.1.3" class="anchored" data-anchor-id="sec-defining-theme-elements"><span class="header-section-number">4.1.3</span> 定义主题元素</h3>
 <p>在 <span class="quarto-unresolved-ref">?sec-polishing</span> 中我们看到，ggplot2 主题的结构由元素树定义。元素树指定了每个主题元素的类型以及它从哪里继承其值（你可以使用 <code>get_element_tree()</code> 函数将此树作为列表返回）。ggplot2 的扩展系统允许你通过使用 <code>register_theme_elements()</code> 函数将新主题元素注册为元素树的一部分来定义新主题元素。假设你正在编写一个名为 “ggxyz” 的新包，它包括作为坐标系统一部分的面板注释，你希望这个面板注释成为一个主题元素：</p>
 <div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">register_theme_elements</span><span class="op">(</span></span>
-<span>  ggxyz.panel.annotation <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span></span>
-<span>    color <span class="op">=</span> <span class="st">"blue"</span>, </span>
-<span>    hjust <span class="op">=</span> <span class="fl">0.95</span>, </span>
-<span>    vjust <span class="op">=</span> <span class="fl">0.05</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  element_tree <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
-<span>    ggxyz.panel.annotation <span class="op">=</span> <span class="fu">el_def</span><span class="op">(</span></span>
-<span>      class <span class="op">=</span> <span class="st">"element_text"</span>, </span>
-<span>      inherit <span class="op">=</span> <span class="st">"text"</span></span>
-<span>    <span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">register_theme_elements</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">ggxyz.panel.annotation =</span> <span class="fu">element_text</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"blue"</span>, </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">hjust =</span> <span class="fl">0.95</span>, </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">vjust =</span> <span class="fl">0.05</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">element_tree =</span> <span class="fu">list</span>(</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">ggxyz.panel.annotation =</span> <span class="fu">el_def</span>(</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">class =</span> <span class="st">"element_text"</span>, </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">inherit =</span> <span class="st">"text"</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>在包中定义新主题元素时要注意两点：</p>
 <ul>
@@ -414,25 +432,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>元素树更新后，包可以定义一个使用新主题元素的新坐标系统。一个简单的方法是定义一个创建新的 <code>CoordCartesian</code> ggproto 对象的函数。我们将在 <a href="#sec-new-coords" class="quarto-xref"><span>Section 4.4</span></a> 中更多地讨论这一点，但现在只需注意这段代码将有效：</p>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">coord_annotate</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">label</span> <span class="op">=</span> <span class="st">"panel annotation"</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu">ggproto</span><span class="op">(</span><span class="cn">NULL</span>, <span class="va">CoordCartesian</span>,</span>
-<span>          limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>,</span>
-<span>          expand <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>          default <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>          clip <span class="op">=</span> <span class="st">"on"</span>,</span>
-<span>          render_fg <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">panel_params</span>, <span class="va">theme</span><span class="op">)</span> <span class="op">{</span></span>
-<span>            <span class="fu">element_render</span><span class="op">(</span></span>
-<span>              theme <span class="op">=</span> <span class="va">theme</span>, </span>
-<span>              element <span class="op">=</span> <span class="st">"ggxyz.panel.annotation"</span>, </span>
-<span>              label <span class="op">=</span> <span class="va">label</span></span>
-<span>            <span class="op">)</span></span>
-<span>          <span class="op">}</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>coord_annotate <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">label =</span> <span class="st">"panel annotation"</span>) {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggproto</span>(<span class="cn">NULL</span>, CoordCartesian,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">limits =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">expand =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">default =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">clip =</span> <span class="st">"on"</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">render_fg =</span> <span class="cf">function</span>(panel_params, theme) {</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>            <span class="fu">element_render</span>(</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">theme =</span> theme, </span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">element =</span> <span class="st">"ggxyz.panel.annotation"</span>, </span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>              <span class="at">label =</span> label</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>          }</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>所以现在这将有效：</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> <span class="fu">coord_annotate</span><span class="op">(</span><span class="st">"annotation in blue"</span><span class="op">)</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">coord_annotate</span><span class="op">(</span><span class="st">"annotation in blue"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_dark</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>base <span class="sc">+</span> <span class="fu">coord_annotate</span>(<span class="st">"annotation in blue"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>base <span class="sc">+</span> <span class="fu">coord_annotate</span>(<span class="st">"annotation in blue"</span>) <span class="sc">+</span> <span class="fu">theme_dark</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 
 </div>
@@ -450,55 +468,55 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>修改了元素树后，值得一提的是 <code>reset_theme_settings()</code> 函数会恢复默认元素树，丢弃所有新元素定义，并（除非关闭）将当前激活的主题重置为默认。</p>
-</section></section><section id="sec-new-stats" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="sec-new-stats">
-<span class="header-section-number">4.2</span> 新统计</h2>
+</section>
+</section>
+<section id="sec-new-stats" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="sec-new-stats"><span class="header-section-number">4.2</span> 新统计</h2>
 <p>可能令人惊讶的是，创建新统计是扩展 ggplot2 功能最有用的方式之一。当用户向图表添加新图层时，他们通常使用 geom 函数，因此作为开发人员，你可能会认为你的 ggplot2 扩展应该封装为一个新的 geom。在一定程度上这是正确的，因为你的用户可能会想要使用 geom 函数，但实际上不同 geoms 之间的多样性主要是由于不同的统计。使用统计的好处之一是它们纯粹是关于数据转换的。大多数 R 用户和开发人员对数据转换非常熟悉，这使得定义新统计变得更容易。只要所需的行为可以封装在一个统计中，就无需对任何 grid 调用进行调整。</p>
-<section id="创建统计" class="level3" data-number="4.2.1"><h3 data-number="4.2.1" class="anchored" data-anchor-id="创建统计">
-<span class="header-section-number">4.2.1</span> 创建统计</h3>
+<section id="创建统计" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="创建统计"><span class="header-section-number">4.2.1</span> 创建统计</h3>
 <p>如在 <span class="quarto-unresolved-ref">?sec-internals</span> 中讨论的，统计的核心行为由对 <code>compute_layer()</code>、<code>compute_panel()</code> 和 <code>compute_group()</code> 的分层调用序列捕获，所有这些都是与定义统计的 ggproto 对象相关联的方法。默认情况下，前两个函数不执行太多操作，它们只是将数据集按 <code>PANEL</code> 列拆分，调用 <code>compute_panel()</code>，然后重新组装结果。</p>
 <ul>
-<li>
-<code>compute_layer()</code> 按 <code>PANEL</code> 列拆分数据集，调用 <code>compute_panel()</code>，并重新组装结果。</li>
-<li>
-<code>compute_panel()</code> 将面板数据按 <code>group</code> 列拆分，调用 <code>compute_group()</code>，并重新组装结果。</li>
+<li><code>compute_layer()</code> 按 <code>PANEL</code> 列拆分数据集，调用 <code>compute_panel()</code>，并重新组装结果。</li>
+<li><code>compute_panel()</code> 将面板数据按 <code>group</code> 列拆分，调用 <code>compute_group()</code>，并重新组装结果。</li>
 </ul>
-<p>因此，作为开发人员，你通常只需要指定 <code>compute_group()</code> 函数，其工作是获取单个组的数据并适当转换它。这将足以创建一个工作统计，尽管可能不会产生最佳性能。因此，开发人员有时会发现将一些工作转移到 <code>compute_panel()</code> 是有价值的：这样做可以允许你矢量化计算并避免昂贵的拆分-组合步骤（我们将在 <a href="ggplot2_spring1.html#sec-spring-stat" class="quarto-xref"><span>Section 5.2</span></a> 中看到这样一个例子）。然而，通常最好首先仅修改 <code>compute_group()</code>，然后看看性能是否足够。</p>
-<p>为了说明这一点，我们首先创建一个计算一组点的凸包的统计，使用 <code>grDevices</code> 中包含的 <code><a href="https://rdrr.io/r/grDevices/chull.html">chull()</a></code> 函数。正如你可能预期的，大部分工作是由我们将要创建的新 ggproto 对象完成的：</p>
+<p>因此，作为开发人员，你通常只需要指定 <code>compute_group()</code> 函数，其工作是获取单个组的数据并适当转换它。这将足以创建一个工作统计，尽管可能不会产生最佳性能。因此，开发人员有时会发现将一些工作转移到 <code>compute_panel()</code> 是有价值的：这样做可以允许你矢量化计算并避免昂贵的拆分-组合步骤（我们将在 <span class="quarto-unresolved-ref">?sec-spring-stat</span> 中看到这样一个例子）。然而，通常最好首先仅修改 <code>compute_group()</code>，然后看看性能是否足够。</p>
+<p>为了说明这一点，我们首先创建一个计算一组点的凸包的统计，使用 <code>grDevices</code> 中包含的 <code>chull()</code> 函数。正如你可能预期的，大部分工作是由我们将要创建的新 ggproto 对象完成的：</p>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">StatChull</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"StatChull"</span>, <span class="va">Stat</span>,</span>
-<span>  compute_group <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">scales</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/grDevices/chull.html">chull</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">x</span>, <span class="va">data</span><span class="op">$</span><span class="va">y</span><span class="op">)</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
-<span>  <span class="op">}</span>,</span>
-<span>  required_aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>StatChull <span class="ot">&lt;-</span> <span class="fu">ggproto</span>(<span class="st">"StatChull"</span>, Stat,</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">compute_group =</span> <span class="cf">function</span>(data, scales) {</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    data[<span class="fu">chull</span>(data<span class="sc">$</span>x, data<span class="sc">$</span>y), , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  },</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">required_aes =</span> <span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>如在 <a href="ggplot2internal.html#sec-ggproto" class="quarto-xref"><span>Section 2.4</span></a> 中所述，<code>ggproto()</code> 的前两个参数用于指示此对象定义了一个新的类（方便地命名为 <code>"StatChull"</code>），它从 <code>Stat</code> 对象继承字段和方法。然后我们指定只需要从 <code>Stat</code> 提供的默认值中更改的字段和方法，即 <code>compute_group()</code> 和 <code>required_aes</code>。我们的 <code>compute_group()</code> 函数接受两个输入，<code>data</code> 和 <code>scales</code>—因为这是 ggplot2 所期望的—但实际计算仅依赖于 <code>data</code>。请注意，由于计算必须同时存在两个位置美学，我们还指定了 <code>required_aes</code> 字段，以确保 ggplot2 知道这些美学是必需的。</p>
+<p>如在 <span class="quarto-unresolved-ref">?sec-ggproto</span> 中所述，<code>ggproto()</code> 的前两个参数用于指示此对象定义了一个新的类（方便地命名为 <code>"StatChull"</code>），它从 <code>Stat</code> 对象继承字段和方法。然后我们指定只需要从 <code>Stat</code> 提供的默认值中更改的字段和方法，即 <code>compute_group()</code> 和 <code>required_aes</code>。我们的 <code>compute_group()</code> 函数接受两个输入，<code>data</code> 和 <code>scales</code>—因为这是 ggplot2 所期望的—但实际计算仅依赖于 <code>data</code>。请注意，由于计算必须同时存在两个位置美学，我们还指定了 <code>required_aes</code> 字段，以确保 ggplot2 知道这些美学是必需的。</p>
 <p>通过创建这个 ggproto 对象，我们有一个工作统计，但还没有给用户提供访问它的方式。为了解决这个问题，我们编写一个图层函数 <code>stat_chull()</code>。所有图层函数都有相同的形式：你在函数参数中指定默认值，然后调用 <code>layer()</code>，将 <code>...</code> 传递到 <code>params</code> 参数中。<code>...</code> 中的参数将是 geom 的参数（如果你正在制作一个统计包装器），统计的参数（如果你正在制作一个 geom 包装器），或者要设置的美学。</p>
 <div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">stat_chull</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">data</span> <span class="op">=</span> <span class="cn">NULL</span>, </span>
-<span>                       <span class="va">geom</span> <span class="op">=</span> <span class="st">"polygon"</span>, <span class="va">position</span> <span class="op">=</span> <span class="st">"identity"</span>, </span>
-<span>                       <span class="va">na.rm</span> <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">show.legend</span> <span class="op">=</span> <span class="cn">NA</span>, </span>
-<span>                       <span class="va">inherit.aes</span> <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu">layer</span><span class="op">(</span></span>
-<span>    stat <span class="op">=</span> <span class="va">StatChull</span>, </span>
-<span>    data <span class="op">=</span> <span class="va">data</span>, </span>
-<span>    mapping <span class="op">=</span> <span class="va">mapping</span>, </span>
-<span>    geom <span class="op">=</span> <span class="va">geom</span>, </span>
-<span>    position <span class="op">=</span> <span class="va">position</span>, </span>
-<span>    show.legend <span class="op">=</span> <span class="va">show.legend</span>, </span>
-<span>    inherit.aes <span class="op">=</span> <span class="va">inherit.aes</span>, </span>
-<span>    params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>na.rm <span class="op">=</span> <span class="va">na.rm</span>, <span class="va">...</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>stat_chull <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">mapping =</span> <span class="cn">NULL</span>, <span class="at">data =</span> <span class="cn">NULL</span>, </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">geom =</span> <span class="st">"polygon"</span>, <span class="at">position =</span> <span class="st">"identity"</span>, </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">na.rm =</span> <span class="cn">FALSE</span>, <span class="at">show.legend =</span> <span class="cn">NA</span>, </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">inherit.aes =</span> <span class="cn">TRUE</span>, ...) {</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer</span>(</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> StatChull, </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> data, </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> mapping, </span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> geom, </span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> position, </span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">show.legend =</span> show.legend, </span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> inherit.aes, </span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">params =</span> <span class="fu">list</span>(<span class="at">na.rm =</span> na.rm, ...)</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>现在我们的统计可以在图表中使用：</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">stat_chull</span><span class="op">(</span>fill <span class="op">=</span> <span class="cn">NA</span>, colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, colour <span class="op">=</span> <span class="va">drv</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">stat_chull</span><span class="op">(</span>fill <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(displ, hwy)) <span class="sc">+</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_chull</span>(<span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">colour =</span> <span class="st">"black"</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(displ, hwy, <span class="at">colour =</span> drv)) <span class="sc">+</span> </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_chull</span>(<span class="at">fill =</span> <span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -511,76 +529,80 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>创建新统计时，通常是个好主意提供相应的 <code>geom_*()</code> 构造函数以及 <code>stat_*()</code> 构造函数，因为大多数用户习惯于使用 geoms 而不是统计来添加图表图层。我们将在 <a href="#sec-new-geoms" class="quarto-xref"><span>Section 4.3</span></a> 中展示一个 <code>geom_chull()</code> 函数可能是什么样子。</p>
 <p>请注意，并不总是能够以有意义的方式定义 <code>geom_*()</code> 构造函数。当没有明显的默认 geom 用于新统计，或者统计旨在为现有的 geom/stat 对提供轻微修改时，这种情况就会发生。在这种情况下，可能明智的做法是只提供 <code>stat_*()</code> 函数。</p>
-</section><section id="sec-modifying-stat-params" class="level3" data-number="4.2.2"><h3 data-number="4.2.2" class="anchored" data-anchor-id="sec-modifying-stat-params">
-<span class="header-section-number">4.2.2</span> 修改参数和数据</h3>
+</section>
+<section id="sec-modifying-stat-params" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="sec-modifying-stat-params"><span class="header-section-number">4.2.2</span> 修改参数和数据</h3>
 <p>在定义新统计时，通常需要指定 <code>setup_params()</code> 和/或 <code>setup_data()</code> 函数。这些函数在 <code>compute_*()</code> 函数之前被调用，它们允许统计响应并修改自身以响应参数和数据（特别是数据，在统计构造时不可用）：</p>
 <ul>
 <li><p><code>setup_params()</code> 函数首先被调用。它接受两个参数，分别对应于图层 <code>data</code> 和在构造期间指定的参数列表（<code>params</code>），并返回将在后续计算中使用的修改后的参数列表。由于参数由 <code>compute_*()</code> 函数使用，列表的元素应对应于 <code>compute_*()</code> 函数中的参数名称以便可用。</p></li>
 <li><p><code>setup_data()</code> 函数接下来被调用。它也接受 <code>data</code> 和 <code>params</code> 作为输入—尽管它接收的参数是 <code>setup_params()</code> 返回的修改后的参数—并返回修改后的图层数据。重要的是，无论在 <code>setup_data()</code> 中发生什么修改，<code>PANEL</code> 和 <code>group</code> 列都必须保持不变。</p></li>
 </ul>
-<p>以下示例展示了如何使用 <code>setup_params()</code> 方法定义新统计。修改 <code>setup_data()</code> 方法的示例稍后包含在 <a href="#sec-modifying-geom-data" class="quarto-xref"><span>Section 4.3.2</span></a> 中。假设我们想要创建 <code>StatDensityCommon</code>，一个统计，它在将数据分组后计算变量的密度估计，并估计应用于所有组的默认带宽。这可以通过许多不同的方式完成，但为了简单起见，我们假设我们有一个 <code>common_bandwidth()</code> 函数，它使用 <code><a href="https://rdrr.io/r/stats/bandwidth.html">bw.nrd0()</a></code> 函数为每个组分别估计带宽，然后返回平均值：</p>
+<p>以下示例展示了如何使用 <code>setup_params()</code> 方法定义新统计。修改 <code>setup_data()</code> 方法的示例稍后包含在 <a href="#sec-modifying-geom-data" class="quarto-xref"><span>Section 4.3.2</span></a> 中。假设我们想要创建 <code>StatDensityCommon</code>，一个统计，它在将数据分组后计算变量的密度估计，并估计应用于所有组的默认带宽。这可以通过许多不同的方式完成，但为了简单起见，我们假设我们有一个 <code>common_bandwidth()</code> 函数，它使用 <code>bw.nrd0()</code> 函数为每个组分别估计带宽，然后返回平均值：</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">common_bandwidth</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">split_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">x</span>, <span class="va">data</span><span class="op">$</span><span class="va">group</span><span class="op">)</span></span>
-<span>  <span class="va">bandwidth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">vapply</a></span><span class="op">(</span><span class="va">split_data</span>, <span class="va">bw.nrd0</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">bandwidth</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>common_bandwidth <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  split_data <span class="ot">&lt;-</span> <span class="fu">split</span>(data<span class="sc">$</span>x, data<span class="sc">$</span>group)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  bandwidth <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">vapply</span>(split_data, bw.nrd0, <span class="fu">numeric</span>(<span class="dv">1</span>)))</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(bandwidth)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>我们希望 <code>StatDensityCommon</code> 使用 <code>common_bandwith()</code> 函数在数据被分组并传递给 <code>compute_group()</code> 函数之前设置一个共同的带宽。这是 <code>setup_params()</code> 方法的用途：</p>
 <div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">StatDensityCommon</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"StatDensityCommon"</span>, <span class="va">Stat</span>,</span>
-<span>  required_aes <span class="op">=</span> <span class="st">"x"</span>,</span>
-<span>  </span>
-<span>  setup_params <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">bandwith</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>      <span class="va">params</span><span class="op">$</span><span class="va">bandwidth</span> <span class="op">&lt;-</span> <span class="fu">common_bandwidth</span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="st">"Picking bandwidth of "</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">bandwidth</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
-<span>    <span class="op">}</span></span>
-<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">params</span><span class="op">)</span></span>
-<span>  <span class="op">}</span>,</span>
-<span>    </span>
-<span>  compute_group <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">scales</span>, <span class="va">bandwidth</span> <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/density.html">density</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">x</span>, bw <span class="op">=</span> <span class="va">bandwidth</span><span class="op">)</span></span>
-<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">d</span><span class="op">$</span><span class="va">x</span>, y <span class="op">=</span> <span class="va">d</span><span class="op">$</span><span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">}</span>  </span>
-<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>StatDensityCommon <span class="ot">&lt;-</span> <span class="fu">ggproto</span>(<span class="st">"StatDensityCommon"</span>, Stat,</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">required_aes =</span> <span class="st">"x"</span>,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">setup_params =</span> <span class="cf">function</span>(data, params) {</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">is.null</span>(params<span class="sc">$</span>bandwith)) {</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>      params<span class="sc">$</span>bandwidth <span class="ot">&lt;-</span> <span class="fu">common_bandwidth</span>(data)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">message</span>(<span class="st">"Picking bandwidth of "</span>, <span class="fu">signif</span>(params<span class="sc">$</span>bandwidth, <span class="dv">3</span>))</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(params)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  },</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">compute_group =</span> <span class="cf">function</span>(data, scales, <span class="at">bandwidth =</span> <span class="dv">1</span>) {</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    d <span class="ot">&lt;-</span> <span class="fu">density</span>(data<span class="sc">$</span>x, <span class="at">bw =</span> bandwidth)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> d<span class="sc">$</span>x, <span class="at">y =</span> d<span class="sc">$</span>y))</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  }  </span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>然后我们以通常的方式定义 <code>stat_*()</code> 函数：</p>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">stat_density_common</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">data</span> <span class="op">=</span> <span class="cn">NULL</span>, </span>
-<span>                                <span class="va">geom</span> <span class="op">=</span> <span class="st">"line"</span>, <span class="va">position</span> <span class="op">=</span> <span class="st">"identity"</span>, </span>
-<span>                                <span class="va">na.rm</span> <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">show.legend</span> <span class="op">=</span> <span class="cn">NA</span>, </span>
-<span>                                <span class="va">inherit.aes</span> <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">bandwidth</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu">layer</span><span class="op">(</span></span>
-<span>    stat <span class="op">=</span> <span class="va">StatDensityCommon</span>, </span>
-<span>    data <span class="op">=</span> <span class="va">data</span>, </span>
-<span>    mapping <span class="op">=</span> <span class="va">mapping</span>, </span>
-<span>    geom <span class="op">=</span> <span class="va">geom</span>, </span>
-<span>    position <span class="op">=</span> <span class="va">position</span>, </span>
-<span>    show.legend <span class="op">=</span> <span class="va">show.legend</span>, </span>
-<span>    inherit.aes <span class="op">=</span> <span class="va">inherit.aes</span>, </span>
-<span>    params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
-<span>      bandwidth <span class="op">=</span> <span class="va">bandwidth</span>, </span>
-<span>      na.rm <span class="op">=</span> <span class="va">na.rm</span>,</span>
-<span>      <span class="va">...</span></span>
-<span>    <span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>stat_density_common <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">mapping =</span> <span class="cn">NULL</span>, <span class="at">data =</span> <span class="cn">NULL</span>, </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                                <span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">position =</span> <span class="st">"identity"</span>, </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                                <span class="at">na.rm =</span> <span class="cn">FALSE</span>, <span class="at">show.legend =</span> <span class="cn">NA</span>, </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                                <span class="at">inherit.aes =</span> <span class="cn">TRUE</span>, <span class="at">bandwidth =</span> <span class="cn">NULL</span>, ...) {</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer</span>(</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> StatDensityCommon, </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> data, </span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> mapping, </span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> geom, </span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> position, </span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">show.legend =</span> show.legend, </span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> inherit.aes, </span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">params =</span> <span class="fu">list</span>(</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">bandwidth =</span> bandwidth, </span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">na.rm =</span> na.rm,</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>      ...</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>现在我们可以应用我们的新统计：</p>
 <div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, colour <span class="op">=</span> <span class="va">drv</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">stat_density_common</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Picking bandwidth of 0.345</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(displ, <span class="at">colour =</span> drv)) <span class="sc">+</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_density_common</span>()</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Picking bandwidth of 0.345</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="ggplot2extend_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="2100"></p>
+<figure class="figure">
+<p><img src="ggplot2extend_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="2100"></p>
 </figure>
 </div>
 </div>
 </div>
-</section></section><section id="sec-new-geoms" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="sec-new-geoms">
-<span class="header-section-number">4.3</span> 新 geoms</h2>
+</section>
+</section>
+<section id="sec-new-geoms" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="sec-new-geoms"><span class="header-section-number">4.3</span> 新 geoms</h2>
 <p>虽然通过创建新统计可以实现许多事情，但在某些情况下创建新的 geom 是必要的。这些情况包括：</p>
 <ul>
 <li>从统计返回的数据以任何当前 geoms 可以理解的形式返回是没有意义的。</li>
@@ -588,164 +610,168 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>geom 需要返回当前现有 geoms 不可用的 grobs。</li>
 </ul>
 <p>创建新的 geoms 可能比创建新的统计看起来稍微有些令人生畏，因为最终结果是一个 grobs 集合而不是一个修改后的数据框，这对许多开发人员来说是一个不熟悉的领域。尽管如此，除了上述最后一点，你还是可以尝试不需要考虑太多 grid 和 grobs。</p>
-<section id="sec-modifying-geom-defaults" class="level3" data-number="4.3.1"><h3 data-number="4.3.1" class="anchored" data-anchor-id="sec-modifying-geom-defaults">
-<span class="header-section-number">4.3.1</span> 修改 geom 默认值</h3>
+<section id="sec-modifying-geom-defaults" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="sec-modifying-geom-defaults"><span class="header-section-number">4.3.1</span> 修改 geom 默认值</h3>
 <p>在许多情况下，你的新 geom 可能只是一个期望稍微不同的输入或具有不同默认参数值的现有 geom。前一节中的 <code>stat_chull()</code> 示例是一个很好的例子。注意，在使用 <code>stat_chull()</code> 创建图表时，我们必须手动指定 <code>fill</code> 和 <code>colour</code> 参数，如果它们没有映射到美学上，这些是不适合我们的凸包 geom 的默认值。为了让我们的生活稍微容易一些，我们可以创建一个 <code>GeomPolygon</code> 的子类，修改默认值，以便它默认产生一个空心多边形。我们可以通过覆盖 <code>default_aes</code> 值以直接的方式做到这一点：</p>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GeomPolygonHollow</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"GeomPolygonHollow"</span>, <span class="va">GeomPolygon</span>,</span>
-<span>  default_aes <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span></span>
-<span>    colour <span class="op">=</span> <span class="st">"black"</span>, </span>
-<span>    fill <span class="op">=</span> <span class="cn">NA</span>, </span>
-<span>    linewidth <span class="op">=</span> <span class="fl">0.5</span>,</span>
-<span>    linetype <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    alpha <span class="op">=</span> <span class="cn">NA</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>GeomPolygonHollow <span class="ot">&lt;-</span> <span class="fu">ggproto</span>(<span class="st">"GeomPolygonHollow"</span>, GeomPolygon,</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">default_aes =</span> <span class="fu">aes</span>(</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"black"</span>, </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="cn">NA</span>, </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">0.5</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="dv">1</span>,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="cn">NA</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>我们现在可以使用 <code>GeomPolygonHollow</code> 作为默认 geom 来定义我们的 <code>geom_chull()</code> 构造函数：</p>
 <div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geom_chull</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">data</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">stat</span> <span class="op">=</span> <span class="st">"chull"</span>,</span>
-<span>                       <span class="va">position</span> <span class="op">=</span> <span class="st">"identity"</span>, <span class="va">na.rm</span> <span class="op">=</span> <span class="cn">FALSE</span>, </span>
-<span>                       <span class="va">show.legend</span> <span class="op">=</span> <span class="cn">NA</span>, <span class="va">inherit.aes</span> <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu">layer</span><span class="op">(</span></span>
-<span>    geom <span class="op">=</span> <span class="va">GeomPolygonHollow</span>, </span>
-<span>    data <span class="op">=</span> <span class="va">data</span>, </span>
-<span>    mapping <span class="op">=</span> <span class="va">mapping</span>, </span>
-<span>    stat <span class="op">=</span> <span class="va">stat</span>, </span>
-<span>    position <span class="op">=</span> <span class="va">position</span>, </span>
-<span>    show.legend <span class="op">=</span> <span class="va">show.legend</span>, </span>
-<span>    inherit.aes <span class="op">=</span> <span class="va">inherit.aes</span>,</span>
-<span>    params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>na.rm <span class="op">=</span> <span class="va">na.rm</span>, <span class="va">...</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">}</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>geom_chull <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">mapping =</span> <span class="cn">NULL</span>, <span class="at">data =</span> <span class="cn">NULL</span>, <span class="at">stat =</span> <span class="st">"chull"</span>,</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">position =</span> <span class="st">"identity"</span>, <span class="at">na.rm =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">show.legend =</span> <span class="cn">NA</span>, <span class="at">inherit.aes =</span> <span class="cn">TRUE</span>, ...) {</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer</span>(</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> GeomPolygonHollow, </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> data, </span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> mapping, </span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> stat, </span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> position, </span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">show.legend =</span> show.legend, </span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> inherit.aes,</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">params =</span> <span class="fu">list</span>(<span class="at">na.rm =</span> na.rm, ...)</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>} </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>为了一致性，我们还会定义 <code>stat_chull()</code> 使用这个作为默认值。无论如何，我们现在有一个新的 <code>geom_chull()</code> 函数，它工作得很好，不需要用户设置参数：</p>
 <div class="cell">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">geom_chull</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(displ, hwy)) <span class="sc">+</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_chull</span>() <span class="sc">+</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="ggplot2extend_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="2100"></p>
+<figure class="figure">
+<p><img src="ggplot2extend_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="2100"></p>
 </figure>
 </div>
 </div>
 </div>
-</section><section id="sec-modifying-geom-data" class="level3" data-number="4.3.2"><h3 data-number="4.3.2" class="anchored" data-anchor-id="sec-modifying-geom-data">
-<span class="header-section-number">4.3.2</span> 修改 geom 数据</h3>
+</section>
+<section id="sec-modifying-geom-data" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="sec-modifying-geom-data"><span class="header-section-number">4.3.2</span> 修改 geom 数据</h3>
 <p>在其他情况下，你可能想要定义一个 geom，它在视觉上等同于现有的 geom，但接受不同格式的数据。ggplot2 源代码中的一个示例是 <code>geom_spoke()</code>，这是 <code>geom_segment()</code> 的一个变体，它接受极坐标数据。为了使这工作，<code>GeomSpoke</code> ggproto 对象从 <code>GeomSegment</code> 子类化，并使用 <code>setup_data()</code> 方法来获取用户的极坐标数据，然后将其转换为 <code>GeomSegment</code> 期望的格式。为了说明这种技术，我们将创建 <code>geom_spike()</code>，一个 geom，它重新实现了 <code>geom_spoke()</code> 的功能。这需要我们重写 <code>required_aes</code> 字段以及 <code>setup_data()</code> 方法：</p>
 <div class="cell">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GeomSpike</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"GeomSpike"</span>, <span class="va">GeomSegment</span>,</span>
-<span>  </span>
-<span>  <span class="co"># 指定所需的美学                   </span></span>
-<span>  required_aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"angle"</span>, <span class="st">"radius"</span><span class="op">)</span>,</span>
-<span>  </span>
-<span>  <span class="co"># 在任何绘图发生之前转换数据</span></span>
-<span>  setup_data <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/transform.html">transform</a></span><span class="op">(</span><span class="va">data</span>,</span>
-<span>      xend <span class="op">=</span> <span class="va">x</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="va">angle</span><span class="op">)</span> <span class="op">*</span> <span class="va">radius</span>,</span>
-<span>      yend <span class="op">=</span> <span class="va">y</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">angle</span><span class="op">)</span> <span class="op">*</span> <span class="va">radius</span></span>
-<span>    <span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>GeomSpike <span class="ot">&lt;-</span> <span class="fu">ggproto</span>(<span class="st">"GeomSpike"</span>, GeomSegment,</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 指定所需的美学                   </span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">required_aes =</span> <span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"angle"</span>, <span class="st">"radius"</span>),</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 在任何绘图发生之前转换数据</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">setup_data =</span> <span class="cf">function</span>(data, params) {</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">transform</span>(data,</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">xend =</span> x <span class="sc">+</span> <span class="fu">cos</span>(angle) <span class="sc">*</span> radius,</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">yend =</span> y <span class="sc">+</span> <span class="fu">sin</span>(angle) <span class="sc">*</span> radius</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>我们现在编写面向用户的 <code>geom_spike()</code> 函数：</p>
 <div class="cell">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geom_spike</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">data</span> <span class="op">=</span> <span class="cn">NULL</span>, </span>
-<span>                       <span class="va">stat</span> <span class="op">=</span> <span class="st">"identity"</span>, <span class="va">position</span> <span class="op">=</span> <span class="st">"identity"</span>, </span>
-<span>                       <span class="va">...</span>, <span class="va">na.rm</span> <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">show.legend</span> <span class="op">=</span> <span class="cn">NA</span>, </span>
-<span>                       <span class="va">inherit.aes</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu">layer</span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">data</span>, </span>
-<span>    mapping <span class="op">=</span> <span class="va">mapping</span>, </span>
-<span>    geom <span class="op">=</span> <span class="va">GeomSpike</span>, </span>
-<span>    stat <span class="op">=</span> <span class="va">stat</span>, </span>
-<span>    position <span class="op">=</span> <span class="va">position</span>, </span>
-<span>    show.legend <span class="op">=</span> <span class="va">show.legend</span>, </span>
-<span>    inherit.aes <span class="op">=</span> <span class="va">inherit.aes</span>, </span>
-<span>    params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>na.rm <span class="op">=</span> <span class="va">na.rm</span>, <span class="va">...</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>geom_spike <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">mapping =</span> <span class="cn">NULL</span>, <span class="at">data =</span> <span class="cn">NULL</span>, </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="st">"identity"</span>, </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                       ..., <span class="at">na.rm =</span> <span class="cn">FALSE</span>, <span class="at">show.legend =</span> <span class="cn">NA</span>, </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">inherit.aes =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer</span>(</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> data, </span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> mapping, </span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> GeomSpike, </span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> stat, </span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> position, </span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">show.legend =</span> show.legend, </span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> inherit.aes, </span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">params =</span> <span class="fu">list</span>(<span class="at">na.rm =</span> na.rm, ...)</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>我们现在可以使用 <code>geom_spike()</code> 在图表中：</p>
 <div class="cell">
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
-<span>  x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,</span>
-<span>  y <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  angle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0</span>, to <span class="op">=</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">pi</span>, length.out <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
-<span>  radius <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0</span>, to <span class="op">=</span> <span class="fl">2</span>, length.out <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_spike</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>angle <span class="op">=</span> <span class="va">angle</span>, radius <span class="op">=</span> <span class="va">radius</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">coord_equal</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="dv">0</span>,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">angle =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">2</span> <span class="sc">*</span> pi, <span class="at">length.out =</span> <span class="dv">10</span>),</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">radius =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">2</span>, <span class="at">length.out =</span> <span class="dv">10</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_spike</span>(<span class="fu">aes</span>(<span class="at">angle =</span> angle, <span class="at">radius =</span> radius)) <span class="sc">+</span> </span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="ggplot2extend_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="2400"></p>
+<figure class="figure">
+<p><img src="ggplot2extend_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="2400"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>如统计一样，geoms 也有 <code>setup_params()</code> 方法以及 <code>setup_data()</code> 方法，可以用来在任何绘图发生之前修改参数（见 <a href="#sec-modifying-stat-params" class="quarto-xref"><span>Section 4.2.2</span></a> 示例）。然而，在 geom 上下文中，有一点需要注意的是，<code>setup_data()</code> 在任何位置调整之前被调用。</p>
-</section><section id="sec-combining-multiple-geoms" class="level3" data-number="4.3.3"><h3 data-number="4.3.3" class="anchored" data-anchor-id="sec-combining-multiple-geoms">
-<span class="header-section-number">4.3.3</span> 组合多个 geoms</h3>
+</section>
+<section id="sec-combining-multiple-geoms" class="level3" data-number="4.3.3">
+<h3 data-number="4.3.3" class="anchored" data-anchor-id="sec-combining-multiple-geoms"><span class="header-section-number">4.3.3</span> 组合多个 geoms</h3>
 <p>定义新 geoms 的一个有用技术是组合不同 geoms 的功能。例如，<code>geom_smooth()</code> 函数用于绘制非参数回归线，它使用 <code>geom_line()</code> 的功能来绘制回归线，并使用 <code>geom_ribbon()</code> 来绘制阴影误差带。要在新 geom 中实现这一点，通常通过考虑绘图过程来完成。就像统计通过调用 <code>compute_layer()</code> 然后 <code>compute_panel()</code> 最后是 <code>compute_group()</code> 的分层序列工作一样，geom 通过调用 <code>draw_layer()</code>、<code>draw_panel()</code> 和 <code>draw_group()</code> 来构建。</p>
-<p>如果你想组合多个 geoms 的功能，它通常可以通过在 <code>draw_*()</code> 调用内准备每个 geom 的数据并将其发送到不同的 geoms 来实现，使用 <code><a href="https://rdrr.io/r/grid/grid.grob.html">grid::gList()</a></code> 收集输出时需要一个 grobs 列表，或者如果需要一个带有多个子项的单个 grob，则使用 <code><a href="https://rdrr.io/r/grid/grid.grob.html">grid::gTree()</a></code>。</p>
+<p>如果你想组合多个 geoms 的功能，它通常可以通过在 <code>draw_*()</code> 调用内准备每个 geom 的数据并将其发送到不同的 geoms 来实现，使用 <code>grid::gList()</code> 收集输出时需要一个 grobs 列表，或者如果需要一个带有多个子项的单个 grob，则使用 <code>grid::gTree()</code>。</p>
 <p>作为一个相对简单的例子，考虑 <code>GeomBarbell</code> ggproto 对象，它创建由条形连接的两个点的 geoms：</p>
 <div class="cell">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GeomBarbell</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"GeomBarbell"</span>, <span class="va">Geom</span>,</span>
-<span>  </span>
-<span>  required_aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"xend"</span>, <span class="st">"yend"</span><span class="op">)</span>,</span>
-<span>  </span>
-<span>  default_aes <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span></span>
-<span>    colour <span class="op">=</span> <span class="st">"black"</span>,</span>
-<span>    linewidth <span class="op">=</span> <span class="fl">.5</span>,</span>
-<span>    size <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>    linetype <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    shape <span class="op">=</span> <span class="fl">19</span>,</span>
-<span>    fill <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>    alpha <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>    stroke <span class="op">=</span> <span class="fl">1</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  </span>
-<span>  draw_panel <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">panel_params</span>, <span class="va">coord</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    </span>
-<span>    <span class="co"># 点的转换数据</span></span>
-<span>    <span class="va">point1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/transform.html">transform</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> </span>
-<span>    <span class="va">point2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/transform.html">transform</a></span><span class="op">(</span><span class="va">data</span>, x <span class="op">=</span> <span class="va">xend</span>, y <span class="op">=</span> <span class="va">yend</span><span class="op">)</span>    </span>
-<span>    </span>
-<span>    <span class="co"># 返回所有三个组件</span></span>
-<span>    <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/grid.grob.html">gList</a></span><span class="op">(</span></span>
-<span>      <span class="va">GeomSegment</span><span class="op">$</span><span class="fu">draw_panel</span><span class="op">(</span><span class="va">data</span>, <span class="va">panel_params</span>, <span class="va">coord</span>, <span class="va">...</span><span class="op">)</span>,</span>
-<span>      <span class="va">GeomPoint</span><span class="op">$</span><span class="fu">draw_panel</span><span class="op">(</span><span class="va">point1</span>, <span class="va">panel_params</span>, <span class="va">coord</span>, <span class="va">...</span><span class="op">)</span>,</span>
-<span>      <span class="va">GeomPoint</span><span class="op">$</span><span class="fu">draw_panel</span><span class="op">(</span><span class="va">point2</span>, <span class="va">panel_params</span>, <span class="va">coord</span>, <span class="va">...</span><span class="op">)</span></span>
-<span>    <span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>GeomBarbell <span class="ot">&lt;-</span> <span class="fu">ggproto</span>(<span class="st">"GeomBarbell"</span>, Geom,</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">required_aes =</span> <span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"xend"</span>, <span class="st">"yend"</span>),</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">default_aes =</span> <span class="fu">aes</span>(</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"black"</span>,</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> .<span class="dv">5</span>,</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">2</span>,</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="dv">1</span>,</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">shape =</span> <span class="dv">19</span>,</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="cn">NA</span>,</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="cn">NA</span>,</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">stroke =</span> <span class="dv">1</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">draw_panel =</span> <span class="cf">function</span>(data, panel_params, coord, ...) {</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 点的转换数据</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    point1 <span class="ot">&lt;-</span> <span class="fu">transform</span>(data) </span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>    point2 <span class="ot">&lt;-</span> <span class="fu">transform</span>(data, <span class="at">x =</span> xend, <span class="at">y =</span> yend)    </span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 返回所有三个组件</span></span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>    grid<span class="sc">::</span><span class="fu">gList</span>(</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>      GeomSegment<span class="sc">$</span><span class="fu">draw_panel</span>(data, panel_params, coord, ...),</span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>      GeomPoint<span class="sc">$</span><span class="fu">draw_panel</span>(point1, panel_params, coord, ...),</span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>      GeomPoint<span class="sc">$</span><span class="fu">draw_panel</span>(point2, panel_params, coord, ...)</span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>在这个例子中，<code>draw_panel()</code> 方法返回一个三个 grobs 的列表，一个来自 <code>GeomSegment</code>，两个来自 <code>GeomPoint</code>。像往常一样，如果我们希望 geom 对用户可见，我们添加一个包装器函数：</p>
 <div class="cell">
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geom_barbell</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">data</span> <span class="op">=</span> <span class="cn">NULL</span>, </span>
-<span>                         <span class="va">stat</span> <span class="op">=</span> <span class="st">"identity"</span>, <span class="va">position</span> <span class="op">=</span> <span class="st">"identity"</span>, </span>
-<span>                         <span class="va">...</span>, <span class="va">na.rm</span> <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">show.legend</span> <span class="op">=</span> <span class="cn">NA</span>, </span>
-<span>                         <span class="va">inherit.aes</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu">layer</span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">data</span>, </span>
-<span>    mapping <span class="op">=</span> <span class="va">mapping</span>, </span>
-<span>    stat <span class="op">=</span> <span class="va">stat</span>, </span>
-<span>    geom <span class="op">=</span> <span class="va">GeomBarbell</span>, </span>
-<span>    position <span class="op">=</span> <span class="va">position</span>, </span>
-<span>    show.legend <span class="op">=</span> <span class="va">show.legend</span>, </span>
-<span>    inherit.aes <span class="op">=</span> <span class="va">inherit.aes</span>, </span>
-<span>    params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>na.rm <span class="op">=</span> <span class="va">na.rm</span>, <span class="va">...</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>geom_barbell <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">mapping =</span> <span class="cn">NULL</span>, <span class="at">data =</span> <span class="cn">NULL</span>, </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="st">"identity"</span>, </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                         ..., <span class="at">na.rm =</span> <span class="cn">FALSE</span>, <span class="at">show.legend =</span> <span class="cn">NA</span>, </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">inherit.aes =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer</span>(</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> data, </span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> mapping, </span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> stat, </span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> GeomBarbell, </span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> position, </span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">show.legend =</span> show.legend, </span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> inherit.aes, </span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">params =</span> <span class="fu">list</span>(<span class="at">na.rm =</span> na.rm, ...)</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>我们现在可以使用组合 geom：</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, xend <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">9</span>, y <span class="op">=</span> <span class="fl">0</span>, yend <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
-<span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, xend <span class="op">=</span> <span class="va">xend</span>, yend <span class="op">=</span> <span class="va">yend</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">geom_barbell</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">geom_barbell</span><span class="op">(</span>shape <span class="op">=</span> <span class="fl">4</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span><span class="op">)</span>  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">xend =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">9</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">yend =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>base <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(x, y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend))</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>base <span class="sc">+</span> <span class="fu">geom_barbell</span>()</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>base <span class="sc">+</span> <span class="fu">geom_barbell</span>(<span class="at">shape =</span> <span class="dv">4</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -756,99 +782,104 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>如果你不能利用任何现有的 geom 实现来创建 grobs，那么你将不得不从头开始实现完整的 <code>draw_*()</code> 方法，这需要对 grid 包有一点了解。有关 grid 的更多信息以及使用它来从网格原语构建 geom 的示例，请参见 <a href="ggplot2_spring1.html" class="quarto-xref"><span>Chapter 4</span></a>。</p>
-</section></section><section id="sec-new-coords" class="level2" data-number="4.4"><h2 data-number="4.4" class="anchored" data-anchor-id="sec-new-coords">
-<span class="header-section-number">4.4</span> 新坐标</h2>
+<p>如果你不能利用任何现有的 geom 实现来创建 grobs，那么你将不得不从头开始实现完整的 <code>draw_*()</code> 方法，这需要对 grid 包有一点了解。有关 grid 的更多信息以及使用它来从网格原语构建 geom 的示例，请参见 <span class="quarto-unresolved-ref">?sec-spring1</span>。</p>
+</section>
+</section>
+<section id="sec-new-coords" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="sec-new-coords"><span class="header-section-number">4.4</span> 新坐标</h2>
 <p>坐标的主要 作用是将位置美学重新缩放到 [0, 1] 范围，并在此过程中对其进行转换。定义新坐标相对罕见：在 <span class="quarto-unresolved-ref">?sec-coord</span> 中描述的坐标适用于大多数非制图案例，并且随着 <code>coord_sf()</code> 的引入，在 <span class="quarto-unresolved-ref">?sec-maps</span> 中讨论，ggplot2 能够开箱即用地捕获大多数制图投影。</p>
-<p>开发人员可能需要了解坐标系统内部的最常见情况是定义新的 geoms。坐标的 <code>draw_*()</code> 方法之一调用坐标的 <code><a href="https://rdrr.io/r/base/transform.html">transform()</a></code> 方法并不少见。例如，<code>CoordCartesian</code> 的 <code><a href="https://rdrr.io/r/base/transform.html">transform()</a></code> 方法用于重新缩放位置数据，但不会以其他方式转换它，geom 可能需要应用此重新缩放以正确绘制 grob。一个示例出现在 <a href="ggplot2_spring1.html" class="quarto-xref"><span>Chapter 4</span></a> 中。</p>
+<p>开发人员可能需要了解坐标系统内部的最常见情况是定义新的 geoms。坐标的 <code>draw_*()</code> 方法之一调用坐标的 <code>transform()</code> 方法并不少见。例如，<code>CoordCartesian</code> 的 <code>transform()</code> 方法用于重新缩放位置数据，但不会以其他方式转换它，geom 可能需要应用此重新缩放以正确绘制 grob。一个示例出现在 <span class="quarto-unresolved-ref">?sec-spring1</span> 中。</p>
 <p>除了转换位置数据外，坐标还负责渲染轴、轴标签、面板前景和面板背景。此外，坐标可以截获并修改图层数据和分面布局。如果绝对必要，大部分这些功能都可供开发人员使用（一个示例显示在 <a href="#sec-defining-theme-elements" class="quarto-xref"><span>Section 4.1.3</span></a> 中），但在大多数情况下，最好保留这些功能不变。</p>
-</section><section id="sec-new-scales" class="level2" data-number="4.5"><h2 data-number="4.5" class="anchored" data-anchor-id="sec-new-scales">
-<span class="header-section-number">4.5</span> 新比例尺</h2>
+</section>
+<section id="sec-new-scales" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="sec-new-scales"><span class="header-section-number">4.5</span> 新比例尺</h2>
 <p>有三种方式可能想要通过新比例尺扩展 ggplot2。最简单的情况是，当你想要为新调色板提供一个方便的包装器时，通常用于颜色或填充美学。作为一个不切实际的例子，假设你想使用像这样的调色板函数来填充小提琴或箱形图的随机颜色：</p>
 <div class="cell">
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">random_colours</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/colors.html">colours</a></span><span class="op">(</span>distinct <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="va">n</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="op">}</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>random_colours <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample</span>(<span class="fu">colours</span>(<span class="at">distinct =</span> <span class="cn">TRUE</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>} </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>然后我们可以编写一个 <code>scale_fill_random()</code> 构造函数，将调色板传递给 <code>discrete_scale()</code>，然后在图表中使用它：</p>
 <div class="cell">
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">scale_fill_random</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span>, <span class="va">aesthetics</span> <span class="op">=</span> <span class="st">"fill"</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu">discrete_scale</span><span class="op">(</span></span>
-<span>    aesthetics <span class="op">=</span> <span class="va">aesthetics</span>, </span>
-<span>    scale_name <span class="op">=</span> <span class="st">"random"</span>, </span>
-<span>    palette <span class="op">=</span> <span class="va">random_colours</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">hwy</span>, <span class="va">class</span>, fill <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">geom_violin</span><span class="op">(</span>show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">scale_fill_random</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: The `scale_name` argument of `discrete_scale()` is deprecated as of ggplot2</span></span>
-<span><span class="co">#&gt; 3.5.0.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>scale_fill_random <span class="ot">&lt;-</span> <span class="cf">function</span>(..., <span class="at">aesthetics =</span> <span class="st">"fill"</span>) {</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">discrete_scale</span>(</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">aesthetics =</span> aesthetics, </span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">scale_name =</span> <span class="st">"random"</span>, </span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> random_colours</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(hwy, class, <span class="at">fill =</span> class)) <span class="sc">+</span> </span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_random</span>()</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: The `scale_name` argument of `discrete_scale()` is deprecated as of ggplot2</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3.5.0.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="ggplot2extend_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="2100"></p>
+<figure class="figure">
+<p><img src="ggplot2extend_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="2100"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>另一个相对简单的案例是，你提供了一个 geom，它采用新的美学类型，需要进行缩放。假设你创建了一个新的线 geom，并且你决定使用 <code>width</code> 美学而不是 <code>size</code> 美学。为了使 <code>width</code> 像你对 <code>size</code> 的缩放那样进行缩放，你必须为美学提供一个默认比例尺。默认比例尺是根据其名称和提供给美学的数据类型来找到的。如果你将连续值分配给 <code>width</code> 美学，ggplot2 将寻找 <code>scale_width_continuous()</code> 函数，并使用它如果没有添加其他宽度比例尺的话。如果找不到这样的函数（并且没有明确添加宽度比例尺），美学将不会被缩放。</p>
 <p>还有一个值得提及的可能性，但超出了这本书的范围，那就是创建一个新的主要比例尺类型。历史上，ggplot2 有两种主要的比例尺类型，连续和离散。最近，分箱比例尺加入其中，它允许将连续数据分箱为离散箱。可以开发进一步的主要比例尺类型，方法是子类化 <code>Scale</code> 或提供的主要比例尺之一，并创建新的 <code>train()</code> 和 <code>map()</code> 方法等。</p>
-</section><section id="新位置" class="level2" data-number="4.6"><h2 data-number="4.6" class="anchored" data-anchor-id="新位置">
-<span class="header-section-number">4.6</span> 新位置</h2>
+</section>
+<section id="新位置" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="新位置"><span class="header-section-number">4.6</span> 新位置</h2>
 <p><code>Position</code> ggproto 类比其他 ggproto 类要简单一些，反映了 <code>position_*()</code> 函数的非常狭窄的范围。位置的作用是在数据立即传递给任何绘图函数之前接收和修改数据。严格来说，位置可以以任何方式修改数据，但有一个隐含的期望，即它只修改位置美学。位置具有 <code>compute_layer()</code> 和 <code>compute_panel()</code> 方法，这些方法类似于统计的等效方法，但它没有 <code>compute_group()</code> 方法。它还包含 <code>setup_params()</code> 和 <code>setup_data()</code> 方法，这些方法类似于其他 ggproto 类的 <code>setup_*()</code> 方法，有一个值得注意的例外：<code>setup_params()</code> 方法只接收数据作为输入，而不是参数列表。原因是 <code>position_*()</code> 函数从不在 ggplot2 中单独使用：相反，它们总是在指定图层的主 <code>geom_*()</code> 或 <code>stat_*()</code> 命令中调用，主命令中的参数不会传递给 <code>position_*()</code> 函数调用。</p>
 <p>为了提供一个简单的例子，我们将实现一个稍微简化版的 <code>position_jitternormal()</code> 函数，它来自 ggforce 包，其行为与 <code>position_jitter()</code> 相同，只不过扰动是从正态分布而不是均匀分布中采样的。为了保持论述简单，我们假设我们有以下便利函数定义：</p>
 <div class="cell">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">normal_transformer</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">sd</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span><span class="va">x</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, sd <span class="op">=</span> <span class="va">sd</span><span class="op">)</span><span class="op">}</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>normal_transformer <span class="ot">&lt;-</span> <span class="cf">function</span>(x, sd) {</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(x) {x <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="fu">length</span>(x), <span class="at">sd =</span> sd)}</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>当被调用时，<code>normal_transformer()</code> 返回一个函数，通过添加均值为零、标准差为 <code>sd</code> 的随机噪声来扰动输入向量。创建我们的新位置的第一步是制作一个 <code>Position</code> 对象的子类：</p>
 <div class="cell">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">PositionJitterNormal</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">'PositionJitterNormal'</span>, <span class="va">Position</span>,</span>
-<span>           </span>
-<span>  <span class="co"># 我们需要一个 x 和 y 位置美学                              </span></span>
-<span>  required_aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'x'</span>, <span class="st">'y'</span><span class="op">)</span>,</span>
-<span>  </span>
-<span>  <span class="co"># 通过使用 "self" 参数，我们可以访问用户传递给位置的参数，并将它们添加为图层参数</span></span>
-<span>  setup_params <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">self</span>, <span class="va">data</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
-<span>      sd_x <span class="op">=</span> <span class="va">self</span><span class="op">$</span><span class="va">sd_x</span>, </span>
-<span>      sd_y <span class="op">=</span> <span class="va">self</span><span class="op">$</span><span class="va">sd_y</span></span>
-<span>    <span class="op">)</span></span>
-<span>  <span class="op">}</span>,</span>
-<span></span>
-<span>  <span class="co"># 当计算图层时，我们可以从参数列表中读取标准差参数，并使用它们来转换位置美学</span></span>
-<span>  compute_layer <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span>, <span class="va">panel</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    </span>
-<span>    <span class="co"># 为 x 和 y 位置尺度构建变换器 </span></span>
-<span>    <span class="va">x_transformer</span> <span class="op">&lt;-</span> <span class="fu">normal_transformer</span><span class="op">(</span><span class="va">x</span>, <span class="va">params</span><span class="op">$</span><span class="va">sd_x</span><span class="op">)</span></span>
-<span>    <span class="va">y_transformer</span> <span class="op">&lt;-</span> <span class="fu">normal_transformer</span><span class="op">(</span><span class="va">y</span>, <span class="va">params</span><span class="op">$</span><span class="va">sd_y</span><span class="op">)</span></span>
-<span>    </span>
-<span>    <span class="co"># 返回转换后的数据</span></span>
-<span>    <span class="fu">transform_position</span><span class="op">(</span></span>
-<span>      df <span class="op">=</span> <span class="va">data</span>,</span>
-<span>      trans_x <span class="op">=</span> <span class="va">x_transformer</span>,  </span>
-<span>      trans_y <span class="op">=</span> <span class="va">y_transformer</span></span>
-<span>    <span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>PositionJitterNormal <span class="ot">&lt;-</span> <span class="fu">ggproto</span>(<span class="st">'PositionJitterNormal'</span>, Position,</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>           </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 我们需要一个 x 和 y 位置美学                              </span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">required_aes =</span> <span class="fu">c</span>(<span class="st">'x'</span>, <span class="st">'y'</span>),</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 通过使用 "self" 参数，我们可以访问用户传递给位置的参数，并将它们添加为图层参数</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">setup_params =</span> <span class="cf">function</span>(self, data) {</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">sd_x =</span> self<span class="sc">$</span>sd_x, </span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">sd_y =</span> self<span class="sc">$</span>sd_y</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>  },</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 当计算图层时，我们可以从参数列表中读取标准差参数，并使用它们来转换位置美学</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">compute_layer =</span> <span class="cf">function</span>(data, params, panel) {</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 为 x 和 y 位置尺度构建变换器 </span></span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>    x_transformer <span class="ot">&lt;-</span> <span class="fu">normal_transformer</span>(x, params<span class="sc">$</span>sd_x)</span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>    y_transformer <span class="ot">&lt;-</span> <span class="fu">normal_transformer</span>(y, params<span class="sc">$</span>sd_y)</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 返回转换后的数据</span></span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">transform_position</span>(</span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">df =</span> data,</span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">trans_x =</span> x_transformer,  </span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">trans_y =</span> y_transformer</span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>compute_layer()</code> 方法使用了 <code>transform_position()</code>，这是 ggplot2 提供的一个便利函数，其作用是将用户供应的函数应用于与相关位置尺度相关联的所有美学（例如，不仅仅是 x 和 y，还有 xend 和 yend）。</p>
 <p>在现实的实现中，<code>position_jitternormal()</code> 构造函数将进行一些输入验证，以确保用户没有指定负的标准差，但在这个上下文中我们将保持简单：</p>
 <div class="cell">
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">position_jitternormal</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">sd_x</span> <span class="op">=</span> <span class="fl">.15</span>, <span class="va">sd_y</span> <span class="op">=</span> <span class="fl">.15</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu">ggproto</span><span class="op">(</span><span class="cn">NULL</span>, <span class="va">PositionJitterNormal</span>, sd_x <span class="op">=</span> <span class="va">sd_x</span>, sd_y <span class="op">=</span> <span class="va">sd_y</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>position_jitternormal <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">sd_x =</span> .<span class="dv">15</span>, <span class="at">sd_y =</span> .<span class="dv">15</span>) {</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggproto</span>(<span class="cn">NULL</span>, PositionJitterNormal, <span class="at">sd_x =</span> sd_x, <span class="at">sd_y =</span> sd_y)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>我们现在可以在创建图表时使用我们的新位置函数。要查看 <code>position_jitter()</code> 和我们刚刚定义的 <code>position_jitternormal()</code> 函数之间的区别，请比较以下图表：</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
-<span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">1500</span>, <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">1500</span>, <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span>position <span class="op">=</span> <span class="fu">position_jitter</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span>position <span class="op">=</span> <span class="fu">position_jitternormal</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">1500</span>, <span class="cn">TRUE</span>),</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">1500</span>, <span class="cn">TRUE</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(x, y)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">position =</span> <span class="fu">position_jitter</span>())</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(x, y)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">position =</span> <span class="fu">position_jitternormal</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -860,8 +891,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>在设计新位置时需要考虑的一个实际问题是，用户很少直接调用位置构造函数。指定图层的命令更可能是像 <code>position = "dodge"</code> 而不是 <code>position = position_dodge()</code>，更不用说覆盖你的默认值了，就像用户指定 <code>position = position_dodge(width = 0.9)</code> 那样。因此，如果可能的话，重要的是要仔细思考并使默认值适用于大多数情况。这可能非常棘手：位置对图层数据的形状和格式几乎没有控制权，但用户将期望它们在所有情况下都可预测地行为。一个例子是躲避，用户可能想要躲避箱形图和点云，并期望点云出现在其相应的箱形图的相同区域。在用户层面上，这是一个完全合理的期望，但对开发人员来说可能很棘手。箱形图有一个明确的宽度，可以用来控制躲避，而点则不是这样，但用户期望它们以相同的方式移动。这种考虑通常意味着位置实现最终比最简单的解决方案要复杂得多，以照顾到广泛的边缘情况。</p>
-</section><section id="新分面" class="level2" data-number="4.7"><h2 data-number="4.7" class="anchored" data-anchor-id="新分面">
-<span class="header-section-number">4.7</span> 新分面</h2>
+</section>
+<section id="新分面" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="新分面"><span class="header-section-number">4.7</span> 新分面</h2>
 <p>分面是 ggplot2 中最强大的概念之一，扩展分面是修改 ggplot2 操作方式的最强大的方式之一。这种力量是有代价的：分面负责接收所有面板，将轴和条带附加到它们上，然后以预期的方式排列它们。从头开始创建一个全新的分面系统需要深入了解 grid 和 gtable，可能是一个令人生畏的挑战。幸运的是，你并不总是需要从头开始创建分面。例如，如果你的新分面将产生位于网格上的面板，你通常可以子类化 <code>FacetWrap</code> 或 <code>FacetGrid</code> 并修改一个或两个方法。特别是，你可能想要定义新的 <code>compute_layout()</code> 和/或 <code>map_data()</code> 方法：</p>
 <ul>
 <li><p><code>compute_layout()</code> 方法接收原始数据集，并创建布局规范，这是一个数据框，每行代表面板在网格上的位置，以及哪些轴限制应该是自由的，哪些应该是固定的。</p></li>
@@ -869,51 +901,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>为了说明如何通过子类化现有分面来创建新分面，我们将创建一个相对简单的分面系统，该系统将“散布”面板，将它们随机放置在网格上。为此，我们将创建一个名为 <code>FacetScatter</code> 的新 ggproto 对象，它是 <code>FacetWrap</code> 的子类，并编写一个新的 <code>compute_layout()</code> 方法，将每个面板放置在面板网格中随机选择的单元格中：</p>
 <div class="cell">
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">FacetScatter</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"FacetScatter"</span>, <span class="va">FacetWrap</span>,</span>
-<span>  </span>
-<span>  <span class="co"># 这并不重要的例子：我们所做的一切是</span></span>
-<span>  <span class="co"># 强制所有面板使用固定尺度，以便</span></span>
-<span>  <span class="co"># 其余的例子可以保持简单</span></span>
-<span>  setup_params <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">params</span> <span class="op">&lt;-</span> <span class="va">FacetWrap</span><span class="op">$</span><span class="fu">setup_params</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span><span class="op">)</span></span>
-<span>    <span class="va">params</span><span class="op">$</span><span class="va">free</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">FALSE</span>, y <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">params</span><span class="op">)</span></span>
-<span>  <span class="op">}</span>,                      </span>
-<span>  </span>
-<span>  <span class="co"># compute_layout() 方法做工作</span></span>
-<span>  compute_layout <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span><span class="op">)</span> <span class="op">{</span></span>
-<span>                  </span>
-<span>    <span class="co"># 创建一个数据框，每个分面变量一列，</span></span>
-<span>    <span class="co"># 每一行代表一个可能的值组合</span></span>
-<span>    <span class="co"># （即，每一行一个面板）</span></span>
-<span>    <span class="va">panels</span> <span class="op">&lt;-</span> <span class="fu">combine_vars</span><span class="op">(</span></span>
-<span>      data <span class="op">=</span> <span class="va">data</span>,</span>
-<span>      env <span class="op">=</span> <span class="va">params</span><span class="op">$</span><span class="va">plot_env</span>, </span>
-<span>      vars <span class="op">=</span> <span class="va">params</span><span class="op">$</span><span class="va">facets</span>, </span>
-<span>      drop <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span>    <span class="op">)</span></span>
-<span>    </span>
-<span>    <span class="co"># 创建一个数据框，ROW 和 COL 列，</span></span>
-<span>    <span class="co"># 每一行代表面板网格中可能的单元格</span></span>
-<span>    <span class="va">locations</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span><span class="op">(</span>ROW <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">params</span><span class="op">$</span><span class="va">nrow</span>, COL <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">params</span><span class="op">$</span><span class="va">ncol</span><span class="op">)</span></span>
-<span>    </span>
-<span>    <span class="co"># 随机抽样位置的子集</span></span>
-<span>    <span class="va">shuffle</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">locations</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">panels</span><span class="op">)</span><span class="op">)</span></span>
-<span>    </span>
-<span>    <span class="co"># 为每个面板分配一个位置                      </span></span>
-<span>    <span class="va">layout</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
-<span>      PANEL <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">panels</span><span class="op">)</span>,       <span class="co"># 面板标识符</span></span>
-<span>      ROW <span class="op">=</span> <span class="va">locations</span><span class="op">$</span><span class="va">ROW</span><span class="op">[</span><span class="va">shuffle</span><span class="op">]</span>, <span class="co"># 面板的行号</span></span>
-<span>      COL <span class="op">=</span> <span class="va">locations</span><span class="op">$</span><span class="va">COL</span><span class="op">[</span><span class="va">shuffle</span><span class="op">]</span>, <span class="co"># 面板的列号</span></span>
-<span>      SCALE_X <span class="op">=</span> <span class="fl">1L</span>,                 <span class="co"># 所有 x 轴尺度都是固定的</span></span>
-<span>      SCALE_Y <span class="op">=</span> <span class="fl">1L</span>                  <span class="co"># 所有 y 轴尺度都是固定的</span></span>
-<span>    <span class="op">)</span></span>
-<span>    </span>
-<span>    <span class="co"># 将布局信息与面板标识符绑定</span></span>
-<span>    <span class="co"># 并返回得到的规范</span></span>
-<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">layout</span>, <span class="va">panels</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">}</span>                      </span>
-<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>FacetScatter <span class="ot">&lt;-</span> <span class="fu">ggproto</span>(<span class="st">"FacetScatter"</span>, FacetWrap,</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 这并不重要的例子：我们所做的一切是</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 强制所有面板使用固定尺度，以便</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 其余的例子可以保持简单</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">setup_params =</span> <span class="cf">function</span>(data, params) {</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    params <span class="ot">&lt;-</span> FacetWrap<span class="sc">$</span><span class="fu">setup_params</span>(data, params)</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    params<span class="sc">$</span>free <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="cn">FALSE</span>, <span class="at">y =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(params)</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  },                      </span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># compute_layout() 方法做工作</span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">compute_layout =</span> <span class="cf">function</span>(data, params) {</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>                  </span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 创建一个数据框，每个分面变量一列，</span></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 每一行代表一个可能的值组合</span></span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># （即，每一行一个面板）</span></span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>    panels <span class="ot">&lt;-</span> <span class="fu">combine_vars</span>(</span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> data,</span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>      <span class="at">env =</span> params<span class="sc">$</span>plot_env, </span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>      <span class="at">vars =</span> params<span class="sc">$</span>facets, </span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">drop =</span> <span class="cn">FALSE</span></span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 创建一个数据框，ROW 和 COL 列，</span></span>
+<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 每一行代表面板网格中可能的单元格</span></span>
+<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>    locations <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">ROW =</span> <span class="dv">1</span><span class="sc">:</span>params<span class="sc">$</span>nrow, <span class="at">COL =</span> <span class="dv">1</span><span class="sc">:</span>params<span class="sc">$</span>ncol)</span>
+<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 随机抽样位置的子集</span></span>
+<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a>    shuffle <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(locations), <span class="fu">nrow</span>(panels))</span>
+<span id="cb32-31"><a href="#cb32-31" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-32"><a href="#cb32-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 为每个面板分配一个位置                      </span></span>
+<span id="cb32-33"><a href="#cb32-33" aria-hidden="true" tabindex="-1"></a>    layout <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb32-34"><a href="#cb32-34" aria-hidden="true" tabindex="-1"></a>      <span class="at">PANEL =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(panels),       <span class="co"># 面板标识符</span></span>
+<span id="cb32-35"><a href="#cb32-35" aria-hidden="true" tabindex="-1"></a>      <span class="at">ROW =</span> locations<span class="sc">$</span>ROW[shuffle], <span class="co"># 面板的行号</span></span>
+<span id="cb32-36"><a href="#cb32-36" aria-hidden="true" tabindex="-1"></a>      <span class="at">COL =</span> locations<span class="sc">$</span>COL[shuffle], <span class="co"># 面板的列号</span></span>
+<span id="cb32-37"><a href="#cb32-37" aria-hidden="true" tabindex="-1"></a>      <span class="at">SCALE_X =</span> <span class="dv">1</span>L,                 <span class="co"># 所有 x 轴尺度都是固定的</span></span>
+<span id="cb32-38"><a href="#cb32-38" aria-hidden="true" tabindex="-1"></a>      <span class="at">SCALE_Y =</span> <span class="dv">1</span>L                  <span class="co"># 所有 y 轴尺度都是固定的</span></span>
+<span id="cb32-39"><a href="#cb32-39" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb32-40"><a href="#cb32-40" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-41"><a href="#cb32-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 将布局信息与面板标识符绑定</span></span>
+<span id="cb32-42"><a href="#cb32-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 并返回得到的规范</span></span>
+<span id="cb32-43"><a href="#cb32-43" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">cbind</span>(layout, panels))</span>
+<span id="cb32-44"><a href="#cb32-44" aria-hidden="true" tabindex="-1"></a>  }                      </span>
+<span id="cb32-45"><a href="#cb32-45" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>为了让你对这个输出的样子有一个感觉，这是在构建本节末尾显示的图表时创建的布局规范：</p>
 <div class="cell">
@@ -936,32 +968,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>接下来，我们将编写 <code>facet_scatter()</code> 构造函数，以将此功能暴露给用户。对于分面来说，这就像创建一个新的相关 ggproto 对象（在这种情况下是 <code>FacetScatter</code>）的实例一样简单，它将用户指定的参数传递给分面：</p>
 <div class="cell">
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facet_scatter</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">facets</span>, <span class="va">nrow</span>, <span class="va">ncol</span>, </span>
-<span>                          <span class="va">strip.position</span> <span class="op">=</span> <span class="st">"top"</span>, </span>
-<span>                          <span class="va">labeller</span> <span class="op">=</span> <span class="st">"label_value"</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  </span>
-<span>  <span class="fu">ggproto</span><span class="op">(</span><span class="cn">NULL</span>, <span class="va">FacetScatter</span>, </span>
-<span>    params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
-<span>      facets <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/exprs_auto_name.html">quos_auto_name</a></span><span class="op">(</span><span class="va">facets</span><span class="op">)</span>,</span>
-<span>      strip.position <span class="op">=</span> <span class="va">strip.position</span>,</span>
-<span>      labeller <span class="op">=</span> <span class="va">labeller</span>, </span>
-<span>      ncol <span class="op">=</span> <span class="va">ncol</span>, </span>
-<span>      nrow <span class="op">=</span> <span class="va">nrow</span></span>
-<span>    <span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>facet_scatter <span class="ot">&lt;-</span> <span class="cf">function</span>(facets, nrow, ncol, </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">strip.position =</span> <span class="st">"top"</span>, </span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">labeller =</span> <span class="st">"label_value"</span>) {</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggproto</span>(<span class="cn">NULL</span>, FacetScatter, </span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">params =</span> <span class="fu">list</span>(</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">facets =</span> rlang<span class="sc">::</span><span class="fu">quos_auto_name</span>(facets),</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">strip.position =</span> strip.position,</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">labeller =</span> labeller, </span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">ncol =</span> ncol, </span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">nrow =</span> nrow</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>关于这个构造函数有几个注意事项。首先，为了保持示例简单，<code>facet_scatter()</code> 包含的参数比 <code>facet_wrap()</code> 少，我们将 <code>nrow</code> 和 <code>ncol</code> 作为必需参数：用户需要指定面板应该散布的网格的大小。其次，<code>facet_scatter()</code> 函数要求你使用 <code>vars()</code> 指定分面。如果用户尝试提供公式，它将不起作用。相关地，请注意使用 <code><a href="https://rlang.r-lib.org/reference/exprs_auto_name.html">rlang::quos_auto_name()</a></code>：<code>vars()</code> 函数返回一个未命名的表达式列表（技术上，quosures），但下游代码需要一个命名列表。只要你期望用户使用 <code>vars()</code>，这就是你需要的所有预处理，但如果你想支持其他输入格式，你需要更花哨一些（你可以通过查看 ggplot2 源代码来看如何做到这一点）。</p>
+<p>关于这个构造函数有几个注意事项。首先，为了保持示例简单，<code>facet_scatter()</code> 包含的参数比 <code>facet_wrap()</code> 少，我们将 <code>nrow</code> 和 <code>ncol</code> 作为必需参数：用户需要指定面板应该散布的网格的大小。其次，<code>facet_scatter()</code> 函数要求你使用 <code>vars()</code> 指定分面。如果用户尝试提供公式，它将不起作用。相关地，请注意使用 <code>rlang::quos_auto_name()</code>：<code>vars()</code> 函数返回一个未命名的表达式列表（技术上，quosures），但下游代码需要一个命名列表。只要你期望用户使用 <code>vars()</code>，这就是你需要的所有预处理，但如果你想支持其他输入格式，你需要更花哨一些（你可以通过查看 ggplot2 源代码来看如何做到这一点）。</p>
 <p>无论如何，我们现在有一个工作分面：</p>
 <div class="cell">
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">facet_scatter</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">manufacturer</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">5</span>, ncol <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(displ, hwy)) <span class="sc">+</span> </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_scatter</span>(<span class="fu">vars</span>(manufacturer), <span class="at">nrow =</span> <span class="dv">5</span>, <span class="at">ncol =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="ggplot2extend_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid figure-img" width="2100"></p>
+<figure class="figure">
+<p><img src="ggplot2extend_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid figure-img" width="2100"></p>
 </figure>
 </div>
 </div>
@@ -970,7 +1003,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- >Should probably not mention anything until they have been ported to `ggproto` -->
 
 
-</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -1389,30 +1426,35 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
       <a href="./ggplot2internal.html" class="pagination-link" aria-label="ggplot2工作原理">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">ggplot2工作原理</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./ggplot2_spring1.html" class="pagination-link" aria-label="一个学习案例">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">一个学习案例</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./ggplot2_spring.html" class="pagination-link" aria-label="ggplot2_spring.html">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ggplot2_spring.html</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer">
+<footer class="footer">
+  <div class="nav-footer">
     <div class="nav-footer-left">
       &nbsp;
     </div>   
     <div class="nav-footer-center">
 <p>博客<a href="https://blog.stariverfeel.eu.org/">Feel’s Blog</a> | 部署 <a href="https://quarto.org/">Quarto</a>.</p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/FeelLiao/R_in_ASLDV/edit/main/ggplot2extend.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/FeelLiao/R_in_ASLDV/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/FeelLiao/RdataVisualization/edit/main/ggplot2extend.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/FeelLiao/RdataVisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
   </div>
 </footer>
+
+
 
 
 </body></html>

@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.33">
+<meta name="generator" content="quarto-1.5.57">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
 <meta name="author" content="Feel Liao">
+
 <title>6&nbsp; Top 50 ggplot2 可视化 – R语言数据可视化学习笔记</title>
 <style>
 code{white-space: pre-wrap;}
@@ -54,6 +57,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
+
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
@@ -68,10 +72,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-07ba0ad10f5680c660e360ac31d2f3b6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5b63201b283509340feecb78f0a904f5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -98,11 +103,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+
+
 </head>
+
 <body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
@@ -113,13 +123,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">R语言数据可视化学习笔记</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/FeelLiao/R_in_ASLDV" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/FeelLiao/RdataVisualization" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -135,7 +149,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-<li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">欢迎</span></a>
@@ -162,13 +176,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ggplot2extend.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">编写ggplot2拓展</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">编写ggplot2扩展</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ggplot2_spring1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">一个学习案例</span></span></a>
+  <a href="./ggplot2_spring.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ggplot2_spring.html</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -184,64 +198,58 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
     </ul>
-</div>
-</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li>
-<a href="#%E7%9B%B8%E5%85%B3-correlation" id="toc-相关-correlation" class="nav-link active" data-scroll-target="#%E7%9B%B8%E5%85%B3-correlation"><span class="header-section-number">6.1</span> 相关 Correlation</a>
+  <li><a href="#相关-correlation" id="toc-相关-correlation" class="nav-link active" data-scroll-target="#相关-correlation"><span class="header-section-number">6.1</span> 相关 Correlation</a>
   <ul class="collapse">
-<li><a href="#%E7%82%B9%E5%9B%BE-scatterplot" id="toc-点图-scatterplot" class="nav-link" data-scroll-target="#%E7%82%B9%E5%9B%BE-scatterplot"><span class="header-section-number">6.1.1</span> 点图 Scatterplot</a></li>
-  <li><a href="#%E6%9C%89%E5%9C%88%E7%82%B9%E5%9B%BE-scatterplot-with-encircling" id="toc-有圈点图-scatterplot-with-encircling" class="nav-link" data-scroll-target="#%E6%9C%89%E5%9C%88%E7%82%B9%E5%9B%BE-scatterplot-with-encircling"><span class="header-section-number">6.1.2</span> 有圈点图 Scatterplot With Encircling</a></li>
-  <li><a href="#%E8%AE%A1%E6%95%B0%E5%9B%BE-counts-chart" id="toc-计数图-counts-chart" class="nav-link" data-scroll-target="#%E8%AE%A1%E6%95%B0%E5%9B%BE-counts-chart"><span class="header-section-number">6.1.3</span> 计数图 Counts Chart</a></li>
-  <li><a href="#%E6%B0%94%E6%B3%A1%E5%9B%BE-bubble-plot" id="toc-气泡图-bubble-plot" class="nav-link" data-scroll-target="#%E6%B0%94%E6%B3%A1%E5%9B%BE-bubble-plot"><span class="header-section-number">6.1.4</span> 气泡图 Bubble plot</a></li>
-  <li><a href="#%E8%BE%B9%E9%99%85%E7%9B%B4%E6%96%B9%E5%9B%BE-marginal-histogram-boxplot" id="toc-边际直方图-marginal-histogram-boxplot" class="nav-link" data-scroll-target="#%E8%BE%B9%E9%99%85%E7%9B%B4%E6%96%B9%E5%9B%BE-marginal-histogram-boxplot"><span class="header-section-number">6.1.5</span> 边际直方图 Marginal Histogram / Boxplot</a></li>
-  </ul>
-</li>
-  <li>
-<a href="#%E5%81%8F%E5%B7%AE-deviation" id="toc-偏差-deviation" class="nav-link" data-scroll-target="#%E5%81%8F%E5%B7%AE-deviation"><span class="header-section-number">6.2</span> 偏差 Deviation</a>
+  <li><a href="#点图-scatterplot" id="toc-点图-scatterplot" class="nav-link" data-scroll-target="#点图-scatterplot"><span class="header-section-number">6.1.1</span> 点图 Scatterplot</a></li>
+  <li><a href="#有圈点图-scatterplot-with-encircling" id="toc-有圈点图-scatterplot-with-encircling" class="nav-link" data-scroll-target="#有圈点图-scatterplot-with-encircling"><span class="header-section-number">6.1.2</span> 有圈点图 Scatterplot With Encircling</a></li>
+  <li><a href="#计数图-counts-chart" id="toc-计数图-counts-chart" class="nav-link" data-scroll-target="#计数图-counts-chart"><span class="header-section-number">6.1.3</span> 计数图 Counts Chart</a></li>
+  <li><a href="#气泡图-bubble-plot" id="toc-气泡图-bubble-plot" class="nav-link" data-scroll-target="#气泡图-bubble-plot"><span class="header-section-number">6.1.4</span> 气泡图 Bubble plot</a></li>
+  <li><a href="#边际直方图-marginal-histogram-boxplot" id="toc-边际直方图-marginal-histogram-boxplot" class="nav-link" data-scroll-target="#边际直方图-marginal-histogram-boxplot"><span class="header-section-number">6.1.5</span> 边际直方图 Marginal Histogram / Boxplot</a></li>
+  </ul></li>
+  <li><a href="#偏差-deviation" id="toc-偏差-deviation" class="nav-link" data-scroll-target="#偏差-deviation"><span class="header-section-number">6.2</span> 偏差 Deviation</a>
   <ul class="collapse">
-<li><a href="#%E5%8F%91%E6%95%A3%E5%9E%8B%E6%9D%A1%E5%BD%A2%E5%9B%BE-diverging-bars" id="toc-发散型条形图-diverging-bars" class="nav-link" data-scroll-target="#%E5%8F%91%E6%95%A3%E5%9E%8B%E6%9D%A1%E5%BD%A2%E5%9B%BE-diverging-bars"><span class="header-section-number">6.2.1</span> 发散型条形图 Diverging bars</a></li>
-  <li><a href="#%E5%8F%91%E6%95%A3%E5%9E%8B%E6%A3%92%E6%A3%92%E7%B3%96%E5%9B%BE-diverging-lollipop-chart" id="toc-发散型棒棒糖图-diverging-lollipop-chart" class="nav-link" data-scroll-target="#%E5%8F%91%E6%95%A3%E5%9E%8B%E6%A3%92%E6%A3%92%E7%B3%96%E5%9B%BE-diverging-lollipop-chart"><span class="header-section-number">6.2.2</span> 发散型棒棒糖图 Diverging Lollipop Chart</a></li>
-  <li><a href="#%E5%8F%91%E6%95%A3%E5%9E%8B%E7%82%B9%E5%9B%BE-diverging-dot-plot" id="toc-发散型点图-diverging-dot-plot" class="nav-link" data-scroll-target="#%E5%8F%91%E6%95%A3%E5%9E%8B%E7%82%B9%E5%9B%BE-diverging-dot-plot"><span class="header-section-number">6.2.3</span> 发散型点图 Diverging Dot Plot</a></li>
-  </ul>
-</li>
-  <li>
-<a href="#%E6%8E%92%E5%BA%8F-ranking" id="toc-排序-ranking" class="nav-link" data-scroll-target="#%E6%8E%92%E5%BA%8F-ranking"><span class="header-section-number">6.3</span> 排序 Ranking</a>
+  <li><a href="#发散型条形图-diverging-bars" id="toc-发散型条形图-diverging-bars" class="nav-link" data-scroll-target="#发散型条形图-diverging-bars"><span class="header-section-number">6.2.1</span> 发散型条形图 Diverging bars</a></li>
+  <li><a href="#发散型棒棒糖图-diverging-lollipop-chart" id="toc-发散型棒棒糖图-diverging-lollipop-chart" class="nav-link" data-scroll-target="#发散型棒棒糖图-diverging-lollipop-chart"><span class="header-section-number">6.2.2</span> 发散型棒棒糖图 Diverging Lollipop Chart</a></li>
+  <li><a href="#发散型点图-diverging-dot-plot" id="toc-发散型点图-diverging-dot-plot" class="nav-link" data-scroll-target="#发散型点图-diverging-dot-plot"><span class="header-section-number">6.2.3</span> 发散型点图 Diverging Dot Plot</a></li>
+  </ul></li>
+  <li><a href="#排序-ranking" id="toc-排序-ranking" class="nav-link" data-scroll-target="#排序-ranking"><span class="header-section-number">6.3</span> 排序 Ranking</a>
   <ul class="collapse">
-<li><a href="#%E7%82%B9%E5%9B%BE-dot-plot" id="toc-点图-dot-plot" class="nav-link" data-scroll-target="#%E7%82%B9%E5%9B%BE-dot-plot"><span class="header-section-number">6.3.1</span> 点图 Dot Plot</a></li>
-  <li><a href="#%E5%9D%A1%E5%BA%A6%E5%9B%BE-slope-chart" id="toc-坡度图-slope-chart" class="nav-link" data-scroll-target="#%E5%9D%A1%E5%BA%A6%E5%9B%BE-slope-chart"><span class="header-section-number">6.3.2</span> 坡度图 Slope Chart</a></li>
-  <li><a href="#%E5%93%91%E9%93%83%E5%9B%BE-dumbbell-plot" id="toc-哑铃图-dumbbell-plot" class="nav-link" data-scroll-target="#%E5%93%91%E9%93%83%E5%9B%BE-dumbbell-plot"><span class="header-section-number">6.3.3</span> 哑铃图 Dumbbell Plot</a></li>
-  </ul>
-</li>
-  <li>
-<a href="#%E5%88%86%E5%B8%83-distribution" id="toc-分布-distribution" class="nav-link" data-scroll-target="#%E5%88%86%E5%B8%83-distribution"><span class="header-section-number">6.4</span> 分布 Distribution</a>
+  <li><a href="#点图-dot-plot" id="toc-点图-dot-plot" class="nav-link" data-scroll-target="#点图-dot-plot"><span class="header-section-number">6.3.1</span> 点图 Dot Plot</a></li>
+  <li><a href="#坡度图-slope-chart" id="toc-坡度图-slope-chart" class="nav-link" data-scroll-target="#坡度图-slope-chart"><span class="header-section-number">6.3.2</span> 坡度图 Slope Chart</a></li>
+  <li><a href="#哑铃图-dumbbell-plot" id="toc-哑铃图-dumbbell-plot" class="nav-link" data-scroll-target="#哑铃图-dumbbell-plot"><span class="header-section-number">6.3.3</span> 哑铃图 Dumbbell Plot</a></li>
+  </ul></li>
+  <li><a href="#分布-distribution" id="toc-分布-distribution" class="nav-link" data-scroll-target="#分布-distribution"><span class="header-section-number">6.4</span> 分布 Distribution</a>
   <ul class="collapse">
-<li><a href="#tufte-boxplot" id="toc-tufte-boxplot" class="nav-link" data-scroll-target="#tufte-boxplot"><span class="header-section-number">6.4.1</span> Tufte Boxplot</a></li>
-  <li><a href="#%E4%BA%BA%E5%8F%A3%E9%87%91%E5%AD%97%E5%A1%94-population-pyramid" id="toc-人口金字塔-population-pyramid" class="nav-link" data-scroll-target="#%E4%BA%BA%E5%8F%A3%E9%87%91%E5%AD%97%E5%A1%94-population-pyramid"><span class="header-section-number">6.4.2</span> 人口金字塔 Population Pyramid</a></li>
-  </ul>
-</li>
-  <li>
-<a href="#%E7%BB%84%E6%88%90-composition" id="toc-组成-composition" class="nav-link" data-scroll-target="#%E7%BB%84%E6%88%90-composition"><span class="header-section-number">6.5</span> 组成 Composition</a>
+  <li><a href="#tufte-boxplot" id="toc-tufte-boxplot" class="nav-link" data-scroll-target="#tufte-boxplot"><span class="header-section-number">6.4.1</span> Tufte Boxplot</a></li>
+  <li><a href="#人口金字塔-population-pyramid" id="toc-人口金字塔-population-pyramid" class="nav-link" data-scroll-target="#人口金字塔-population-pyramid"><span class="header-section-number">6.4.2</span> 人口金字塔 Population Pyramid</a></li>
+  </ul></li>
+  <li><a href="#组成-composition" id="toc-组成-composition" class="nav-link" data-scroll-target="#组成-composition"><span class="header-section-number">6.5</span> 组成 Composition</a>
   <ul class="collapse">
-<li><a href="#%E5%8D%8E%E5%A4%AB%E5%9B%BE-waffle-chart" id="toc-华夫图-waffle-chart" class="nav-link" data-scroll-target="#%E5%8D%8E%E5%A4%AB%E5%9B%BE-waffle-chart"><span class="header-section-number">6.5.1</span> 华夫图 Waffle Chart</a></li>
-  <li><a href="#%E6%A0%91%E5%BD%A2%E5%9B%BE-treemap" id="toc-树形图-treemap" class="nav-link" data-scroll-target="#%E6%A0%91%E5%BD%A2%E5%9B%BE-treemap"><span class="header-section-number">6.5.2</span> 树形图 Treemap</a></li>
-  </ul>
-</li>
-  <li>
-<a href="#%E5%88%86%E7%BB%84-groups" id="toc-分组-groups" class="nav-link" data-scroll-target="#%E5%88%86%E7%BB%84-groups"><span class="header-section-number">6.6</span> 分组 Groups</a>
+  <li><a href="#华夫图-waffle-chart" id="toc-华夫图-waffle-chart" class="nav-link" data-scroll-target="#华夫图-waffle-chart"><span class="header-section-number">6.5.1</span> 华夫图 Waffle Chart</a></li>
+  <li><a href="#树形图-treemap" id="toc-树形图-treemap" class="nav-link" data-scroll-target="#树形图-treemap"><span class="header-section-number">6.5.2</span> 树形图 Treemap</a></li>
+  </ul></li>
+  <li><a href="#分组-groups" id="toc-分组-groups" class="nav-link" data-scroll-target="#分组-groups"><span class="header-section-number">6.6</span> 分组 Groups</a>
   <ul class="collapse">
-<li><a href="#%E5%88%86%E5%B1%82%E6%A0%91%E6%9E%9D%E5%9B%BE-hierarchical-dendrogram" id="toc-分层树枝图-hierarchical-dendrogram" class="nav-link" data-scroll-target="#%E5%88%86%E5%B1%82%E6%A0%91%E6%9E%9D%E5%9B%BE-hierarchical-dendrogram"><span class="header-section-number">6.6.1</span> 分层树枝图 Hierarchical Dendrogram</a></li>
-  <li><a href="#%E8%81%9A%E7%B1%BB-clusters" id="toc-聚类-clusters" class="nav-link" data-scroll-target="#%E8%81%9A%E7%B1%BB-clusters"><span class="header-section-number">6.6.2</span> 聚类 Clusters</a></li>
+  <li><a href="#分层树枝图-hierarchical-dendrogram" id="toc-分层树枝图-hierarchical-dendrogram" class="nav-link" data-scroll-target="#分层树枝图-hierarchical-dendrogram"><span class="header-section-number">6.6.1</span> 分层树枝图 Hierarchical Dendrogram</a></li>
+  <li><a href="#聚类-clusters" id="toc-聚类-clusters" class="nav-link" data-scroll-target="#聚类-clusters"><span class="header-section-number">6.6.2</span> 聚类 Clusters</a></li>
+  </ul></li>
   </ul>
-</li>
-  </ul><div class="toc-actions"><ul><li><a href="https://github.com/FeelLiao/R_in_ASLDV/edit/main/top50zh.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/FeelLiao/R_in_ASLDV/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/FeelLiao/RdataVisualization/edit/main/top50zh.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/FeelLiao/RdataVisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
 <h1 class="title"><span id="sec-top50ggplot2zh" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 可视化</span></span></h1>
 </div>
 
@@ -256,7 +264,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 
-</header><div class="callout callout-style-simple callout-note">
+</header>
+
+
+<div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -278,328 +289,350 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>下面的示例可以根据可视化的目标分为8类图表。在实际绘制之前，你应该弄清楚你想通过数据可视化来传达或研究哪些发现和关系，它很有可能属于这8个类别中的一个或多个。</p>
 <p><strong>文章中用到的R包:</strong></p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hrbrmstr/ggalt">ggalt</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/daattali/ggExtra">ggExtra</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://scales.r-lib.org">scales</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jrnold/ggthemes">ggthemes</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkox.org/treemapify/">treemapify</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/andrie/ggdendro">ggdendro</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sinhrks/ggfortify">ggfortify</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggalt)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggExtra)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(treemapify)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggdendro)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="相关-correlation" class="level2" data-number="6.1"><h2 data-number="6.1" class="anchored" data-anchor-id="相关-correlation">
-<span class="header-section-number">6.1</span> 相关 Correlation</h2>
+<section id="相关-correlation" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="相关-correlation"><span class="header-section-number">6.1</span> 相关 Correlation</h2>
 <p>下面的图形帮助解释两个变量之间的相关性。</p>
-<section id="点图-scatterplot" class="level3" data-number="6.1.1"><h3 data-number="6.1.1" class="anchored" data-anchor-id="点图-scatterplot">
-<span class="header-section-number">6.1.1</span> 点图 Scatterplot</h3>
+<section id="点图-scatterplot" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="点图-scatterplot"><span class="header-section-number">6.1.1</span> 点图 Scatterplot</h3>
 <p>最常使用的数据分析图无疑是散点图。每当您想了解两个变量之间的关系时，第一个选择就是散点图。</p>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>scipen <span class="op">=</span> <span class="fl">999</span><span class="op">)</span> <span class="co"># 关闭科学计数显示</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">midwest</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">area</span>, y <span class="op">=</span> <span class="va">poptotal</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">state</span>, size <span class="op">=</span> <span class="va">popdensity</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"loess"</span>, se <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">500000</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
-<span>    x <span class="op">=</span> <span class="st">"Area"</span>,</span>
-<span>    y <span class="op">=</span> <span class="st">"Population"</span>,</span>
-<span>    title <span class="op">=</span> <span class="st">"Scatterplot"</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="st">"Area vs Population"</span>,</span>
-<span>    caption <span class="op">=</span> <span class="st">"Source: midwest"</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen =</span> <span class="dv">999</span>) <span class="co"># 关闭科学计数显示</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(midwest, <span class="fu">aes</span>(<span class="at">x =</span> area, <span class="at">y =</span> poptotal)) <span class="sc">+</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> state, <span class="at">size =</span> popdensity)) <span class="sc">+</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.1</span>)) <span class="sc">+</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">500000</span>)) <span class="sc">+</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Area"</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Population"</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Scatterplot"</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Area vs Population"</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Source: midwest"</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="top50zh_files/figure-html/Scatterplot-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure">
+<p><img src="top50zh_files/figure-html/Scatterplot-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-</section><section id="有圈点图-scatterplot-with-encircling" class="level3" data-number="6.1.2"><h3 data-number="6.1.2" class="anchored" data-anchor-id="有圈点图-scatterplot-with-encircling">
-<span class="header-section-number">6.1.2</span> 有圈点图 Scatterplot With Encircling</h3>
-<p>在展示结果时，有时会在图表中强调某些特殊点组成的区域，以引起人们对这些特殊情况的注意。使用 <code>ggalt</code> 软件包中的<code><a href="https://rdrr.io/pkg/ggalt/man/geom_encircle.html">geom_encircle()</a></code>可以很方便地做到这一点。</p>
+</section>
+<section id="有圈点图-scatterplot-with-encircling" class="level3" data-number="6.1.2">
+<h3 data-number="6.1.2" class="anchored" data-anchor-id="有圈点图-scatterplot-with-encircling"><span class="header-section-number">6.1.2</span> 有圈点图 Scatterplot With Encircling</h3>
+<p>在展示结果时，有时会在图表中强调某些特殊点组成的区域，以引起人们对这些特殊情况的注意。使用 <code>ggalt</code> 软件包中的<code>geom_encircle()</code>可以很方便地做到这一点。</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">midwest_select</span> <span class="op">&lt;-</span> <span class="va">midwest</span><span class="op">[</span></span>
-<span>  <span class="va">midwest</span><span class="op">$</span><span class="va">poptotal</span> <span class="op">&gt;</span> <span class="fl">350000</span> <span class="op">&amp;</span></span>
-<span>    <span class="va">midwest</span><span class="op">$</span><span class="va">poptotal</span> <span class="op">&lt;=</span> <span class="fl">500000</span> <span class="op">&amp;</span></span>
-<span>    <span class="va">midwest</span><span class="op">$</span><span class="va">area</span> <span class="op">&gt;</span> <span class="fl">0.01</span> <span class="op">&amp;</span></span>
-<span>    <span class="va">midwest</span><span class="op">$</span><span class="va">area</span> <span class="op">&lt;</span> <span class="fl">0.1</span>,</span>
-<span><span class="op">]</span></span>
-<span></span>
-<span><span class="co"># Plot</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">midwest</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">area</span>, y <span class="op">=</span> <span class="va">poptotal</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>col <span class="op">=</span> <span class="va">state</span>, size <span class="op">=</span> <span class="va">popdensity</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># draw points</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"loess"</span>, se <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">500000</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># draw smoothing line</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggalt/man/geom_encircle.html">geom_encircle</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">area</span>, y <span class="op">=</span> <span class="va">poptotal</span><span class="op">)</span>,</span>
-<span>    data <span class="op">=</span> <span class="va">midwest_select</span>,</span>
-<span>    color <span class="op">=</span> <span class="st">"red"</span>,</span>
-<span>    size <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>    expand <span class="op">=</span> <span class="fl">0.08</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span> <span class="co"># encircle</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
-<span>    subtitle <span class="op">=</span> <span class="st">"Area Vs Population"</span>,</span>
-<span>    y <span class="op">=</span> <span class="st">"Population"</span>,</span>
-<span>    x <span class="op">=</span> <span class="st">"Area"</span>,</span>
-<span>    title <span class="op">=</span> <span class="st">"Scatterplot + Encircle"</span>,</span>
-<span>    caption <span class="op">=</span> <span class="st">"Source: midwest"</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>midwest_select <span class="ot">&lt;-</span> midwest[</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  midwest<span class="sc">$</span>poptotal <span class="sc">&gt;</span> <span class="dv">350000</span> <span class="sc">&amp;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    midwest<span class="sc">$</span>poptotal <span class="sc">&lt;=</span> <span class="dv">500000</span> <span class="sc">&amp;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    midwest<span class="sc">$</span>area <span class="sc">&gt;</span> <span class="fl">0.01</span> <span class="sc">&amp;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    midwest<span class="sc">$</span>area <span class="sc">&lt;</span> <span class="fl">0.1</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(midwest, <span class="fu">aes</span>(<span class="at">x =</span> area, <span class="at">y =</span> poptotal)) <span class="sc">+</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">col =</span> state, <span class="at">size =</span> popdensity)) <span class="sc">+</span> <span class="co"># draw points</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> F) <span class="sc">+</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.1</span>)) <span class="sc">+</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">500000</span>)) <span class="sc">+</span> <span class="co"># draw smoothing line</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_encircle</span>(<span class="fu">aes</span>(<span class="at">x =</span> area, <span class="at">y =</span> poptotal),</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> midwest_select,</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"red"</span>,</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">2</span>,</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">expand =</span> <span class="fl">0.08</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> <span class="co"># encircle</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Area Vs Population"</span>,</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Population"</span>,</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Area"</span>,</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Scatterplot + Encircle"</span>,</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Source: midwest"</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="top50zh_files/figure-html/Scatterplot With Encircling-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure">
+<p><img src="top50zh_files/figure-html/Scatterplot With Encircling-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-</section><section id="计数图-counts-chart" class="level3" data-number="6.1.3"><h3 data-number="6.1.3" class="anchored" data-anchor-id="计数图-counts-chart">
-<span class="header-section-number">6.1.3</span> 计数图 Counts Chart</h3>
+</section>
+<section id="计数图-counts-chart" class="level3" data-number="6.1.3">
+<h3 data-number="6.1.3" class="anchored" data-anchor-id="计数图-counts-chart"><span class="header-section-number">6.1.3</span> 计数图 Counts Chart</h3>
 <p>当数据点重叠时，散点图可能无法清楚地显示数据，因此可以使用计数图。在计数图中，数据点重叠越多的地方会显示一更大的圆。</p>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">cty</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_count.html">geom_count</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"tomato3"</span><span class="op">)</span>, show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
-<span>    subtitle <span class="op">=</span> <span class="st">"mpg: city vs highway mileage"</span>,</span>
-<span>    y <span class="op">=</span> <span class="st">"hwy"</span>,</span>
-<span>    x <span class="op">=</span> <span class="st">"cty"</span>,</span>
-<span>    title <span class="op">=</span> <span class="st">"Counts Plot"</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(cty, hwy)) <span class="sc">+</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_count</span>(<span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"tomato3"</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"mpg: city vs highway mileage"</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"hwy"</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"cty"</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Counts Plot"</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="top50zh_files/figure-html/Counts Chart-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure">
+<p><img src="top50zh_files/figure-html/Counts Chart-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-</section><section id="气泡图-bubble-plot" class="level3" data-number="6.1.4"><h3 data-number="6.1.4" class="anchored" data-anchor-id="气泡图-bubble-plot">
-<span class="header-section-number">6.1.4</span> 气泡图 Bubble plot</h3>
+</section>
+<section id="气泡图-bubble-plot" class="level3" data-number="6.1.4">
+<h3 data-number="6.1.4" class="anchored" data-anchor-id="气泡图-bubble-plot"><span class="header-section-number">6.1.4</span> 气泡图 Bubble plot</h3>
 <p>散点图可以比较两个连续变量之间的关系，而气泡图则可以很好地帮助理解一个分类变量（通过改变颜色）和另一个连续变量（通过改变点的大小）的基础组内关系。简单地说，如果您有四维数据，其中两个是 X 和 Y（连续变量），另两个是表示颜色（分类变量）和大小（连续变量）的变量，那么气泡图就比较适合。</p>
 <p>气泡图可以清楚地区分不同制造商之间的<code>displ</code>范围以及最佳拟合直线斜率的变化情况，从而更好地对各组数据进行直观比较。</p>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mpg_select</span> <span class="op">&lt;-</span> <span class="va">mpg</span><span class="op">[</span><span class="va">mpg</span><span class="op">$</span><span class="va">manufacturer</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"audi"</span>, <span class="st">"ford"</span>, <span class="st">"honda"</span>, <span class="st">"hyundai"</span><span class="op">)</span>, <span class="op">]</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mpg_select</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">displ</span>, <span class="va">cty</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>col <span class="op">=</span> <span class="va">manufacturer</span>, size <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>col <span class="op">=</span> <span class="va">manufacturer</span><span class="op">)</span>, method <span class="op">=</span> <span class="st">"lm"</span>, se <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
-<span>    subtitle <span class="op">=</span> <span class="st">"mpg: Displacement vs City Mileage"</span>,</span>
-<span>    title <span class="op">=</span> <span class="st">"Bubble chart"</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mpg_select <span class="ot">&lt;-</span> mpg[mpg<span class="sc">$</span>manufacturer <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"audi"</span>, <span class="st">"ford"</span>, <span class="st">"honda"</span>, <span class="st">"hyundai"</span>), ]</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg_select, <span class="fu">aes</span>(displ, cty)) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="fu">aes</span>(<span class="at">col =</span> manufacturer, <span class="at">size =</span> hwy)) <span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">col =</span> manufacturer), <span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"mpg: Displacement vs City Mileage"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Bubble chart"</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="top50zh_files/figure-html/Bubble plot-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure">
+<p><img src="top50zh_files/figure-html/Bubble plot-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-</section><section id="边际直方图-marginal-histogram-boxplot" class="level3" data-number="6.1.5"><h3 data-number="6.1.5" class="anchored" data-anchor-id="边际直方图-marginal-histogram-boxplot">
-<span class="header-section-number">6.1.5</span> 边际直方图 Marginal Histogram / Boxplot</h3>
+</section>
+<section id="边际直方图-marginal-histogram-boxplot" class="level3" data-number="6.1.5">
+<h3 data-number="6.1.5" class="anchored" data-anchor-id="边际直方图-marginal-histogram-boxplot"><span class="header-section-number">6.1.5</span> 边际直方图 Marginal Histogram / Boxplot</h3>
 <p>如果想在同一张图表中显示关系和分布，可以使用边际直方图。它在散点图的边缘显示 X 和 Y 变量的直方图。</p>
-<p>可以使用 <code>ggExtra</code> 软件包中的 <code><a href="https://rdrr.io/pkg/ggExtra/man/ggMarginal.html">ggMarginal()</a></code> 函数来实现。除了直方图，您还可以通过设置相应的类型选项来绘制边际盒状图或密度图。</p>
+<p>可以使用 <code>ggExtra</code> 软件包中的 <code>ggMarginal()</code> 函数来实现。除了直方图，您还可以通过设置相应的类型选项来绘制边际盒状图或密度图。</p>
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># mpg_select &lt;- mpg[mpg$hwy &gt;= 35 &amp; mpg$cty &gt; 27, ]</span></span>
-<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">cty</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_count.html">geom_count</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, se <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/ggExtra/man/ggMarginal.html">ggMarginal</a></span><span class="op">(</span><span class="va">g</span>, type <span class="op">=</span> <span class="st">"histogram"</span>, fill <span class="op">=</span> <span class="st">"transparent"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mpg_select &lt;- mpg[mpg$hwy &gt;= 35 &amp; mpg$cty &gt; 27, ]</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(cty, hwy)) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_count</span>() <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggMarginal</span>(g, <span class="at">type =</span> <span class="st">"histogram"</span>, <span class="at">fill =</span> <span class="st">"transparent"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="top50zh_files/figure-html/Marginal Histogram-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure">
+<p><img src="top50zh_files/figure-html/Marginal Histogram-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-</section></section><section id="偏差-deviation" class="level2" data-number="6.2"><h2 data-number="6.2" class="anchored" data-anchor-id="偏差-deviation">
-<span class="header-section-number">6.2</span> 偏差 Deviation</h2>
+</section>
+</section>
+<section id="偏差-deviation" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="偏差-deviation"><span class="header-section-number">6.2</span> 偏差 Deviation</h2>
 <p>比较少量项目（或类别）之间相对于固定参照物的数值变化。</p>
-<section id="发散型条形图-diverging-bars" class="level3" data-number="6.2.1"><h3 data-number="6.2.1" class="anchored" data-anchor-id="发散型条形图-diverging-bars">
-<span class="header-section-number">6.2.1</span> 发散型条形图 Diverging bars</h3>
-<p>发散条形图是一种可以处理负值和正值的条形图。可以通过对 <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code>进行巧妙的调整来实现。但是，“geom_bar()”的用法可能相当令人困惑。这是因为它既可以用来制作柱状图，也可以用来制作直方图。让我来解释一下。</p>
-<p>默认情况下，<code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code> 的统计量为计数。这意味着，当你只提供一个连续的 X 变量（而没有 Y 变量）时，它会尝试将数据制成柱状图。为了让条形图创建条形而不是直方图，需要做两件事。</p>
+<section id="发散型条形图-diverging-bars" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="发散型条形图-diverging-bars"><span class="header-section-number">6.2.1</span> 发散型条形图 Diverging bars</h3>
+<p>发散条形图是一种可以处理负值和正值的条形图。可以通过对 <code>geom_bar()</code>进行巧妙的调整来实现。但是，“geom_bar()”的用法可能相当令人困惑。这是因为它既可以用来制作柱状图，也可以用来制作直方图。让我来解释一下。</p>
+<p>默认情况下，<code>geom_bar()</code> 的统计量为计数。这意味着，当你只提供一个连续的 X 变量（而没有 Y 变量）时，它会尝试将数据制成柱状图。为了让条形图创建条形而不是直方图，需要做两件事。</p>
 <p>在 “aes()”中设置 “stat=identity”，同时提供 x 和 y，其中 x 是字符或因子，y 是数字。为了确保得到的是发散条形图而不是单纯的条形图，请确保您的分类变量有两个类别，其值在连续变量的某个阈值时会发生变化。在下面的示例中，mtcars 数据集中的 mpg 通过计算 z 分数进行归一化。mpg高于零的车辆标记为绿色，低于零的标记为红色。</p>
 <div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mtcars_new</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
-<span>    car_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>    mpg_z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="op">(</span><span class="va">mpg</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>, <span class="co"># compute normalized mpg</span></span>
-<span>    mpg_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">mpg_z</span> <span class="op">&lt;</span> <span class="fl">0</span>, <span class="st">"below"</span>, <span class="st">"above"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># above / below avg flag</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">mpg_z</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co"># Diverging Barcharts</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mtcars_new</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">car_name</span>, y <span class="op">=</span> <span class="va">mpg_z</span>, label <span class="op">=</span> <span class="va">mpg_z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">mpg_type</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span></span>
-<span>    name <span class="op">=</span> <span class="st">"Mileage"</span>,</span>
-<span>    labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Above Average"</span>, <span class="st">"Below Average"</span><span class="op">)</span>,</span>
-<span>    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"above"</span> <span class="op">=</span> <span class="st">"#00ba38"</span>, <span class="st">"below"</span> <span class="op">=</span> <span class="st">"#f8766d"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
-<span>    subtitle <span class="op">=</span> <span class="st">"Normalised mileage from 'mtcars'"</span>,</span>
-<span>    title <span class="op">=</span> <span class="st">"Diverging Bars"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="co"># using sorted car_name to adjust the rank of the x labels</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html">scale_x_discrete</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="va">mtcars_new</span><span class="op">$</span><span class="va">car_name</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mtcars_new <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">car_name =</span> <span class="fu">factor</span>(<span class="fu">rownames</span>(mtcars)),</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mpg_z =</span> <span class="fu">round</span>((mpg <span class="sc">-</span> <span class="fu">mean</span>(mpg)) <span class="sc">/</span> <span class="fu">sd</span>(mpg), <span class="dv">2</span>), <span class="co"># compute normalized mpg</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mpg_type =</span> <span class="fu">ifelse</span>(mpg_z <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="st">"below"</span>, <span class="st">"above"</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> <span class="co"># above / below avg flag</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(mpg_z) <span class="sc">|&gt;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Diverging Barcharts</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars_new, <span class="fu">aes</span>(<span class="at">x =</span> car_name, <span class="at">y =</span> mpg_z, <span class="at">label =</span> mpg_z)) <span class="sc">+</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="fu">aes</span>(<span class="at">fill =</span> mpg_type), <span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Mileage"</span>,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Above Average"</span>, <span class="st">"Below Average"</span>),</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"above"</span> <span class="ot">=</span> <span class="st">"#00ba38"</span>, <span class="st">"below"</span> <span class="ot">=</span> <span class="st">"#f8766d"</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Normalised mileage from 'mtcars'"</span>,</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Diverging Bars"</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># using sorted car_name to adjust the rank of the x labels</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">limits =</span> mtcars_new<span class="sc">$</span>car_name) <span class="sc">+</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="top50zh_files/figure-html/Diverging Bars-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure">
+<p><img src="top50zh_files/figure-html/Diverging Bars-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-</section><section id="发散型棒棒糖图-diverging-lollipop-chart" class="level3" data-number="6.2.2"><h3 data-number="6.2.2" class="anchored" data-anchor-id="发散型棒棒糖图-diverging-lollipop-chart">
-<span class="header-section-number">6.2.2</span> 发散型棒棒糖图 Diverging Lollipop Chart</h3>
-<p>棒棒糖图传达的信息与柱状图和发散柱状图相同。只不过它看起来更现代。我没有使用 <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code>，而是使用了 <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point()</a></code> 和 <code><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment()</a></code> 来正确绘制棒棒糖图。让我们用上一个发散条形图示例中的相同数据来画一个棒棒糖图。</p>
+</section>
+<section id="发散型棒棒糖图-diverging-lollipop-chart" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="发散型棒棒糖图-diverging-lollipop-chart"><span class="header-section-number">6.2.2</span> 发散型棒棒糖图 Diverging Lollipop Chart</h3>
+<p>棒棒糖图传达的信息与柱状图和发散柱状图相同。只不过它看起来更现代。我没有使用 <code>geom_bar()</code>，而是使用了 <code>geom_point()</code> 和 <code>geom_segment()</code> 来正确绘制棒棒糖图。让我们用上一个发散条形图示例中的相同数据来画一个棒棒糖图。</p>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mtcars_new</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">car_name</span>, y <span class="op">=</span> <span class="va">mpg_z</span>, label <span class="op">=</span> <span class="va">mpg_z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>, fill <span class="op">=</span> <span class="st">"black"</span>, size <span class="op">=</span> <span class="fl">6</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="co"># geom_segment draw a line between</span></span>
-<span>  <span class="co"># (x,y) and (xend,yend)</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span></span>
-<span>    y <span class="op">=</span> <span class="fl">0</span>, x <span class="op">=</span> <span class="va">car_name</span>,</span>
-<span>    yend <span class="op">=</span> <span class="va">mpg_z</span>, xend <span class="op">=</span> <span class="va">car_name</span></span>
-<span>  <span class="op">)</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="co"># label mpg_z -&gt; geom_text</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"white"</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
-<span>    title <span class="op">=</span> <span class="st">"Diverging Lollipop Chart"</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="st">"Normalized mileage from 'mtcars': Lollipop"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2.5</span>, <span class="fl">2.5</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html">scale_x_discrete</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="va">mtcars_new</span><span class="op">$</span><span class="va">car_name</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars_new, <span class="fu">aes</span>(<span class="at">x =</span> car_name, <span class="at">y =</span> mpg_z, <span class="at">label =</span> mpg_z)) <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">6</span>) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># geom_segment draw a line between</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># (x,y) and (xend,yend)</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="dv">0</span>, <span class="at">x =</span> car_name,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">yend =</span> mpg_z, <span class="at">xend =</span> car_name</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  ), <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># label mpg_z -&gt; geom_text</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">color =</span> <span class="st">"white"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Diverging Lollipop Chart"</span>,</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Normalized mileage from 'mtcars': Lollipop"</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="sc">-</span><span class="fl">2.5</span>, <span class="fl">2.5</span>) <span class="sc">+</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">limits =</span> mtcars_new<span class="sc">$</span>car_name) <span class="sc">+</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="top50zh_files/figure-html/Diverging Lollipop Chart-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure">
+<p><img src="top50zh_files/figure-html/Diverging Lollipop Chart-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-</section><section id="发散型点图-diverging-dot-plot" class="level3" data-number="6.2.3"><h3 data-number="6.2.3" class="anchored" data-anchor-id="发散型点图-diverging-dot-plot">
-<span class="header-section-number">6.2.3</span> 发散型点图 Diverging Dot Plot</h3>
+</section>
+<section id="发散型点图-diverging-dot-plot" class="level3" data-number="6.2.3">
+<h3 data-number="6.2.3" class="anchored" data-anchor-id="发散型点图-diverging-dot-plot"><span class="header-section-number">6.2.3</span> 发散型点图 Diverging Dot Plot</h3>
 <p>点图也能传递类似的信息。其原理与我们在发散条形图中看到的相同，只是只使用了点。下面的示例使用了发散条形图示例中的相同数据。</p>
 <div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mtcars_new</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">car_name</span>, y <span class="op">=</span> <span class="va">mpg_z</span>, label <span class="op">=</span> <span class="va">mpg_z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">mpg_type</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">6</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_color_manual</a></span><span class="op">(</span></span>
-<span>    name <span class="op">=</span> <span class="st">"Mileage"</span>,</span>
-<span>    labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Above Average"</span>, <span class="st">"Below Average"</span><span class="op">)</span>,</span>
-<span>    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"above"</span> <span class="op">=</span> <span class="st">"#00ba38"</span>, <span class="st">"below"</span> <span class="op">=</span> <span class="st">"#f8766d"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"white"</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
-<span>    title <span class="op">=</span> <span class="st">"Diverging Dot Plot"</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="st">"Normalized mileage from 'mtcars': Dot plot"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html">scale_x_discrete</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="va">mtcars_new</span><span class="op">$</span><span class="va">car_name</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars_new, <span class="fu">aes</span>(<span class="at">x =</span> car_name, <span class="at">y =</span> mpg_z, <span class="at">label =</span> mpg_z)) <span class="sc">+</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="fu">aes</span>(<span class="at">color =</span> mpg_type), <span class="at">size =</span> <span class="dv">6</span>) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Mileage"</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Above Average"</span>, <span class="st">"Below Average"</span>),</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"above"</span> <span class="ot">=</span> <span class="st">"#00ba38"</span>, <span class="st">"below"</span> <span class="ot">=</span> <span class="st">"#f8766d"</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">color =</span> <span class="st">"white"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Diverging Dot Plot"</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Normalized mileage from 'mtcars': Dot plot"</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">limits =</span> mtcars_new<span class="sc">$</span>car_name) <span class="sc">+</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="top50zh_files/figure-html/Diverging Dot Plot-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure">
+<p><img src="top50zh_files/figure-html/Diverging Dot Plot-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-</section></section><section id="排序-ranking" class="level2" data-number="6.3"><h2 data-number="6.3" class="anchored" data-anchor-id="排序-ranking">
-<span class="header-section-number">6.3</span> 排序 Ranking</h2>
+</section>
+</section>
+<section id="排序-ranking" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="排序-ranking"><span class="header-section-number">6.3</span> 排序 Ranking</h2>
 <p>用于比较多个变量之间的的排位。在排序中，变量实际值的重要性会显得没有他们的排位重要。</p>
-<section id="点图-dot-plot" class="level3" data-number="6.3.1"><h3 data-number="6.3.1" class="anchored" data-anchor-id="点图-dot-plot">
-<span class="header-section-number">6.3.1</span> 点图 Dot Plot</h3>
+<section id="点图-dot-plot" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="点图-dot-plot"><span class="header-section-number">6.3.1</span> 点图 Dot Plot</h3>
 <p>点图与棒棒糖图非常相似，但没有线段，且翻转到水平位置。它更强调变量实际值的排序，以及不同变量与起始位置之间的距离。</p>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Prepare data: group mean city mileage by manufacturer.</span></span>
-<span><span class="va">cty_mpg</span> <span class="op">&lt;-</span> <span class="va">mpg</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">manufacturer</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>mileage <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">cty</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>make <span class="op">=</span> <span class="va">manufacturer</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>make <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">make</span>, levels <span class="op">=</span> <span class="va">make</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">mileage</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">cty_mpg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">make</span>, y <span class="op">=</span> <span class="va">mileage</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"tomato2"</span>, size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span></span>
-<span>      x <span class="op">=</span> <span class="va">make</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">mileage</span><span class="op">)</span>,</span>
-<span>      xend <span class="op">=</span> <span class="va">make</span>, yend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">mileage</span><span class="op">)</span></span>
-<span>    <span class="op">)</span>,</span>
-<span>    linetype <span class="op">=</span> <span class="st">"dashed"</span>, linewidth <span class="op">=</span> <span class="fl">0.1</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
-<span>    title <span class="op">=</span> <span class="st">"Dot Plot"</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="st">"Make Vs Avg. Mileage"</span>,</span>
-<span>    caption <span class="op">=</span> <span class="st">"source: mpg"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html">scale_x_discrete</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="va">cty_mpg</span><span class="op">$</span><span class="va">make</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data: group mean city mileage by manufacturer.</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>cty_mpg <span class="ot">&lt;-</span> mpg <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(manufacturer) <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mileage =</span> <span class="fu">mean</span>(cty, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">make =</span> manufacturer) <span class="sc">|&gt;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">make =</span> <span class="fu">factor</span>(make, <span class="at">levels =</span> make)) <span class="sc">|&gt;</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(mileage)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cty_mpg, <span class="fu">aes</span>(<span class="at">x =</span> make, <span class="at">y =</span> mileage)) <span class="sc">+</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"tomato2"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> make, <span class="at">y =</span> <span class="fu">min</span>(mileage),</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">xend =</span> make, <span class="at">yend =</span> <span class="fu">max</span>(mileage)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">linewidth =</span> <span class="fl">0.1</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Dot Plot"</span>,</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Make Vs Avg. Mileage"</span>,</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"source: mpg"</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">limits =</span> cty_mpg<span class="sc">$</span>make) <span class="sc">+</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="top50zh_files/figure-html/Dot Plot-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure">
+<p><img src="top50zh_files/figure-html/Dot Plot-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-</section><section id="坡度图-slope-chart" class="level3" data-number="6.3.2"><h3 data-number="6.3.2" class="anchored" data-anchor-id="坡度图-slope-chart">
-<span class="header-section-number">6.3.2</span> 坡度图 Slope Chart</h3>
+</section>
+<section id="坡度图-slope-chart" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="坡度图-slope-chart"><span class="header-section-number">6.3.2</span> 坡度图 Slope Chart</h3>
 <p>坡度图提供了比较两点在不同时间上的位置的极佳方法。目前，还没有内置函数来构建这种图表。下面的代码可作为您如何处理这一问题的指南。</p>
 <div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Prepare data</span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/top50ggplot2/gdppercap.csv"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">left_label</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">continent</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">`1952`</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span>
-<span><span class="va">right_label</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">continent</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">`1957`</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span>
-<span><span class="va">df</span><span class="op">$</span><span class="va">class</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">`1957`</span> <span class="op">-</span> <span class="va">df</span><span class="op">$</span><span class="va">`1952`</span> <span class="op">&lt;</span> <span class="fl">0</span>, <span class="st">"red"</span>, <span class="st">"green"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Plot</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, y <span class="op">=</span> <span class="va">`1952`</span>, xend <span class="op">=</span> <span class="fl">2</span>, yend <span class="op">=</span> <span class="va">`1957`</span>, color <span class="op">=</span> <span class="va">class</span><span class="op">)</span>,</span>
-<span>    linewidth <span class="op">=</span> <span class="fl">0.75</span>, show.legend <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fl">1</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, linewidth <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fl">2</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, linewidth <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_color_manual</a></span><span class="op">(</span></span>
-<span>    labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Up"</span>, <span class="st">"Down"</span><span class="op">)</span>,</span>
-<span>    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"green"</span> <span class="op">=</span> <span class="st">"#00ba38"</span>, <span class="st">"red"</span> <span class="op">=</span> <span class="st">"#f8766d"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="st">"Mean GdpPerCap"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">2.5</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="fl">0</span>, <span class="op">(</span><span class="fl">1.1</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">`1957`</span>, <span class="va">df</span><span class="op">$</span><span class="va">`1952`</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span></span>
-<span>    label <span class="op">=</span> <span class="va">left_label</span>, y <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">`1952`</span>,</span>
-<span>    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span>, hjust <span class="op">=</span> <span class="fl">1.1</span>, size <span class="op">=</span> <span class="fl">3.5</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span></span>
-<span>    label <span class="op">=</span> <span class="va">right_label</span>, y <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">`1957`</span>,</span>
-<span>    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span>, hjust <span class="op">=</span> <span class="op">-</span><span class="fl">0.1</span>, size <span class="op">=</span> <span class="fl">3.5</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span></span>
-<span>    label <span class="op">=</span> <span class="st">"Time 1"</span>, x <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    y <span class="op">=</span> <span class="fl">1.1</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">`1957`</span>, <span class="va">df</span><span class="op">$</span><span class="va">`1952`</span><span class="op">)</span>,</span>
-<span>    hjust <span class="op">=</span> <span class="fl">1.2</span>, size <span class="op">=</span> <span class="fl">5</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span></span>
-<span>    label <span class="op">=</span> <span class="st">"Time 2"</span>, x <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>    y <span class="op">=</span> <span class="fl">1.1</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">`1957`</span>, <span class="va">df</span><span class="op">$</span><span class="va">`1952`</span><span class="op">)</span>,</span>
-<span>    hjust <span class="op">=</span> <span class="op">-</span><span class="fl">0.2</span>, size <span class="op">=</span> <span class="fl">5</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
-<span>    panel.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>    panel.grid <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>    axis.ticks <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>    axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>    panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>    plot.margin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, <span class="st">"cm"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/top50ggplot2/gdppercap.csv"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>left_label <span class="ot">&lt;-</span> <span class="fu">paste</span>(df<span class="sc">$</span>continent, <span class="fu">round</span>(df<span class="sc">$</span><span class="st">`</span><span class="at">1952</span><span class="st">`</span>), <span class="at">sep =</span> <span class="st">","</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>right_label <span class="ot">&lt;-</span> <span class="fu">paste</span>(df<span class="sc">$</span>continent, <span class="fu">round</span>(df<span class="sc">$</span><span class="st">`</span><span class="at">1957</span><span class="st">`</span>), <span class="at">sep =</span> <span class="st">","</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>class <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(df<span class="sc">$</span><span class="st">`</span><span class="at">1957</span><span class="st">`</span> <span class="sc">-</span> df<span class="sc">$</span><span class="st">`</span><span class="at">1952</span><span class="st">`</span> <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="st">"red"</span>, <span class="st">"green"</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df) <span class="sc">+</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">1952</span><span class="st">`</span>, <span class="at">xend =</span> <span class="dv">2</span>, <span class="at">yend =</span> <span class="st">`</span><span class="at">1957</span><span class="st">`</span>, <span class="at">color =</span> class),</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">0.75</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">linewidth =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">2</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">linewidth =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Up"</span>, <span class="st">"Down"</span>),</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"green"</span> <span class="ot">=</span> <span class="st">"#00ba38"</span>, <span class="st">"red"</span> <span class="ot">=</span> <span class="st">"#f8766d"</span>)</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">"Mean GdpPerCap"</span>) <span class="sc">+</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="fl">0.5</span>, <span class="fl">2.5</span>) <span class="sc">+</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, (<span class="fl">1.1</span> <span class="sc">*</span> <span class="fu">max</span>(df<span class="sc">$</span><span class="st">`</span><span class="at">1957</span><span class="st">`</span>, df<span class="sc">$</span><span class="st">`</span><span class="at">1952</span><span class="st">`</span>))) <span class="sc">+</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> left_label, <span class="at">y =</span> df<span class="sc">$</span><span class="st">`</span><span class="at">1952</span><span class="st">`</span>,</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">nrow</span>(df)), <span class="at">hjust =</span> <span class="fl">1.1</span>, <span class="at">size =</span> <span class="fl">3.5</span></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> right_label, <span class="at">y =</span> df<span class="sc">$</span><span class="st">`</span><span class="at">1957</span><span class="st">`</span>,</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">rep</span>(<span class="dv">2</span>, <span class="fu">nrow</span>(df)), <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.1</span>, <span class="at">size =</span> <span class="fl">3.5</span></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"Time 1"</span>, <span class="at">x =</span> <span class="dv">1</span>,</span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fl">1.1</span> <span class="sc">*</span> <span class="fu">max</span>(df<span class="sc">$</span><span class="st">`</span><span class="at">1957</span><span class="st">`</span>, df<span class="sc">$</span><span class="st">`</span><span class="at">1952</span><span class="st">`</span>),</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">hjust =</span> <span class="fl">1.2</span>, <span class="at">size =</span> <span class="dv">5</span></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"Time 2"</span>, <span class="at">x =</span> <span class="dv">2</span>,</span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fl">1.1</span> <span class="sc">*</span> <span class="fu">max</span>(df<span class="sc">$</span><span class="st">`</span><span class="at">1957</span><span class="st">`</span>, df<span class="sc">$</span><span class="st">`</span><span class="at">1952</span><span class="st">`</span>),</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.2</span>, <span class="at">size =</span> <span class="dv">5</span></span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="st">"cm"</span>)</span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="top50zh_files/figure-html/Slope Chart-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure">
+<p><img src="top50zh_files/figure-html/Slope Chart-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-</section><section id="哑铃图-dumbbell-plot" class="level3" data-number="6.3.3"><h3 data-number="6.3.3" class="anchored" data-anchor-id="哑铃图-dumbbell-plot">
-<span class="header-section-number">6.3.3</span> 哑铃图 Dumbbell Plot</h3>
+</section>
+<section id="哑铃图-dumbbell-plot" class="level3" data-number="6.3.3">
+<h3 data-number="6.3.3" class="anchored" data-anchor-id="哑铃图-dumbbell-plot"><span class="header-section-number">6.3.3</span> 哑铃图 Dumbbell Plot</h3>
 <p>哑铃图是一个针对以下问题的很好的数据可视化工具：</p>
 <ol type="1">
 <li>直观显示两个时间点之间的相对位置（如增长和下降）。</li>
@@ -607,230 +640,250 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <p>为了获得正确的哑铃图排序，Y 变量应该是一个因子类型的数据，因子变量的水平应该与它在图中出现的顺序相同。</p>
 <div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Prepare data</span></span>
-<span><span class="va">health</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"data/top50ggplot2/health.csv"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">health</span><span class="op">$</span><span class="va">Area</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">health</span><span class="op">$</span><span class="va">Area</span>,</span>
-<span>  levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">health</span><span class="op">$</span><span class="va">Area</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Plot</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">health</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">pct_2013</span>, xend <span class="op">=</span> <span class="va">pct_2014</span>, y <span class="op">=</span> <span class="va">Area</span>, group <span class="op">=</span> <span class="va">Area</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggalt/man/geom_dumbbell.html">geom_dumbbell</a></span><span class="op">(</span></span>
-<span>    color <span class="op">=</span> <span class="st">"#a3c4dc"</span>, size <span class="op">=</span> <span class="fl">0.75</span>,</span>
-<span>    colour_x <span class="op">=</span> <span class="st">"#0e668b"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="va"><a href="https://scales.r-lib.org/reference/percent_format.html">percent</a></span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
-<span>    x <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>    y <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>    title <span class="op">=</span> <span class="st">"Dumbbell Chart"</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="st">"Pct Change: 2013 vs 2014"</span>,</span>
-<span>    caption <span class="op">=</span> <span class="st">"Source: https://github.com/hrbrmstr/ggalt"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
-<span>    plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0.5</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,</span>
-<span>    plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#f7f7f7"</span><span class="op">)</span>,</span>
-<span>    panel.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#f7f7f7"</span><span class="op">)</span>,</span>
-<span>    panel.grid.minor <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>    panel.grid.major.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>    panel.grid.major.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"grey50"</span><span class="op">)</span>,</span>
-<span>    axis.ticks <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>    legend.position <span class="op">=</span> <span class="st">"top"</span>,</span>
-<span>    panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>health <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/top50ggplot2/health.csv"</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>health<span class="sc">$</span>Area <span class="ot">&lt;-</span> <span class="fu">factor</span>(health<span class="sc">$</span>Area,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">levels =</span> <span class="fu">as.character</span>(health<span class="sc">$</span>Area)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(health, <span class="fu">aes</span>(<span class="at">x =</span> pct_2013, <span class="at">xend =</span> pct_2014, <span class="at">y =</span> Area, <span class="at">group =</span> Area)) <span class="sc">+</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_dumbbell</span>(</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"#a3c4dc"</span>, <span class="at">size =</span> <span class="fl">0.75</span>,</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_x =</span> <span class="st">"#0e668b"</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span>,</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Dumbbell Chart"</span>,</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Pct Change: 2013 vs 2014"</span>,</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Source: https://github.com/hrbrmstr/ggalt"</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#f7f7f7"</span>),</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#f7f7f7"</span>),</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.x =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"grey50"</span>),</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="top50zh_files/figure-html/Dumbbell Plot-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure">
+<p><img src="top50zh_files/figure-html/Dumbbell Plot-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-</section></section><section id="分布-distribution" class="level2" data-number="6.4"><h2 data-number="6.4" class="anchored" data-anchor-id="分布-distribution">
-<span class="header-section-number">6.4</span> 分布 Distribution</h2>
+</section>
+</section>
+<section id="分布-distribution" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="分布-distribution"><span class="header-section-number">6.4</span> 分布 Distribution</h2>
 <p>当你有大量的数据点，并且想研究数据点在哪里以及如何分布时。</p>
-<section id="tufte-boxplot" class="level3" data-number="6.4.1"><h3 data-number="6.4.1" class="anchored" data-anchor-id="tufte-boxplot">
-<span class="header-section-number">6.4.1</span> Tufte Boxplot</h3>
+<section id="tufte-boxplot" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="tufte-boxplot"><span class="header-section-number">6.4.1</span> Tufte Boxplot</h3>
 <p>由 ggthemes 软件包提供的 Tufte 方框图灵感来自 Edward Tufte 的作品。Tufte 的盒状图只是一个盒状图，它的设计简约而具有视觉吸引力。</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">manufacturer</span>, <span class="va">cty</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggthemes/man/geom_tufteboxplot.html">geom_tufteboxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggthemes/man/theme_tufte.html">theme_tufte</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># from ggthemes</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">65</span>, vjust <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
-<span>    title <span class="op">=</span> <span class="st">"Tufte Styled Boxplot"</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="st">"City Mileage grouped by Class of vehicle"</span>,</span>
-<span>    caption <span class="op">=</span> <span class="st">"Source: mpg"</span>,</span>
-<span>    x <span class="op">=</span> <span class="st">"Class of Vehicle"</span>,</span>
-<span>    y <span class="op">=</span> <span class="st">"City Mileage"</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(manufacturer, cty)) <span class="sc">+</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tufteboxplot</span>() <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_tufte</span>() <span class="sc">+</span> <span class="co"># from ggthemes</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">65</span>, <span class="at">vjust =</span> <span class="fl">0.6</span>)) <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Tufte Styled Boxplot"</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"City Mileage grouped by Class of vehicle"</span>,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Source: mpg"</span>,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Class of Vehicle"</span>,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"City Mileage"</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="top50zh_files/figure-html/Tufte Boxplot-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure">
+<p><img src="top50zh_files/figure-html/Tufte Boxplot-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-</section><section id="人口金字塔-population-pyramid" class="level3" data-number="6.4.2"><h3 data-number="6.4.2" class="anchored" data-anchor-id="人口金字塔-population-pyramid">
-<span class="header-section-number">6.4.2</span> 人口金字塔 Population Pyramid</h3>
+</section>
+<section id="人口金字塔-population-pyramid" class="level3" data-number="6.4.2">
+<h3 data-number="6.4.2" class="anchored" data-anchor-id="人口金字塔-population-pyramid"><span class="header-section-number">6.4.2</span> 人口金字塔 Population Pyramid</h3>
 <p>人口金字塔提供了一种独特的方式，可以直观地显示有多少人口或多大比例的人口属于某个类别。下面的金字塔就是一个很好的例子，说明在电子邮件营销活动中的每个阶段有多少用户被留住。</p>
 <div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>scipen <span class="op">=</span> <span class="fl">999</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">email_campaign_funnel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"data/top50ggplot2/email_campaign_funnel.csv"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># X Axis Breaks and Labels</span></span>
-<span><span class="va">brks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">15000000</span>, <span class="fl">15000000</span>, <span class="fl">5000000</span><span class="op">)</span></span>
-<span><span class="va">lbls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">15</span>, <span class="fl">0</span>, <span class="op">-</span><span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">15</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, <span class="st">"m"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span></span>
-<span>  <span class="va">email_campaign_funnel</span>,</span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Stage</span>, y <span class="op">=</span> <span class="va">Users</span>, fill <span class="op">=</span> <span class="va">Gender</span><span class="op">)</span></span>
-<span><span class="op">)</span> <span class="op">+</span> <span class="co"># Fill column</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>, width <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span> <span class="op">+</span> <span class="co"># draw the bars</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span></span>
-<span>    breaks <span class="op">=</span> <span class="va">brks</span>, <span class="co"># Breaks</span></span>
-<span>    labels <span class="op">=</span> <span class="va">lbls</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span> <span class="co"># Labels</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># Flip axes</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Email Campaign Funnel"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggthemes/man/theme_tufte.html">theme_tufte</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># Tufte theme from ggfortify</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
-<span>    plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
-<span>    axis.ticks <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span> <span class="co"># Centre plot title</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Dark2"</span><span class="op">)</span> <span class="co"># Color palette</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen =</span> <span class="dv">999</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>email_campaign_funnel <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/top50ggplot2/email_campaign_funnel.csv"</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># X Axis Breaks and Labels</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>brks <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">15000000</span>, <span class="dv">15000000</span>, <span class="dv">5000000</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>lbls <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">as.character</span>(<span class="fu">c</span>(<span class="fu">seq</span>(<span class="dv">15</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">5</span>), <span class="fu">seq</span>(<span class="dv">5</span>, <span class="dv">15</span>, <span class="dv">5</span>))), <span class="st">"m"</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  email_campaign_funnel,</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> Stage, <span class="at">y =</span> Users, <span class="at">fill =</span> Gender)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span> <span class="co"># Fill column</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">width =</span> <span class="fl">0.6</span>) <span class="sc">+</span> <span class="co"># draw the bars</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> brks, <span class="co"># Breaks</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> lbls</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> <span class="co"># Labels</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> <span class="co"># Flip axes</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Email Campaign Funnel"</span>) <span class="sc">+</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_tufte</span>() <span class="sc">+</span> <span class="co"># Tufte theme from ggfortify</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> <span class="co"># Centre plot title</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Dark2"</span>) <span class="co"># Color palette</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="top50zh_files/figure-html/Population Pyramid-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure">
+<p><img src="top50zh_files/figure-html/Population Pyramid-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-</section></section><section id="组成-composition" class="level2" data-number="6.5"><h2 data-number="6.5" class="anchored" data-anchor-id="组成-composition">
-<span class="header-section-number">6.5</span> 组成 Composition</h2>
-<section id="华夫图-waffle-chart" class="level3" data-number="6.5.1"><h3 data-number="6.5.1" class="anchored" data-anchor-id="华夫图-waffle-chart">
-<span class="header-section-number">6.5.1</span> 华夫图 Waffle Chart</h3>
-<p>华夫图是显示总人口分类组成的一种好方法。虽然没有直接的函数，但可以通过使用 <code><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_tile()</a></code> 函数巧妙地操纵 ggplot2 来实现。下面的模板可以帮助你创建自己的华夫图。</p>
+</section>
+</section>
+<section id="组成-composition" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="组成-composition"><span class="header-section-number">6.5</span> 组成 Composition</h2>
+<section id="华夫图-waffle-chart" class="level3" data-number="6.5.1">
+<h3 data-number="6.5.1" class="anchored" data-anchor-id="华夫图-waffle-chart"><span class="header-section-number">6.5.1</span> 华夫图 Waffle Chart</h3>
+<p>华夫图是显示总人口分类组成的一种好方法。虽然没有直接的函数，但可以通过使用 <code>geom_tile()</code> 函数巧妙地操纵 ggplot2 来实现。下面的模板可以帮助你创建自己的华夫图。</p>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">var</span> <span class="op">&lt;-</span> <span class="va">mpg</span><span class="op">$</span><span class="va">class</span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
-<span><span class="va">categ_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span> <span class="op">*</span> <span class="op">(</span><span class="op">(</span><span class="fl">10</span> <span class="op">*</span> <span class="fl">10</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">df</span><span class="op">$</span><span class="va">category</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">categ_table</span><span class="op">)</span>, <span class="va">categ_table</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span>, fill <span class="op">=</span> <span class="va">category</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_tile</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span>, linewidth <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, trans <span class="op">=</span> <span class="st">"reverse"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set2"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
-<span>    title <span class="op">=</span> <span class="st">"Waffle Chart"</span>, subtitle <span class="op">=</span> <span class="st">"'Class' of vehicles"</span>,</span>
-<span>    caption <span class="op">=</span> <span class="st">"Source: mpg"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
-<span>    plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">rel</a></span><span class="op">(</span><span class="fl">1.2</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>    axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>    axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>    axis.ticks <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>    legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>    legend.position <span class="op">=</span> <span class="st">"right"</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>var <span class="ot">&lt;-</span> mpg<span class="sc">$</span>class</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">y =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>categ_table <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">table</span>(var) <span class="sc">*</span> ((<span class="dv">10</span> <span class="sc">*</span> <span class="dv">10</span>) <span class="sc">/</span> (<span class="fu">length</span>(var))))</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>category <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">names</span>(categ_table), categ_table))</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">fill =</span> category)) <span class="sc">+</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">trans =</span> <span class="st">"reverse"</span>) <span class="sc">+</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set2"</span>) <span class="sc">+</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Waffle Chart"</span>, <span class="at">subtitle =</span> <span class="st">"'Class' of vehicles"</span>,</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Source: mpg"</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">1.2</span>)),</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"right"</span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="top50zh_files/figure-html/Waffle Chart-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure">
+<p><img src="top50zh_files/figure-html/Waffle Chart-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-</section><section id="树形图-treemap" class="level3" data-number="6.5.2"><h3 data-number="6.5.2" class="anchored" data-anchor-id="树形图-treemap">
-<span class="header-section-number">6.5.2</span> 树形图 Treemap</h3>
+</section>
+<section id="树形图-treemap" class="level3" data-number="6.5.2">
+<h3 data-number="6.5.2" class="anchored" data-anchor-id="树形图-treemap"><span class="header-section-number">6.5.2</span> 树形图 Treemap</h3>
 <p>树形图是一种通过嵌套矩形显示分层数据的好方法。<code>treemapify</code> 软件包提供了将数据转换为所需格式（treemapify）以及绘制实际图形（ggplotify）的必要函数。</p>
-<p>要创建树形图，必须使用 <code><a href="https://wilkox.org/treemapify/reference/treemapify.html">treemapify()</a></code> 将数据转换为所需格式。您的数据必须分别包含一个变量，用于描述瓦片的面积、填充颜色、瓦片标签以及父组。</p>
+<p>要创建树形图，必须使用 <code>treemapify()</code> 将数据转换为所需格式。您的数据必须分别包含一个变量，用于描述瓦片的面积、填充颜色、瓦片标签以及父组。</p>
 <p>数据格式化完成后，只需在树状地图数据上调用 <code>ggplotify()</code>。</p>
 <div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">proglangs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"data/top50ggplot2/proglanguages.csv"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">proglangs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span></span>
-<span>  area <span class="op">=</span> <span class="va">value</span>,</span>
-<span>  fill <span class="op">=</span> <span class="va">parent</span>, group <span class="op">=</span> <span class="va">parent</span>, label <span class="op">=</span> <span class="va">id</span></span>
-<span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://wilkox.org/treemapify/reference/geom_treemap.html">geom_treemap</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://wilkox.org/treemapify/reference/geom_treemap_text.html">geom_treemap_text</a></span><span class="op">(</span></span>
-<span>    fontface <span class="op">=</span> <span class="st">"italic"</span>, colour <span class="op">=</span> <span class="st">"white"</span>, place <span class="op">=</span> <span class="st">"centre"</span>,</span>
-<span>    grow <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Dark2"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>proglangs <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/top50ggplot2/proglanguages.csv"</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(proglangs, <span class="fu">aes</span>(</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">area =</span> value,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">fill =</span> parent, <span class="at">group =</span> parent, <span class="at">label =</span> id</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_treemap</span>() <span class="sc">+</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_treemap_text</span>(</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">fontface =</span> <span class="st">"italic"</span>, <span class="at">colour =</span> <span class="st">"white"</span>, <span class="at">place =</span> <span class="st">"centre"</span>,</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">grow =</span> <span class="cn">TRUE</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Dark2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="top50zh_files/figure-html/Treemap-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure">
+<p><img src="top50zh_files/figure-html/Treemap-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-</section></section><section id="分组-groups" class="level2" data-number="6.6"><h2 data-number="6.6" class="anchored" data-anchor-id="分组-groups">
-<span class="header-section-number">6.6</span> 分组 Groups</h2>
-<section id="分层树枝图-hierarchical-dendrogram" class="level3" data-number="6.6.1"><h3 data-number="6.6.1" class="anchored" data-anchor-id="分层树枝图-hierarchical-dendrogram">
-<span class="header-section-number">6.6.1</span> 分层树枝图 Hierarchical Dendrogram</h3>
+</section>
+</section>
+<section id="分组-groups" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="分组-groups"><span class="header-section-number">6.6</span> 分组 Groups</h2>
+<section id="分层树枝图-hierarchical-dendrogram" class="level3" data-number="6.6.1">
+<h3 data-number="6.6.1" class="anchored" data-anchor-id="分层树枝图-hierarchical-dendrogram"><span class="header-section-number">6.6.1</span> 分层树枝图 Hierarchical Dendrogram</h3>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">hc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/hclust.html">hclust</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/dist.html">dist</a></span><span class="op">(</span><span class="va">USArrests</span><span class="op">)</span>, <span class="st">"ave"</span><span class="op">)</span>  <span class="co"># hierarchical clustering</span></span>
-<span></span>
-<span><span class="co"># plot</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/ggdendro/man/ggdendrogram.html">ggdendrogram</a></span><span class="op">(</span><span class="va">hc</span>, rotate <span class="op">=</span> <span class="cn">TRUE</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>hc <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="fu">dist</span>(USArrests), <span class="st">"ave"</span>)  <span class="co"># hierarchical clustering</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdendrogram</span>(hc, <span class="at">rotate =</span> <span class="cn">TRUE</span>, <span class="at">size =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="top50zh_files/figure-html/Hierarchical Dendrogram-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure">
+<p><img src="top50zh_files/figure-html/Hierarchical Dendrogram-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-</section><section id="聚类-clusters" class="level3" data-number="6.6.2"><h3 data-number="6.6.2" class="anchored" data-anchor-id="聚类-clusters">
-<span class="header-section-number">6.6.2</span> 聚类 Clusters</h3>
-<p>可以使用 <code><a href="https://rdrr.io/pkg/ggalt/man/geom_encircle.html">geom_encircle()</a></code>来显示不同的聚类或分组。如果数据集具有多个弱特征，可以计算主成分，并以 PC1 和 PC2 为 X 轴和 Y 轴绘制散点图。</p>
+</section>
+<section id="聚类-clusters" class="level3" data-number="6.6.2">
+<h3 data-number="6.6.2" class="anchored" data-anchor-id="聚类-clusters"><span class="header-section-number">6.6.2</span> 聚类 Clusters</h3>
+<p>可以使用 <code>geom_encircle()</code>来显示不同的聚类或分组。如果数据集具有多个弱特征，可以计算主成分，并以 PC1 和 PC2 为 X 轴和 Y 轴绘制散点图。</p>
 <div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Compute data with principal components ------------------</span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">iris</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">pca_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/prcomp.html">prcomp</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="co"># compute principal components</span></span>
-<span></span>
-<span><span class="co"># Data frame of principal components ----------------------</span></span>
-<span><span class="va">df_pc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">pca_mod</span><span class="op">$</span><span class="va">x</span>,</span>
-<span>  Species <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Species</span></span>
-<span><span class="op">)</span> <span class="co"># dataframe of principal components</span></span>
-<span><span class="va">df_pc_vir</span> <span class="op">&lt;-</span> <span class="va">df_pc</span><span class="op">[</span><span class="va">df_pc</span><span class="op">$</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"virginica"</span>, <span class="op">]</span> <span class="co"># df for 'virginica'</span></span>
-<span><span class="va">df_pc_set</span> <span class="op">&lt;-</span> <span class="va">df_pc</span><span class="op">[</span><span class="va">df_pc</span><span class="op">$</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"setosa"</span>, <span class="op">]</span> <span class="co"># df for 'setosa'</span></span>
-<span><span class="va">df_pc_ver</span> <span class="op">&lt;-</span> <span class="va">df_pc</span><span class="op">[</span><span class="va">df_pc</span><span class="op">$</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"versicolor"</span>, <span class="op">]</span> <span class="co"># df for 'versicolor'</span></span>
-<span></span>
-<span><span class="co"># Plot ----------------------------------------------------</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df_pc</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">PC1</span>, <span class="va">PC2</span>, col <span class="op">=</span> <span class="va">Species</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="va">Species</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="co"># draw points</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
-<span>    title <span class="op">=</span> <span class="st">"Iris Clustering"</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="st">"With principal components PC1 and PC2 as X and Y axis"</span>,</span>
-<span>    caption <span class="op">=</span> <span class="st">"Source: Iris"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian</a></span><span class="op">(</span></span>
-<span>    xlim <span class="op">=</span> <span class="fl">1.2</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">df_pc</span><span class="op">$</span><span class="va">PC1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">df_pc</span><span class="op">$</span><span class="va">PC1</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>    ylim <span class="op">=</span> <span class="fl">1.2</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">df_pc</span><span class="op">$</span><span class="va">PC2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">df_pc</span><span class="op">$</span><span class="va">PC2</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span> <span class="co"># change axis limits</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggalt/man/geom_encircle.html">geom_encircle</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">df_pc_vir</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">PC1</span>, y <span class="op">=</span> <span class="va">PC2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># draw circles</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggalt/man/geom_encircle.html">geom_encircle</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">df_pc_set</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">PC1</span>, y <span class="op">=</span> <span class="va">PC2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggalt/man/geom_encircle.html">geom_encircle</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">df_pc_ver</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">PC1</span>, y <span class="op">=</span> <span class="va">PC2</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_classic</span>())</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute data with principal components ------------------</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> iris[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)]</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>pca_mod <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(df) <span class="co"># compute principal components</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Data frame of principal components ----------------------</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>df_pc <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(pca_mod<span class="sc">$</span>x,</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">Species =</span> iris<span class="sc">$</span>Species</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>) <span class="co"># dataframe of principal components</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>df_pc_vir <span class="ot">&lt;-</span> df_pc[df_pc<span class="sc">$</span>Species <span class="sc">==</span> <span class="st">"virginica"</span>, ] <span class="co"># df for 'virginica'</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>df_pc_set <span class="ot">&lt;-</span> df_pc[df_pc<span class="sc">$</span>Species <span class="sc">==</span> <span class="st">"setosa"</span>, ] <span class="co"># df for 'setosa'</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>df_pc_ver <span class="ot">&lt;-</span> df_pc[df_pc<span class="sc">$</span>Species <span class="sc">==</span> <span class="st">"versicolor"</span>, ] <span class="co"># df for 'versicolor'</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot ----------------------------------------------------</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_pc, <span class="fu">aes</span>(PC1, PC2, <span class="at">col =</span> Species)) <span class="sc">+</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">shape =</span> Species), <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span> <span class="co"># draw points</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Iris Clustering"</span>,</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"With principal components PC1 and PC2 as X and Y axis"</span>,</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Source: Iris"</span></span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlim =</span> <span class="fl">1.2</span> <span class="sc">*</span> <span class="fu">c</span>(<span class="fu">min</span>(df_pc<span class="sc">$</span>PC1), <span class="fu">max</span>(df_pc<span class="sc">$</span>PC1)),</span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylim =</span> <span class="fl">1.2</span> <span class="sc">*</span> <span class="fu">c</span>(<span class="fu">min</span>(df_pc<span class="sc">$</span>PC2), <span class="fu">max</span>(df_pc<span class="sc">$</span>PC2))</span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> <span class="co"># change axis limits</span></span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_encircle</span>(<span class="at">data =</span> df_pc_vir, <span class="fu">aes</span>(<span class="at">x =</span> PC1, <span class="at">y =</span> PC2)) <span class="sc">+</span> <span class="co"># draw circles</span></span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_encircle</span>(<span class="at">data =</span> df_pc_set, <span class="fu">aes</span>(<span class="at">x =</span> PC1, <span class="at">y =</span> PC2)) <span class="sc">+</span></span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_encircle</span>(<span class="at">data =</span> df_pc_ver, <span class="fu">aes</span>(<span class="at">x =</span> PC1, <span class="at">y =</span> PC2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="top50zh_files/figure-html/Clusters-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure">
+<p><img src="top50zh_files/figure-html/Clusters-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 
 
-</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -1249,7 +1302,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
       <a href="./top50en.html" class="pagination-link" aria-label="Top 50 ggplot2 Visualizations">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 Visualizations</span></span>
       </a>          
@@ -1258,18 +1313,21 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer">
+<footer class="footer">
+  <div class="nav-footer">
     <div class="nav-footer-left">
       &nbsp;
     </div>   
     <div class="nav-footer-center">
 <p>博客<a href="https://blog.stariverfeel.eu.org/">Feel’s Blog</a> | 部署 <a href="https://quarto.org/">Quarto</a>.</p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/FeelLiao/R_in_ASLDV/edit/main/top50zh.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/FeelLiao/R_in_ASLDV/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/FeelLiao/RdataVisualization/edit/main/top50zh.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/FeelLiao/RdataVisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
   </div>
 </footer>
+
+
 
 
 </body></html>
