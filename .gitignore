@@ -1,6 +1,7 @@
 .quarto/
 
 /.quarto/
-.Rhistory
 .Rproj.user
 
+.RData
+.Rhistory
