@@ -2,13 +2,13 @@
 
 ::: callout-note
 1.  本篇文章的内容来自于[Internals of ggplot2](https://ggplot2-book.org/internals)，如果翻译有误，恳请指出！
-2.  文章介绍的内容基于 ggplot2 3.3.0 版本，如果使用其他版本，代码可能出错。
+2.  文章介绍的内容基于 ggplot2 3.3.0 版本，跟目前的最新版本（3.5.1）差异巨大，本项目无精力处理两个版本兼容的问题，下面的除 ggproto 外的示例代码将全部不运行，预期运行结果将以图片或注释展示。
 :::
 
 ```{r}
 #| include: false
 #| label: internal-loading-packages
-library(dplyr)
+library(tidyverse)
 source("scripts/internals_ggbuild.R")
 source("scripts/internals_ggtable.R")
 ```
@@ -21,6 +21,8 @@ source("scripts/internals_ggtable.R")
 
 ```{r}
 #| label: plot-method-p
+#| echo: false
+#| eval: false
 p <- ggplot(mpg, aes(displ, hwy, color = drv)) + 
   geom_point(position = "jitter") +
   geom_smooth(method = "lm", formula = y ~ x) + 
@@ -34,6 +36,7 @@ ggplot2 被设计成允许用户向图中添加新元素，而无需重新计算
 
 ```{r}
 #| label: build ggprint function
+#| eval: false
 ggprint <- function(x) {
   data <- ggplot_build(x)
   gtable <- ggplot_gtable(data)
@@ -47,8 +50,11 @@ ggprint <- function(x) {
 
 ```{r}
 #| label: ggprint-p
+#| eval: false
 ggprint(p) 
 ```
+
+![](assets/unnamed-chunk-5-1.png)
 
 在我们简化的打印方法的代码中，显示了四个不同的步骤：
 
@@ -75,10 +81,20 @@ ggprint(p)
 数据准备的第二步是将图层数据转换为经过计算的美学（aesthetic）值。 这包括在图层数据上评估来自 `aes()` 的所有美学表达式。 此外，如果没有明确给出，`group`美学值会从所有非连续美学值的交互中计算出来。 `group`美学和`PANEL`一样，是必须在整个处理过程中保留的特殊列。 例如，前面创建的`p`图只包含`geom_point()`指定的一个图层，在数据准备过程结束时，与该图层相关的前 10 行数据是这样的：
 
 ```{r}
-#| echo: false
+#| eval: false
 #| label: data-prepperation
-data_prepped <- ggbuild(p)$prepared
-head(data_prepped[[1]], n = 10)
+
+#>      x  y colour PANEL group
+#> 1  1.8 29      f     1     2
+#> 2  1.8 29      f     1     2
+#> 3  2.0 31      f     2     2
+#> 4  2.0 30      f     2     2
+#> 5  2.8 26      f     1     2
+#> 6  2.8 26      f     1     2
+#> 7  3.1 27      f     2     2
+#> 8  1.8 26      4     1     1
+#> 9  1.8 25      4     1     1
+#> 10 2.0 28      4     2     1
 ```
 
 ::: callout-tip
@@ -92,25 +108,38 @@ head(data_prepped[[1]], n = 10)
 该过程的第一步是对数据中的列进行标度（scale）转换。 在这一阶段，任何标度中的 `trans` 参数都会产生影响，所有后续的渲染都将在这一转换后进行。 这就是在标度中设置位置变换（对`x`和`y`进行变换）与在坐标系中设置位置变换效果不同的原因。 如果在标度中指定变换，则变换会在任何其他计算*之前*应用，但如果在坐标系中指定变换，则变换会在这些计算*之后*应用。 例如，我们最初绘制的`p`图不涉及标度变换，因此图层数据在此阶段保持不变。 前三行如下所示：
 
 ```{r}
-#| echo: false
+#| eval: false
 #| label: data_trans
-ggbuild(p)$transformed[[1]] %>% head(n = 3)
+
+#>     x  y colour PANEL group
+#> 1 1.8 29      f     1     2
+#> 2 1.8 29      f     1     2
+#> 3 2.0 31      f     2     2
 ```
 
 相反，如果我们的绘图对象是 `p + scale_x_log10()`，并在处理过程中检查此时的图层数据，我们就会看到 `x` 变量已进行了适当的转换：
 
 ```{r}
-#| echo: false
+#| eval: false
 #| label: data_trans_log10x
-ggbuild(p + scale_x_log10())$transformed[[1]] %>% head(n = 3)
+
+#>       x  y colour PANEL group
+#> 1 0.255 29      f     1     2
+#> 2 0.255 29      f     1     2
+#> 3 0.301 31      f     2     2
 ```
 
 该过程的第二步是使用位置标度（position scales 即`x`和`y`）映射位置美学 (position aesthetic)，根据所涉及的位置标度类型（连续，离散，bins），映射过程会有所不同。 对于连续位置标度（例如我们示例中使用的标度），此时会应用 `oob` 参数中指定的出界函数，并删除图层数据中的 `NA` 值。 这对 `p` 没有什么影响，但如果我们绘制的是 `p + xlim(2, 8)`，则 `oob` 函数 -- 本例中的 `scales::censor()` -- 会用 `NA` 替换 2 以下的 `x` 值，如下图所示：
 
 ```{r}
-#| echo: false
+#| eval: false
 #| label: data_trans_xlim
-ggbuild(p + xlim(2, 8))$positioned[[1]] %>% head(n = 3)
+
+#> Warning: Removed 22 rows containing non-finite values (`stat_smooth()`).
+#>    x  y colour PANEL group
+#> 1 NA 29      f     1     2
+#> 2 NA 29      f     1     2
+#> 3  2 31      f     2     2
 ```
 
 对于离散位置标度，变化则更为复杂，原始数值会与用户提供的`limits`参数或 `breaks`参数相匹配，然后转换为整型数值。 最后，对于 bins 位置标度，首先使用 `breaks` 参数将连续数据切成 bins，然后将每个 bin 的位置设置为其范围的中点。 在这一阶段进行映射的原因是保持数据的一致性：无论使用哪种位置标度，在 stat 和 geom 计算中看起来都是连续的。 这一点非常重要，否则离散标度的闪避和抖动等计算都会失败。
@@ -120,27 +149,36 @@ ggbuild(p + xlim(2, 8))$positioned[[1]] %>% head(n = 3)
 举例来说，我们可以看一下图中的第二图层，它可以产生线性回归结果。在进行统计计算之前，该图层的数据只包含坐标以及所需的 "PANEL"和 "group"列。
 
 ```{r}
-#| echo: false
+#| eval: false
 #| message: false
 #| label: data_trans_lay2
-bb <- ggbuild(p)
-bb$positioned[[2]] %>% head(n = 3)
+#>     x  y colour PANEL group
+#> 1 1.8 29      f     1     2
+#> 2 1.8 29      f     1     2
+#> 3 2.0 31      f     2     2
 ```
 
 在统计计算结束后，图层数据也会相应的改变：
 
 ```{r}
-#| echo: false
+#| eval: false
 #| label: data_trans_lay2_stat
-bb$poststat[[2]] %>% head(n = 3)
+#>      x    y ymin ymax    se flipped_aes colour PANEL group
+#> 1 1.80 24.3 23.1 25.6 0.625       FALSE      4     1     1
+#> 2 1.86 24.2 22.9 25.4 0.612       FALSE      4     1     1
+#> 3 1.92 24.0 22.8 25.2 0.598       FALSE      4     1     1
 ```
 
 此时，geom 接管了 stat 的工作（几乎）。它要做的第一件事就是检查数据、更新参数，并可能对数据进行第一次修改（与 stat 的设置相同）。这可能会对某些列进行重新参数化，例如将 `x`+`width` 改为 `xmin`+`xmax`。之后，位置调整将被应用，例如，重叠的条形图将被堆叠等。对于我们的示例图 `p` 来说，这一步是在图的第一层应用抖动，并对 `x` 和 `y` 坐标进行扰动：
 
 ```{r}
-#| echo: false
+#| eval: false
 #| label: data_trans_jitter
-ggbuild(p)$geompos[[1]] %>% head(n = 3)
+
+#>      x    y colour PANEL group
+#> 1 1.84 28.7      f     1     2
+#> 2 1.77 29.1      f     1     2
+#> 3 2.03 31.3      f     2     2
 ```
 
 接下来，位置标度将全部重置、重新训练并应用于图层数据。仔细想想，这绝对是必要的，因为，例如，堆叠会极大地改变其中一个坐标轴的范围。在某些情况下（例如在上面的直方图示例中），其中一个位置美学可能甚至要到统计计算之后才能获得，如果不对刻度进行重新训练，它就永远不会得到训练。
@@ -148,9 +186,13 @@ ggbuild(p)$geompos[[1]] %>% head(n = 3)
 数据转换的最后一步是训练和映射所有非位置美学，即把映射的离散或连续输入转换成图形参数，如颜色、线型、大小等。此外，还将添加地形图中的任何默认美学，以便数据现在处于地形图的可预测状态。在最后一步，在构建步骤完成之前，stat 和 facet 都有最后一次机会使用它们的 "finish_data()"方法修改数据的最终映射形式。对于绘图对象 `p` 来说，图层数据最终状态的前几行是这样的：
 
 ```{r}
-#| echo: false
+#| eval: false
 #| label: data_trans_final
-ggbuild(p)$built$data[[1]] %>% head(n = 3)
+
+#>    colour    x    y PANEL group shape size fill alpha stroke
+#> 1 #00BA38 1.83 29.1     1     2    19  1.5   NA    NA    0.5
+#> 2 #00BA38 1.79 29.2     1     2    19  1.5   NA    NA    0.5
+#> 3 #00BA38 1.99 30.7     2     2    19  1.5   NA    NA    0.5
 ```
 
 ### 输出
@@ -165,27 +207,13 @@ ggbuild(p)$built$data[[1]] %>% head(n = 3)
 
 首先数据会转换成他们的图形表示，分两步进行：首先，将每个图层转换为图形对象列表（`grobs`）。与统计变换一样，转换是通过数据分割进行的，首先按 "PANEL"分割，然后按 "group"分割，出于性能考虑，几何对象 可能会拦截这种分割。虽然很多数据准备工作已经完成，但在这一步中，几何对象 还会对数据进行一些额外的转换，这种情况并不少见。其中最关键的部分是位置数据的转换和归一化。这是由坐标系完成的，虽然这通常只意味着根据坐标系的限制对数据进行归一化，但也可能包含更为激进的转换，如将直角坐标转换为极坐标。这样做的结果是为每个图层生成一个`gList`对象列表，该列表与切面布局中的每个面板相对应。之后，分面开始组装不同的面板。它首先从图层中收集每个面板的信息，包括主题相关的设置和坐标轴信息，并将所有这些合并到每个面板独立的 `gList` 中。然后，它会根据计算出的面板布局将所有面板排列到一个 `gtable` 中。对于大多数绘图来说，这很简单，因为只有一个面板，但对于使用了 `facet_wrap()`的绘图来说，这可能会相当复杂。在这一阶段的处理过程结束后，我们的示例图 `p` 看起来是这样的：
 
-```{r}
-#| echo: false
-#| label: gtable_rendering
-d <- ggplot_build(p)
-x <- gggtable(d)
-grid::grid.newpage()
-grid::grid.draw(x$panels)
-```
+![](assets/unnamed-chunk-14-1.png)
 
 ### 添加导图
 
 ggplot2 中有两种类型的导图：坐标轴和图例。正如我们的图 `p` ，此时坐标轴已经完成了渲染，并与面板组装在一起，但图例仍然缺失。渲染图例是一个复杂的过程，首先要为每个标度渲染一个图例。然后，如果美学映射允许，各个标度的图例会在每个图层之间进行组合，合并成最终的图例。最后输出的是一个 `gtable`，其中包含根据主题和导图生成的样式。创建完成后，会根据 `legend.position`主题设置将导图 `gtable` 添加到主 `gtable` 中。至此，我们的绘图示例很多方面都已完成：唯一缺少的就是标题。
 
-```{r}
-#| echo: false
-#| label: gtable_guilds
-d <- ggplot_build(p)
-x <- gggtable(d)
-grid::grid.newpage()
-grid::grid.draw(x$legend)
-```
+![](assets/unnamed-chunk-15-1.png)
 
 ### 添加修饰
 
@@ -197,26 +225,59 @@ grid::grid.draw(x$legend)
 
 ```{r}
 #| label: gtable_output
+#| eval: false
 p_built <- ggplot_build(p)
 p_gtable <- ggplot_gtable(p_built)
 
 class(p_gtable)
+
+#> [1] "gtable" "gTree"  "grob"   "gDesc"
 ```
 
 下面的代码显示了我们的绘图 `p` 的 `gtable`：
 
 ```{r}
 #| label: gtable_print
+#| eval: false
 p_gtable
+
+#> TableGrob (13 x 15) "layout": 22 grobs
+#>     z         cells        name                                          grob
+#> 1   0 ( 1-13, 1-15)  background               rect[plot.background..rect.741]
+#> 2   1 ( 8- 8, 5- 5)   panel-1-1                      gTree[panel-1.gTree.612]
+#> 3   1 ( 8- 8, 9- 9)   panel-2-1                      gTree[panel-2.gTree.627]
+#> 4   3 ( 6- 6, 5- 5)  axis-t-1-1                                zeroGrob[NULL]
+#> 5   3 ( 6- 6, 9- 9)  axis-t-2-1                                zeroGrob[NULL]
+#> 6   3 ( 9- 9, 5- 5)  axis-b-1-1           absoluteGrob[GRID.absoluteGrob.631]
+#> 7   3 ( 9- 9, 9- 9)  axis-b-2-1           absoluteGrob[GRID.absoluteGrob.631]
+#> 8   3 ( 8- 8, 8- 8)  axis-l-1-2                                zeroGrob[NULL]
+#> 9   3 ( 8- 8, 4- 4)  axis-l-1-1           absoluteGrob[GRID.absoluteGrob.639]
+#> 10  3 ( 8- 8,10-10)  axis-r-1-2                                zeroGrob[NULL]
+#> 11  3 ( 8- 8, 6- 6)  axis-r-1-1                                zeroGrob[NULL]
+#> 12  2 ( 7- 7, 5- 5) strip-t-1-1                                 gtable[strip]
+#> 13  2 ( 7- 7, 9- 9) strip-t-2-1                                 gtable[strip]
+#> 14  4 ( 5- 5, 5- 9)      xlab-t                                zeroGrob[NULL]
+#> 15  5 (10-10, 5- 9)      xlab-b titleGrob[axis.title.x.bottom..titleGrob.694]
+#> 16  6 ( 8- 8, 3- 3)      ylab-l   titleGrob[axis.title.y.left..titleGrob.697]
+#> 17  7 ( 8- 8,11-11)      ylab-r                                zeroGrob[NULL]
+#> 18  8 ( 8- 8,13-13)   guide-box                             gtable[guide-box]
+#> 19  9 ( 4- 4, 5- 9)    subtitle         zeroGrob[plot.subtitle..zeroGrob.737]
+#> 20 10 ( 3- 3, 5- 9)       title          titleGrob[plot.title..titleGrob.736]
+#> 21 11 (11-11, 5- 9)     caption          zeroGrob[plot.caption..zeroGrob.739]
+#> 22 12 ( 2- 2, 2- 2)         tag              zeroGrob[plot.tag..zeroGrob.738]
 ```
 
 正如我们所希望的那样，最终的绘图看起来与之前的完全相同：
 
 ```{r}
 #| label: gtable_graph
+#| eval: false
 grid::grid.newpage()
 grid::grid.draw(p_gtable)
+
 ```
+
+![](assets/unnamed-chunk-18-1.png)
 
 ## ggproto 简介 {#sec-ggproto}
 
@@ -406,7 +467,7 @@ Victoria$description()
 创建子类有时需要访问父类及其方法，我们可以借助 `ggproto_parent()` 函数来实现。例如，我们可以定义一个 `Police`子类，该子类与 `Royalty`子类一样包含一个 `rank`变量，但只将该rank用作 `description()`方法的一部分：
 
 ```{r}
-#| label: ggproto_subclass_5
+#| label: ggproto_subclass_6
 Police <- ggproto("Police", Person,
   rank = NA, 
   description = function(self) {
@@ -421,7 +482,7 @@ Police <- ggproto("Police", Person,
 在这个例子中，`Police` 子类的 `description()` 方法被定义成明确引用 `Person` 父类的 `description()` 方法。通过使用 `ggproto_parent(Person, self)` 的这种方式，我们能够引用父类内的方法，同时仍然保留 `self` 的适当定义。和之前一样，我们将创建一个特定的实例并验证这如预期般工作：
 
 ```{r}
-#| label: ggproto_subclass_5
+#| label: ggproto_subclass_7
 John <- ggproto(NULL, Police,
   given_name = "John",
   family_name = "McClane",

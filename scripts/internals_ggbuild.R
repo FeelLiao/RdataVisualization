@@ -9,7 +9,6 @@
 #
 # Lines that marked with # ****** are those that have been modified or inserted
 
-library(ggplot2,lib.loc = "rp_ggplot2")
 ggbuild <- function(plot) {
   all_steps <- list() # ******
 
