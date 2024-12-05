@@ -24,6 +24,7 @@ ggplot2 包的设计使其能够相对容易的通过通用语法组件来构建
 主题可能是最简单的拓展形式，它们只需要使用在 ggplot2 创建图表时会使用的代码。虽然可以从零开始构建新主题，但通常修改现有主题更简单且不易出错。ggplot2 源代码中通常采用这种方法。例如，这是 `theme_minimal()` 的源代码：
 
 ```{r}
+#| label: theme_minimal
 theme_minimal <- function(base_size = 11, 
                           base_family = "", 
                           base_line_size = base_size/22, 
@@ -52,6 +53,7 @@ theme_minimal <- function(base_size = 11,
 ```{r}
 #| layout-ncol: 3
 #| fig-width: 3
+#| label: theme_minaimal_new
 theme_background <- function(background = "white", ...) {
   theme_minimal(...) %+replace%
     theme(
@@ -74,6 +76,7 @@ base + theme_background(base_size = 14, background = "grey70")
 需要注意的是， `theme_minimal()` 和 `theme_background()` 的代码中 `complete = TRUE` 的使用。在创建自己的 ggplot2 主题时，`complete = TRUE`将确保你的主题的行为与默认主题相同，因此不太可能让用户很惊讶。为了理解为什么这是必要的，比较这两个主题：
 
 ```{r}
+#| label: theme_complete
 # good 
 theme_predictable <- function(...) {
   theme_classic(...) %+replace% 
@@ -99,6 +102,7 @@ theme_surprising <- function(...) {
 ```{r}
 #| layout-ncol: 3
 #| fig-width: 3
+#| label: theme_complete_out
 base + theme_classic()
 base + theme_predictable()
 base + theme_surprising()
@@ -109,14 +113,16 @@ base + theme_surprising()
 ```{r}
 #| layout-ncol: 3
 #| fig-width: 3
+#| label: theme_complete_out_1
 base + theme_classic() + theme(axis.line = element_blank())
 base + theme_predictable() + theme(axis.line = element_blank())
 base + theme_surprising() + theme(axis.line = element_blank())
 ```
 
-`theme_predictable()` 的行为与 `theme_classic()` 相同，轴线条被移除，但对于 `theme_surprising()` 则不是这样。原因是 ggplot2 将完整主题视为一系列“后备”值：当用户向完整主题添加 `theme(axis.line = element_blank())` 时，不需要依赖 `axis.line.x` 或 `axis.line.y` 的后备值，因为这些是从用户命令中的 `axis.line` 继承的。这是对用户的善意，因为它允许他们使用像 `theme_predictable() + theme(axis.line = ...)` 这样的命令覆盖所有从 `axis.line` 继承的内容。相比之下，`theme_surprising()` 没有指定一个完整主题。当用户调用 `theme_surprising()` 时，后备值来自 `theme_classic()`，但更重要的是，ggplot2 将设置 `axis.line.x` 和 `axis.line.y` 的 `theme()` 命令完全视为用户输入的命令。因此，图表规范等效于此：
+`theme_predictable()` 的行为与 `theme_classic()` 相同，轴线条被移除，但对于 `theme_surprising()` 则不是这样。原因是 ggplot2 将完整主题视为可以重写特定值：当用户向完整主题添加 `theme(axis.line = element_blank())` 时，就会重写 `axis.line.x` 或 `axis.line.y` 的值，因为他们的值是从用户命令中的 `axis.line` 继承的。这对用户来说是好事，因为它允许用户使用像 `theme_predictable() + theme(axis.line = ...)` 这样的命令覆盖所有从 `axis.line` 继承的内容。相比之下，`theme_surprising()` 没有指定一个完整主题。当用户调用 `theme_surprising()` 时，ggplot2 将设置 `axis.line.x` 和 `axis.line.y` 的 `theme()` 命令完全视为用户输入的命令。因此，图表规范等效于此：
 
 ```{r}
+#| label: theme_complete_out_2
 base + 
   theme_classic() +
   theme(
@@ -130,9 +136,10 @@ base +
 
 ### 定义主题元素 {#sec-defining-theme-elements}
 
-在 @sec-polishing 中我们看到，ggplot2 主题的结构由元素树定义。元素树指定了每个主题元素的类型以及它从哪里继承其值（你可以使用 `get_element_tree()` 函数将此树作为列表返回）。ggplot2 的扩展系统允许你通过使用 `register_theme_elements()` 函数将新主题元素注册为元素树的一部分来定义新主题元素。假设你正在编写一个名为 "ggxyz" 的新包，它包括作为坐标系统一部分的面板注释，你希望这个面板注释成为一个主题元素：
+ggplot2 主题的结构由元素树定义。元素树指定了每个主题元素的类型以及它从哪里继承其值（你可以使用 `get_element_tree()` 函数将此树作为列表返回）。ggplot2 的扩展系统允许你通过使用 `register_theme_elements()` 函数将新主题元素注册为元素树的一部分来定义新主题元素。假设你正在编写一个名为 "ggxyz" 的新包，它包括为坐标系统一部分的面板注释，你希望这个面板注释成为一个主题元素：
 
 ```{r}
+#| label: theme_elements1
 register_theme_elements(
   ggxyz.panel.annotation = element_text(
     color = "blue", 
@@ -150,13 +157,14 @@ register_theme_elements(
 
 在包中定义新主题元素时要注意两点：
 
--   重要的是要从包的 `.onLoad()` 函数中调用 `register_theme_elements()`，以便新主题元素对使用包中函数的任何人都可用，无论包是否已附加。
+-   从包的 `.onLoad()` 函数中调用 `register_theme_elements()`，以便新主题元素对使用包中函数的任何人都可用，无论包是否已附加。
 
--   始终是个好主意在任何新主题元素前包含你的包的名称作为前缀。这样，如果有人写了另一个面板注释包 `ggabc`，就不会有主题元素 `ggxyz.panel.annotation` 和 `ggabc.panel.annotation` 之间的潜在冲突。
+-   在任何新主题元素前包含你的包的名称作为前缀。这样，如果有人写了另一个面板注释包 `ggabc`，就不会有主题元素 `ggxyz.panel.annotation` 和 `ggabc.panel.annotation` 之间的潜在冲突。
 
-元素树更新后，包可以定义一个使用新主题元素的新坐标系统。一个简单的方法是定义一个创建新的 `CoordCartesian` ggproto 对象的函数。我们将在 @sec-new-coords 中更多地讨论这一点，但现在只需注意这段代码将有效：
+元素树更新后，就可以定义一个使用新主题元素的新坐标系统。一个简单的方法是定义一个新的 `CoordCartesian` ggproto 对象函数。我们将在 @sec-new-coords 中更多地讨论这一点，但现在只需知道这段代码有效：
 
 ```{r}
+#| label: theme_elements2
 coord_annotate <- function(label = "panel annotation") {
   ggproto(NULL, CoordCartesian,
           limits = list(x = NULL, y = NULL),
@@ -174,12 +182,13 @@ coord_annotate <- function(label = "panel annotation") {
 }
 ```
 
-所以现在这将有效：
+接着可以有如下代码：
 
 ```{r}
 #| eval: false
 #| layout-ncol: 2
 #| fig-width: 4
+#| label: theme_elements3
 base + coord_annotate("annotation in blue")
 base + coord_annotate("annotation in blue") + theme_dark()
 ```
@@ -188,6 +197,7 @@ base + coord_annotate("annotation in blue") + theme_dark()
 #| echo: false
 #| layout-ncol: 2
 #| fig-width: 4
+#| label: theme_elements4
 # DJN: I'm not sure why, because I can't reproduce the bug elsewhere, but the
 # call to register_theme_element() updates ggplot2:::ggplot_global$element_tree
 # only within *that* chunk, so subsequent chunks don't have ggxyz.panel.annotation
@@ -209,24 +219,25 @@ base + coord_annotate("annotation in blue")
 base + coord_annotate("annotation in blue") + theme_dark()
 ```
 
-修改了元素树后，值得一提的是 `reset_theme_settings()` 函数会恢复默认元素树，丢弃所有新元素定义，并（除非关闭）将当前激活的主题重置为默认。
+修改了元素树后，可以使用 `reset_theme_settings()` 函数来恢复默认元素树，丢弃所有新元素定义，并将当前激活的主题重置为默认。
 
-## 新统计 {#sec-new-stats}
+## 新统计变换 {#sec-new-stats}
 
-可能令人惊讶的是，创建新统计是扩展 ggplot2 功能最有用的方式之一。当用户向图表添加新图层时，他们通常使用 geom 函数，因此作为开发人员，你可能会认为你的 ggplot2 扩展应该封装为一个新的 geom。在一定程度上这是正确的，因为你的用户可能会想要使用 geom 函数，但实际上不同 geoms 之间的多样性主要是由于不同的统计。使用统计的好处之一是它们纯粹是关于数据转换的。大多数 R 用户和开发人员对数据转换非常熟悉，这使得定义新统计变得更容易。只要所需的行为可以封装在一个统计中，就无需对任何 grid 调用进行调整。
+创建新统计变换是扩展 ggplot2 功能最有用的方式之一。当用户向图表添加新图层时，他们通常使用 geom 函数，因此作为开发人员，你可能会认为你的 ggplot2 扩展应该封装为一个新的 geom。这在一定程度上是正确的，因为你的用户可能会想要使用 geom 函数，但实际上不同 geoms 之间的多样性主要是由不同的统计变换决定的。使用统计变换的好处之一是它们纯粹是关于数据的转换。大多数 R 用户和开发人员对数据转换非常熟悉，这使得定义新统计变得很容易。只要所需的功能可以封装在一个统计中，就无需对任何 grid 调用进行调整。
 
-### 创建统计
+### 创建统计变换
 
-如在 @sec-internals 中讨论的，统计的核心行为由对 `compute_layer()`、`compute_panel()` 和 `compute_group()` 的分层调用序列捕获，所有这些都是与定义统计的 ggproto 对象相关联的方法。默认情况下，前两个函数不执行太多操作，它们只是将数据集按 `PANEL` 列拆分，调用 `compute_panel()`，然后重新组装结果。
+就像在 @sec-internals 中讨论的一样，统计变换的核心是对三个函数 `compute_layer()`、`compute_panel()` 和 `compute_group()`的调用，这三个函数都是 ggproto 对象定义的统计变换方法。默认情况下，前两个函数不执行太多操作，它们只是将数据按照下面的方式进行传递：
 
--   `compute_layer()` 按 `PANEL` 列拆分数据集，调用 `compute_panel()`，并重新组装结果。
--   `compute_panel()` 将面板数据按 `group` 列拆分，调用 `compute_group()`，并重新组装结果。
+-   `compute_layer()` 按 `PANEL` 列拆分数据，随后调用 `compute_panel()`，并重新组装结果。
+-   `compute_panel()` 将传递的数据按 `group` 列拆分，随后调用 `compute_group()`，并重新组装结果。
 
-因此，作为开发人员，你通常只需要指定 `compute_group()` 函数，其工作是获取单个组的数据并适当转换它。这将足以创建一个工作统计，尽管可能不会产生最佳性能。因此，开发人员有时会发现将一些工作转移到 `compute_panel()` 是有价值的：这样做可以允许你矢量化计算并避免昂贵的拆分-组合步骤（我们将在 @sec-spring-stat 中看到这样一个例子）。然而，通常最好首先仅修改 `compute_group()`，然后看看性能是否足够。
+作为开发人员，你通常只需要指定 `compute_group()` 函数，其作用是获取单个组的数据并按要求进行转换。这就足以创建一个能够正常工作的统计变换，尽管在性能上可能有所欠缺。有时将一些统计变换工作转移到 `compute_panel()` 上来是有价值的：这样做可以加速计算过程，避免费时的拆分-组合步骤（我们将在 @sec-spring-stat 中看到一个这样的例子）。然而，通常情况下，最好先仅使用`compute_group()`函数，看看性能是否足够。
 
-为了说明这一点，我们首先创建一个计算一组点的凸包的统计，使用 `grDevices` 中包含的 `chull()` 函数。正如你可能预期的，大部分工作是由我们将要创建的新 ggproto 对象完成的：
+为了说明这一点，我们创建了一个计算一组点的凸包统计变换，使用 `grDevices` 包中的 `chull()` 函数。正如你看到的，大部分工作是由我们创建的新 ggproto 对象完成的：
 
 ```{r}
+#| label: stat_new_ggproto
 StatChull <- ggproto("StatChull", Stat,
   compute_group = function(data, scales) {
     data[chull(data$x, data$y), , drop = FALSE]
@@ -235,11 +246,12 @@ StatChull <- ggproto("StatChull", Stat,
 )
 ```
 
-如在 @sec-ggproto 中所述，`ggproto()` 的前两个参数用于指示此对象定义了一个新的类（方便地命名为 `"StatChull"`），它从 `Stat` 对象继承字段和方法。然后我们指定只需要从 `Stat` 提供的默认值中更改的字段和方法，即 `compute_group()` 和 `required_aes`。我们的 `compute_group()` 函数接受两个输入，`data` 和 `scales`---因为这是 ggplot2 所期望的---但实际计算仅依赖于 `data`。请注意，由于计算必须同时存在两个位置美学，我们还指定了 `required_aes` 字段，以确保 ggplot2 知道这些美学是必需的。
+正如在 @sec-ggproto 中所述，`ggproto()` 的前两个参数用于指定新对象的名称和父类（这里新对象命名为 `"StatChull"`），它从 `Stat` 对象继承属性和方法，我们只需要重写 `Stat` 类中提供的属性和方法，即 `compute_group()` 和 `required_aes`。我们的 `compute_group()` 函数接受两个输入，`data` 和 `scales`（这是 ggplot2 规定的），但实际计算仅依赖于 `data`。请注意，由于计算过程必须同时存在两个位置美学（`x`和`y`），我们还指定了 `required_aes` 属性，以确保 ggplot2 知道这些美学是必需的。
 
-通过创建这个 ggproto 对象，我们有一个工作统计，但还没有给用户提供访问它的方式。为了解决这个问题，我们编写一个图层函数 `stat_chull()`。所有图层函数都有相同的形式：你在函数参数中指定默认值，然后调用 `layer()`，将 `...` 传递到 `params` 参数中。`...` 中的参数将是 geom 的参数（如果你正在制作一个统计包装器），统计的参数（如果你正在制作一个 geom 包装器），或者要设置的美学。
+创建这个 ggproto 对象，我们就有一个可以工作的统计变换了，但我们还没有给用户提供访问它的方式。为了解决这个问题，我们编写了一个图层函数 `stat_chull()`。所有图层函数都有相同的形式：在函数参数中指定默认值，然后调用 `layer()`，将 `...` 传递到 `params` 参数中。`...` 中的参数将是 geom，stat 或 aes 的参数。
 
 ```{r}
+#| label: stat_new_wrapper
 stat_chull <- function(mapping = NULL, data = NULL, 
                        geom = "polygon", position = "identity", 
                        na.rm = FALSE, show.legend = NA, 
@@ -257,11 +269,12 @@ stat_chull <- function(mapping = NULL, data = NULL,
 }
 ```
 
-现在我们的统计可以在图表中使用：
+现在我们的统计变换就可以在图表中使用：
 
 ```{r}
 #| layout-ncol: 2
 #| fig-width: 4
+#| label: stat_new_use
 ggplot(mpg, aes(displ, hwy)) + 
   geom_point() + 
   stat_chull(fill = NA, colour = "black")
@@ -271,19 +284,21 @@ ggplot(mpg, aes(displ, hwy, colour = drv)) +
   stat_chull(fill = NA)
 ```
 
-创建新统计时，通常是个好主意提供相应的 `geom_*()` 构造函数以及 `stat_*()` 构造函数，因为大多数用户习惯于使用 geoms 而不是统计来添加图表图层。我们将在 @sec-new-geoms 中展示一个 `geom_chull()` 函数可能是什么样子。
+创建新统计变换时，提供相应的 `geom_*()` 构造函数以及 `stat_*()` 构造函数是一个好习惯，因为大多数用户习惯于使用 geoms 而不是统计变换来添加图层。我们将在 @sec-new-geoms 中展示一个 `geom_chull()` 函数是什么样子的。
 
-请注意，并不总是能够以有意义的方式定义 `geom_*()` 构造函数。当没有明显的默认 geom 用于新统计，或者统计旨在为现有的 geom/stat 对提供轻微修改时，这种情况就会发生。在这种情况下，可能明智的做法是只提供 `stat_*()` 函数。
+请注意，并不总是能够以有意义的方式定义 `geom_*()` 构造函数。当没有明显的默认 geom 用于新的统计变换，或者统计变换旨在轻微修改现有的 geom/stat 时，这种情况就会发生。在这种情况下，明智的做法是只提供 `stat_*()` 构造函数。
 
 ### 修改参数和数据 {#sec-modifying-stat-params}
 
-在定义新统计时，通常需要指定 `setup_params()` 和/或 `setup_data()` 函数。这些函数在 `compute_*()` 函数之前被调用，它们允许统计响应并修改自身以响应参数和数据（特别是数据，在统计构造时不可用）：
+在定义新统计变换时，通常需要重写 `setup_params()` 和/或 `setup_data()` 函数。这些函数在 `compute_*()` 函数之前被调用，它们允许在统计变换之前根据其他参数对数据进行调整（特别是数据）：
 
--   `setup_params()` 函数首先被调用。它接受两个参数，分别对应于图层 `data` 和在构造期间指定的参数列表（`params`），并返回将在后续计算中使用的修改后的参数列表。由于参数由 `compute_*()` 函数使用，列表的元素应对应于 `compute_*()` 函数中的参数名称以便可用。
+-   `setup_params()` 函数首先被调用。它接受两个参数，分别对应图层的 `data` 和在统计变换中指定的参数列表（`params`），并返回会在后续计算中使用的经过修改的参数列表。这里的参数会被 `compute_*()` 函数使用，因此修改后的参数列表应与 `compute_*()` 函数中的参数对应以便可用。
 
--   `setup_data()` 函数接下来被调用。它也接受 `data` 和 `params` 作为输入---尽管它接收的参数是 `setup_params()` 返回的修改后的参数---并返回修改后的图层数据。重要的是，无论在 `setup_data()` 中发生什么修改，`PANEL` 和 `group` 列都必须保持不变。
+-   `setup_data()` 函数其次被调用。它也接受 `data` 和 `params` 作为输入（尽管它接收的参数是 `setup_params()` 返回的修改后的参数），并返回修改后的图层数据。重要的是，无论在 `setup_data()` 中发生什么修改，`PANEL` 和 `group` 列都必须保持不变。
 
-以下示例展示了如何使用 `setup_params()` 方法定义新统计。修改 `setup_data()` 方法的示例稍后包含在 @sec-modifying-geom-data 中。假设我们想要创建 `StatDensityCommon`，一个统计，它在将数据分组后计算变量的密度估计，并估计应用于所有组的默认带宽。这可以通过许多不同的方式完成，但为了简单起见，我们假设我们有一个 `common_bandwidth()` 函数，它使用 `bw.nrd0()` 函数为每个组分别估计带宽，然后返回平均值：
+以下示例展示了如何使用 `setup_params()` 方法定义新的统计变换。修改 `setup_data()` 方法的示例稍后会包含在 @sec-modifying-geom-data 中。
+
+假设我们想要创建一个统计变换 `StatDensityCommon`，它将数据分组后计算变量的密度估计，并估计所有组的默认宽度。这可以通过许多不同的方式完成，为了简单起见，我们假设我们有一个 `common_bandwidth()` 函数，它使用 `bw.nrd0()` 函数为每个组分别估计宽度，然后返回平均值：
 
 ```{r}
 #| label: common-bandwidth
@@ -294,7 +309,7 @@ common_bandwidth <- function(data) {
 }
 ```
 
-我们希望 `StatDensityCommon` 使用 `common_bandwith()` 函数在数据被分组并传递给 `compute_group()` 函数之前设置一个共同的带宽。这是 `setup_params()` 方法的用途：
+我们希望 `StatDensityCommon` 使用 `common_bandwith()` 函数，在数据被分组并传递给 `compute_group()` 函数之前设置一个共同的宽度。这就是 `setup_params()` 函数的用途：
 
 ```{r}
 #| label: stat-density-common
@@ -316,7 +331,7 @@ StatDensityCommon <- ggproto("StatDensityCommon", Stat,
 )
 ```
 
-然后我们以通常的方式定义 `stat_*()` 函数：
+然后我们用一般的方式定义 `stat_*()` 函数：
 
 ```{r}
 #| label: stat-density-common-2
@@ -341,28 +356,30 @@ stat_density_common <- function(mapping = NULL, data = NULL,
 }
 ```
 
-现在我们可以应用我们的新统计：
+现在我们可以应用我们的新统计变换：
 
 ```{r}
+#| label: stat_params_out
 ggplot(mpg, aes(displ, colour = drv)) + 
   stat_density_common()
 ```
 
 ## 新 geoms {#sec-new-geoms}
 
-虽然通过创建新统计可以实现许多事情，但在某些情况下创建新的 geom 是必要的。这些情况包括：
+虽然通过创建新的统计变换可以实现许多事情，但在某些情况下创建新的 geom 是必要的。这些情况包括：
 
--   从统计返回的数据以任何当前 geoms 可以理解的形式返回是没有意义的。
+-   从统计变换返回的数据对当前任何 geoms 可以接受的数据形式都是没有意义的。
 -   图层需要组合多个 geoms 的输出。
--   geom 需要返回当前现有 geoms 不可用的 grobs。
+-   geom 需要返回的 grobs 是现有 geoms 所没有的。
 
-创建新的 geoms 可能比创建新的统计看起来稍微有些令人生畏，因为最终结果是一个 grobs 集合而不是一个修改后的数据框，这对许多开发人员来说是一个不熟悉的领域。尽管如此，除了上述最后一点，你还是可以尝试不需要考虑太多 grid 和 grobs。
+创建新的 geoms 可能比创建新的统计变换看起来有些令人生畏，因为最终结果是一个 grobs 集合而不是一个修改后的数据框，这对许多开发人员来说不是一个熟悉的领域。尽管如此，除了上述最后一点，你还是可以尝试仅使用统计变换。
 
 ### 修改 geom 默认值 {#sec-modifying-geom-defaults}
 
-在许多情况下，你的新 geom 可能只是一个期望稍微不同的输入或具有不同默认参数值的现有 geom。前一节中的 `stat_chull()` 示例是一个很好的例子。注意，在使用 `stat_chull()` 创建图表时，我们必须手动指定 `fill` 和 `colour` 参数，如果它们没有映射到美学上，这些是不适合我们的凸包 geom 的默认值。为了让我们的生活稍微容易一些，我们可以创建一个 `GeomPolygon` 的子类，修改默认值，以便它默认产生一个空心多边形。我们可以通过覆盖 `default_aes` 值以直接的方式做到这一点：
+在许多情况下，你的新 geom 可能只是期望一个稍微不同的输入或具有不同默认参数值的现有 geom。前一节中的 `stat_chull()` 示例是一个很好的例子。注意，在使用 `stat_chull()` 创建图表时，我们必须手动指定 `fill` 和 `colour` 参数，如果它们没有映射到美学上，则不符合我们凸包 geom 的默认值。为了容易的实现这一点，我们可以创建一个 `GeomPolygon` 的子类，修改默认值，以便它可以产生一个空心多边形。我们可以通过覆盖 `default_aes` 值直接实现这一点：
 
 ```{r}
+#| label: geom_modifying_default
 GeomPolygonHollow <- ggproto("GeomPolygonHollow", GeomPolygon,
   default_aes = aes(
     colour = "black", 
@@ -374,9 +391,10 @@ GeomPolygonHollow <- ggproto("GeomPolygonHollow", GeomPolygon,
 )
 ```
 
-我们现在可以使用 `GeomPolygonHollow` 作为默认 geom 来定义我们的 `geom_chull()` 构造函数：
+现在可以使用 `GeomPolygonHollow` 类作为默认 geom 来定义我们的 `geom_chull()` 构造函数：
 
 ```{r}
+#| label: geom_cull 
 geom_chull <- function(mapping = NULL, data = NULL, stat = "chull",
                        position = "identity", na.rm = FALSE, 
                        show.legend = NA, inherit.aes = TRUE, ...) {
@@ -393,9 +411,10 @@ geom_chull <- function(mapping = NULL, data = NULL, stat = "chull",
 } 
 ```
 
-为了一致性，我们还会定义 `stat_chull()` 使用这个作为默认值。无论如何，我们现在有一个新的 `geom_chull()` 函数，它工作得很好，不需要用户设置参数：
+为了一致性，我们还可以定义 `stat_chull()` ，并使用这个类作为默认值。无论如何，我们现在有一个新的 `geom_chull()` 函数，它工作得很好，不需要用户设置参数：
 
 ```{r}
+#| label: geom_cull_test
 ggplot(mpg, aes(displ, hwy)) + 
   geom_chull() +
   geom_point()
@@ -403,9 +422,10 @@ ggplot(mpg, aes(displ, hwy)) +
 
 ### 修改 geom 数据 {#sec-modifying-geom-data}
 
-在其他情况下，你可能想要定义一个 geom，它在视觉上等同于现有的 geom，但接受不同格式的数据。ggplot2 源代码中的一个示例是 `geom_spoke()`，这是 `geom_segment()` 的一个变体，它接受极坐标数据。为了使这工作，`GeomSpoke` ggproto 对象从 `GeomSegment` 子类化，并使用 `setup_data()` 方法来获取用户的极坐标数据，然后将其转换为 `GeomSegment` 期望的格式。为了说明这种技术，我们将创建 `geom_spike()`，一个 geom，它重新实现了 `geom_spoke()` 的功能。这需要我们重写 `required_aes` 字段以及 `setup_data()` 方法：
+在其他情况下，你可能想要定义一个 geom，它等同于现有的 geom，但接受不同格式的数据。ggplot2 源代码中的一个示例是 `geom_spoke()`，这是 `geom_segment()` 的一个变体，它接受极坐标数据。为了使这工作，`GeomSpoke` ggproto 类从 `GeomSegment` 继承，并使用 `setup_data()` 函数来获取用户的极坐标数据，然后将其转换为 `GeomSegment` 期望的格式。为了说明这一点，我们将创建 `geom_spike()`，一个 geom，它重新实现了 `geom_spoke()` 的功能。这需要我们重写 `required_aes` 属性以及 `setup_data()` 函数：
 
 ```{r}
+#| label: geom_data_spike
 GeomSpike <- ggproto("GeomSpike", GeomSegment,
   
   # 指定所需的美学                   
@@ -424,6 +444,7 @@ GeomSpike <- ggproto("GeomSpike", GeomSegment,
 我们现在编写面向用户的 `geom_spike()` 函数：
 
 ```{r}
+#| label: geom_data_spike_func
 geom_spike <- function(mapping = NULL, data = NULL, 
                        stat = "identity", position = "identity", 
                        ..., na.rm = FALSE, show.legend = NA, 
@@ -441,9 +462,10 @@ geom_spike <- function(mapping = NULL, data = NULL,
 }
 ```
 
-我们现在可以使用 `geom_spike()` 在图表中：
+我们现在可以在图表中使用 `geom_spike()` ：
 
 ```{r}
+#| label: geom_data_spike_use
 #| fig-width: 8
 #| fig-height: 2
 df <- data.frame(
@@ -457,17 +479,16 @@ ggplot(df, aes(x, y)) +
   coord_equal()
 ```
 
-如统计一样，geoms 也有 `setup_params()` 方法以及 `setup_data()` 方法，可以用来在任何绘图发生之前修改参数（见 @sec-modifying-stat-params 示例）。然而，在 geom 上下文中，有一点需要注意的是，`setup_data()` 在任何位置调整之前被调用。
+如统计变换一样，geoms 也有 `setup_params()` 函数以及 `setup_data()` 函数，可以用来在绘图之前修改参数（见 @sec-modifying-stat-params 示例）。然而，在 geom 中，有一点需要注意，`setup_data()` 在任何位置调整（对`x`和`y`的修改）之前被调用。
 
 ### 组合多个 geoms {#sec-combining-multiple-geoms}
 
-定义新 geoms 的一个有用技术是组合不同 geoms 的功能。例如，`geom_smooth()` 函数用于绘制非参数回归线，它使用 `geom_line()` 的功能来绘制回归线，并使用 `geom_ribbon()` 来绘制阴影误差带。要在新 geom 中实现这一点，通常通过考虑绘图过程来完成。就像统计通过调用 `compute_layer()` 然后 `compute_panel()` 最后是 `compute_group()` 的分层序列工作一样，geom 通过调用 `draw_layer()`、`draw_panel()` 和 `draw_group()` 来构建。
+定义新 geom 的一个作用是组合不同 geom 的功能。例如，`geom_smooth()` 函数用于绘制非参数的回归线，它使用 `geom_line()` 的功能来绘制回归线，并使用 `geom_ribbon()` 来绘制阴影误差带。要在新 geom 中实现这一点，通常需要考虑绘图过程来完成。就像统计变换通过调用 `compute_layer()` 、 `compute_panel()` 和 `compute_group()` 来构建一样，geom 通过调用 `draw_layer()`、`draw_panel()` 和 `draw_group()` 来构建。
 
-如果你想组合多个 geoms 的功能，它通常可以通过在 `draw_*()` 调用内准备每个 geom 的数据并将其发送到不同的 geoms 来实现，使用 `grid::gList()` 收集输出时需要一个 grobs 列表，或者如果需要一个带有多个子项的单个 grob，则使用 `grid::gTree()`。
-
-作为一个相对简单的例子，考虑 `GeomBarbell` ggproto 对象，它创建由条形连接的两个点的 geoms：
+如果你想组合多个 geom 的功能，可以用 `draw_*()` 函数来准备每个 geom 的数据并将其发送到对应的 geom 来实现，当有很多 grob 时使用 `grid::gList()` 来收集，如果是带有子项的单个 grob ，则使用 `grid::gTree()`来收集。作为一个相对简单的例子，考虑 `GeomBarbell` ggproto 类，它创建一个由两组点连成线的 geom：
 
 ```{r}
+#| label: geom_combine_barbell
 GeomBarbell <- ggproto("GeomBarbell", Geom,
   
   required_aes = c("x", "y", "xend", "yend"),
@@ -499,9 +520,10 @@ GeomBarbell <- ggproto("GeomBarbell", Geom,
 ) 
 ```
 
-在这个例子中，`draw_panel()` 方法返回一个三个 grobs 的列表，一个来自 `GeomSegment`，两个来自 `GeomPoint`。像往常一样，如果我们希望 geom 对用户可见，我们添加一个包装器函数：
+在这个例子中，`draw_panel()` 方法返回一个列表，包含三个 grobs ，一个来自 `GeomSegment`，两个来自 `GeomPoint`。像往常一样，如果我们希望 geom 对用户可见，我们添加一个构造函数：
 
 ```{r}
+#| label: geom_combine_barbell_func
 geom_barbell <- function(mapping = NULL, data = NULL, 
                          stat = "identity", position = "identity", 
                          ..., na.rm = FALSE, show.legend = NA, 
@@ -519,9 +541,10 @@ geom_barbell <- function(mapping = NULL, data = NULL,
 }
 ```
 
-我们现在可以使用组合 geom：
+现在我们可以使用这个组合的 geom：
 
 ```{r}
+#| label: geom_combine_barbell_use
 #| layout-ncol: 2
 #| fig-width: 4
 df <- data.frame(x = 1:10, xend = 0:9, y = 0, yend = 1:10)
@@ -531,29 +554,31 @@ base + geom_barbell()
 base + geom_barbell(shape = 4, linetype = "dashed")  
 ```
 
-如果你不能利用任何现有的 geom 实现来创建 grobs，那么你将不得不从头开始实现完整的 `draw_*()` 方法，这需要对 grid 包有一点了解。有关 grid 的更多信息以及使用它来从网格原语构建 geom 的示例，请参见 @sec-spring1。
+如果你不能利用现有的任何 geom 实现来创建 grobs，那么你将不得不从头开始实现完整的 `draw_*()` 函数，这需要对 grid 包有一点了解。有关 grid 的更多信息以及使用它来从基于网格的语法构建 geom ，请参见 @sec-spring1。
 
-## 新坐标 {#sec-new-coords}
+## 新坐标系 {#sec-new-coords}
 
-坐标的主要 作用是将位置美学重新缩放到 \[0, 1\] 范围，并在此过程中对其进行转换。定义新坐标相对罕见：在 @sec-coord 中描述的坐标适用于大多数非制图案例，并且随着 `coord_sf()` 的引入，在 @sec-maps 中讨论，ggplot2 能够开箱即用地捕获大多数制图投影。
+坐标系的主要作用是将位置美学（`x`和`y`）重新缩放到 \[0, 1\] 的范围。定义新坐标系相对罕见：在 ggplot2中默认的坐标系适用于大多数非制图案例，并且随着 `coord_sf()` 的引入，ggplot2 也能够开箱即用地绘制地图
 
-开发人员可能需要了解坐标系统内部的最常见情况是定义新的 geoms。坐标的 `draw_*()` 方法之一调用坐标的 `transform()` 方法并不少见。例如，`CoordCartesian` 的 `transform()` 方法用于重新缩放位置数据，但不会以其他方式转换它，geom 可能需要应用此重新缩放以正确绘制 grob。一个示例出现在 @sec-spring1 中。
+开发人员需要了解坐标系内部的最常见情况是定义新的 geom。`draw_*()` 函数调用坐标系的 `transform()` 函数并不少见。例如，`CoordCartesian` 的 `transform()` 方法用于重新缩放位置数据，但不会以其他方式转换它，geom 可能需要应用此重新缩放以正确绘制 grob。一个示例出现在 @sec-spring1 中。
 
-除了转换位置数据外，坐标还负责渲染轴、轴标签、面板前景和面板背景。此外，坐标可以截获并修改图层数据和分面布局。如果绝对必要，大部分这些功能都可供开发人员使用（一个示例显示在 @sec-defining-theme-elements 中），但在大多数情况下，最好保留这些功能不变。
+除了转换位置数据外，坐标系还负责渲染轴、轴标签、面板前景和面板背景。此外，坐标系可以截获并修改图层数据和分面布局。如果有必要，这些功能大部分都可供开发人员使用（一个示例在 @sec-defining-theme-elements 中），但在大多数情况下，最好保留这些功能不变。
 
-## 新比例尺 {#sec-new-scales}
+## 新标度 {#sec-new-scales}
 
-有三种方式可能想要通过新比例尺扩展 ggplot2。最简单的情况是，当你想要为新调色板提供一个方便的包装器时，通常用于颜色或填充美学。作为一个不切实际的例子，假设你想使用像这样的调色板函数来填充小提琴或箱形图的随机颜色：
+想通过新标度扩展 ggplot2 的情况大致有三种。最简单的情况是，你想要创建新的调色板，用于颜色或填充美学。作为一个简单的例子，假设你想使用这样的调色板函数来填充小提琴图或箱形图：
 
 ```{r}
+#| label: scales_color
 random_colours <- function(n) {
   sample(colours(distinct = TRUE), n, replace = TRUE)
 } 
 ```
 
-然后我们可以编写一个 `scale_fill_random()` 构造函数，将调色板传递给 `discrete_scale()`，然后在图表中使用它：
+编写一个 `scale_fill_random()` 构造函数，将调色板传递给 `discrete_scale()`，然后在图表中使用它：
 
 ```{r}
+#| label: scales_color_use
 scale_fill_random <- function(..., aesthetics = "fill") {
   discrete_scale(
     aesthetics = aesthetics, 
@@ -567,25 +592,27 @@ ggplot(mpg, aes(hwy, class, fill = class)) +
   scale_fill_random()
 ```
 
-另一个相对简单的案例是，你提供了一个 geom，它采用新的美学类型，需要进行缩放。假设你创建了一个新的线 geom，并且你决定使用 `width` 美学而不是 `size` 美学。为了使 `width` 像你对 `size` 的缩放那样进行缩放，你必须为美学提供一个默认比例尺。默认比例尺是根据其名称和提供给美学的数据类型来找到的。如果你将连续值分配给 `width` 美学，ggplot2 将寻找 `scale_width_continuous()` 函数，并使用它如果没有添加其他宽度比例尺的话。如果找不到这样的函数（并且没有明确添加宽度比例尺），美学将不会被缩放。
+另一个相对简单的情况是，你提供了一个 geom，它采用新的美学类型，需要进行设置。假设你创建了一个新的绘制线条的 geom，并且你决定使用 `width` 美学而不是 `size` 美学。为了使用 `width`美学，就像你使用 `size` 那样，你必须为它提供一个默认的标度。默认标度是根据其名称和提供给美学的数据类型来识别的。如果你的 `width` 美学是连续值，ggplot2 将寻找 `scale_width_continuous()` 函数，并使用它。如果找不到这样的函数（并且没有明确添加`width`标度），美学将不会起作用。
 
-还有一个值得提及的可能性，但超出了这本书的范围，那就是创建一个新的主要比例尺类型。历史上，ggplot2 有两种主要的比例尺类型，连续和离散。最近，分箱比例尺加入其中，它允许将连续数据分箱为离散箱。可以开发进一步的主要比例尺类型，方法是子类化 `Scale` 或提供的主要比例尺之一，并创建新的 `train()` 和 `map()` 方法等。
+还有一个值得提及的情况，但超出了这本书的范围，那就是创建一个新的标度类型。历史上，ggplot2 有两种主要的标度类型，连续和离散标度。最近，bin 标度加入其中，它允许将连续数据按组分为离散的数据。开发人员可以编写其他标度类型，方法是子类化 `Scale` 或默认的标度类型，并重写 `train()` 和 `map()` 函数。
 
-## 新位置
+## 新位置调整
 
-`Position` ggproto 类比其他 ggproto 类要简单一些，反映了 `position_*()` 函数的非常狭窄的范围。位置的作用是在数据立即传递给任何绘图函数之前接收和修改数据。严格来说，位置可以以任何方式修改数据，但有一个隐含的期望，即它只修改位置美学。位置具有 `compute_layer()` 和 `compute_panel()` 方法，这些方法类似于统计的等效方法，但它没有 `compute_group()` 方法。它还包含 `setup_params()` 和 `setup_data()` 方法，这些方法类似于其他 ggproto 类的 `setup_*()` 方法，有一个值得注意的例外：`setup_params()` 方法只接收数据作为输入，而不是参数列表。原因是 `position_*()` 函数从不在 ggplot2 中单独使用：相反，它们总是在指定图层的主 `geom_*()` 或 `stat_*()` 命令中调用，主命令中的参数不会传递给 `position_*()` 函数调用。
+`Position` ggproto 类比其他 ggproto 类要简单一些，反映了 `position_*()` 函数狭窄的作用范围。位置调整的作用是在数据传递给任何绘图函数之前接收和修改数据。严格来说，位置调整可以以任何方式修改数据，但它只修改位置美学。位置调整具有 `compute_layer()` 和 `compute_panel()` 两个方法，这些方法类似于统计变换的等效方法，但它没有 `compute_group()` 方法。它还包含 `setup_params()` 和 `setup_data()` 方法，这些方法类似于其他 ggproto 类的 `setup_*()` 方法，有一个地方值得注意：`setup_params()` 方法只接收数据作为输入，而不是参数列表。原因是 `position_*()` 函数从不在 ggplot2 中单独使用：相反，它们总是在指定图层的主 `geom_*()` 或 `stat_*()` 命令中调用，主命令中的参数不会传递给 `position_*()` 函数调用。
 
-为了提供一个简单的例子，我们将实现一个稍微简化版的 `position_jitternormal()` 函数，它来自 ggforce 包，其行为与 `position_jitter()` 相同，只不过扰动是从正态分布而不是均匀分布中采样的。为了保持论述简单，我们假设我们有以下便利函数定义：
+为了提供一个简单的例子，我们将实现一个简化版的 `position_jitternormal()` 函数，它来自 ggforce 包，其行为与 `position_jitter()` 相同，只不过扰动是从正态分布而不是均匀分布中采样的。为了保持论述简单，我们假设我们有以下函数定义：
 
 ```{r}
+#| label: position_jitter
 normal_transformer <- function(x, sd) {
   function(x) {x + rnorm(length(x), sd = sd)}
 }
 ```
 
-当被调用时，`normal_transformer()` 返回一个函数，通过添加均值为零、标准差为 `sd` 的随机噪声来扰动输入向量。创建我们的新位置的第一步是制作一个 `Position` 对象的子类：
+当这个函数被调用时，`normal_transformer()` 返回一个函数，这个函数通过添加均值为零、标准差为 `sd` 的随机噪声来扰动输入向量。创建这个新位置调整的第一步是创建一个 `Position` 类的子类：
 
 ```{r}
+#| label: position_jitter_class
 PositionJitterNormal <- ggproto('PositionJitterNormal', Position,
            
   # 我们需要一个 x 和 y 位置美学                              
@@ -616,19 +643,21 @@ PositionJitterNormal <- ggproto('PositionJitterNormal', Position,
 )
 ```
 
-`compute_layer()` 方法使用了 `transform_position()`，这是 ggplot2 提供的一个便利函数，其作用是将用户供应的函数应用于与相关位置尺度相关联的所有美学（例如，不仅仅是 x 和 y，还有 xend 和 yend）。
+`compute_layer()` 函数使用了 `transform_position()`，这是 ggplot2 提供的一个便利函数，其作用是将开发者定义的函数应用于所有与位置标度相关的美学值（例如，不仅仅是 x 和 y，还有 xend 和 yend）。
 
-在现实的实现中，`position_jitternormal()` 构造函数将进行一些输入验证，以确保用户没有指定负的标准差，但在这个上下文中我们将保持简单：
+在实际的开发环境中，`position_jitternormal()` 构造函数将进行一些输入验证，以确保用户没有指定负的标准差，简单的示例如下：
 
 ```{r}
+#| label: position_jitter_func
 position_jitternormal <- function(sd_x = .15, sd_y = .15) {
   ggproto(NULL, PositionJitterNormal, sd_x = sd_x, sd_y = sd_y)
 }
 ```
 
-我们现在可以在创建图表时使用我们的新位置函数。要查看 `position_jitter()` 和我们刚刚定义的 `position_jitternormal()` 函数之间的区别，请比较以下图表：
+我们现在可以在创建图表时使用我们的新位置调整函数。要查看 `position_jitter()` 和我们刚刚定义的 `position_jitternormal()` 函数之间的区别，请比较以下图表：
 
 ```{r}
+#| label: position_jitter_use
 #| layout-ncol: 2
 #| fig-width: 4
 df <- data.frame(
@@ -640,19 +669,20 @@ ggplot(df, aes(x, y)) + geom_point(position = position_jitter())
 ggplot(df, aes(x, y)) + geom_point(position = position_jitternormal())
 ```
 
-在设计新位置时需要考虑的一个实际问题是，用户很少直接调用位置构造函数。指定图层的命令更可能是像 `position = "dodge"` 而不是 `position = position_dodge()`，更不用说覆盖你的默认值了，就像用户指定 `position = position_dodge(width = 0.9)` 那样。因此，如果可能的话，重要的是要仔细思考并使默认值适用于大多数情况。这可能非常棘手：位置对图层数据的形状和格式几乎没有控制权，但用户将期望它们在所有情况下都可预测地行为。一个例子是躲避，用户可能想要躲避箱形图和点云，并期望点云出现在其相应的箱形图的相同区域。在用户层面上，这是一个完全合理的期望，但对开发人员来说可能很棘手。箱形图有一个明确的宽度，可以用来控制躲避，而点则不是这样，但用户期望它们以相同的方式移动。这种考虑通常意味着位置实现最终比最简单的解决方案要复杂得多，以照顾到广泛的边缘情况。
+在设计新位置调整时需要考虑的一个实际问题是，用户很少直接调用位置调整的构造函数。用户用来指定图层的命令更可能是像 `position = "dodge"` 而不是 `position = position_dodge()`，更不用说覆盖默认值了，就像用户指定 `position = position_dodge(width = 0.9)` 那样。因此，如果可能的话，要仔细思考并使默认值适用于大多数情况。这可能非常棘手：位置调整对图层数据的形状和格式几乎没有控制权，但用户将期望它们在所有情况下都可用。一个例子是 dodging，用户可能想要箱形图和点图 dodging，并期望点图出现在箱形图的相同区域。在用户层面上，这是一个完全合理的期望，但对开发人员来说可能很棘手。箱形图有一个明确的宽度，可以用来控制 dodging，而点图则不是这样，但用户期望它们以相同的方式移动。这种考虑通常意味着位置调整的最终实现比简单的解决方案要复杂得多，以照顾到更为广泛的情况。
 
 ## 新分面
 
-分面是 ggplot2 中最强大的概念之一，扩展分面是修改 ggplot2 操作方式的最强大的方式之一。这种力量是有代价的：分面负责接收所有面板，将轴和条带附加到它们上，然后以预期的方式排列它们。从头开始创建一个全新的分面系统需要深入了解 grid 和 gtable，可能是一个令人生畏的挑战。幸运的是，你并不总是需要从头开始创建分面。例如，如果你的新分面将产生位于网格上的面板，你通常可以子类化 `FacetWrap` 或 `FacetGrid` 并修改一个或两个方法。特别是，你可能想要定义新的 `compute_layout()` 和/或 `map_data()` 方法：
+分面是 ggplot2 中最强大的概念之一，扩展分面是修改 ggplot2 操作方式的最强大方式之一。这种力量是有代价的：分面负责接收所有面板，将轴和条带附加到它们上，然后以预期的方式排列它们。**从头开始创建一个全新的分面系统需要深入了解 grid 和 gtable**，可能是一个令人生畏的挑战。幸运的是，你并不总是需要从头开始创建分面。例如，如果你的新分面将产生位于网格的面板，你通常可以子类化 `FacetWrap` 或 `FacetGrid` 并修改一两个方法。特别是，你可能想要定义新的 `compute_layout()` 和/或 `map_data()` 方法：
 
 -   `compute_layout()` 方法接收原始数据集，并创建布局规范，这是一个数据框，每行代表面板在网格上的位置，以及哪些轴限制应该是自由的，哪些应该是固定的。
 
 -   `map_data()` 方法接收这个布局规范和原始数据作为输入，并将 `PANEL` 列 附加到它上面，用于将数据框中的每一行分配给布局中的一个面板。
 
-为了说明如何通过子类化现有分面来创建新分面，我们将创建一个相对简单的分面系统，该系统将“散布”面板，将它们随机放置在网格上。为此，我们将创建一个名为 `FacetScatter` 的新 ggproto 对象，它是 `FacetWrap` 的子类，并编写一个新的 `compute_layout()` 方法，将每个面板放置在面板网格中随机选择的单元格中：
+为了说明如何通过子类化现有分面来创建新分面，我们将创建一个相对简单的分面系统，该系统将 “分散” 面板，将它们随机放置在网格上。为此，我们将创建一个名为 `FacetScatter` 的新 ggproto 对象，它是 `FacetWrap` 的子类，并编写一个新的 `compute_layout()` 方法，将每个面板放置在面板网格中随机选择的位置中：
 
 ```{r}
+#| label: facet_scatter_class
 FacetScatter <- ggproto("FacetScatter", FacetWrap,
   
   # 这并不重要的例子：我们所做的一切是
@@ -700,10 +730,10 @@ FacetScatter <- ggproto("FacetScatter", FacetWrap,
 )
 ```
 
-为了让你对这个输出的样子有一个感觉，这是在构建本节末尾显示的图表时创建的布局规范：
+这是在构建本节末尾显示的图表时创建的布局规范：
 
 ```{r}
-#| label: facet-scatter
+#| label: facet-scatter_func
 #| echo: false
 facet_scatter <- function(facets, nrow, ncol, 
                           strip.position = "top", 
@@ -732,17 +762,18 @@ scatter_built <- ggplot_build(scatter)
 scatter_built$layout$layout
 ```
 
-接下来，我们将编写 `facet_scatter()` 构造函数，以将此功能暴露给用户。对于分面来说，这就像创建一个新的相关 ggproto 对象（在这种情况下是 `FacetScatter`）的实例一样简单，它将用户指定的参数传递给分面：
+接下来，我们将编写 `facet_scatter()` 构造函数，以将此功能暴露给用户。对于分面来说，这就像创建一个新 ggproto 对象（在这种情况下是 `FacetScatter`）的实例一样简单，它将用户指定的参数传递给分面：
 
 ```{r}
 #| ref.label: facet-scatter
 ```
 
-关于这个构造函数有几个注意事项。首先，为了保持示例简单，`facet_scatter()` 包含的参数比 `facet_wrap()` 少，我们将 `nrow` 和 `ncol` 作为必需参数：用户需要指定面板应该散布的网格的大小。其次，`facet_scatter()` 函数要求你使用 `vars()` 指定分面。如果用户尝试提供公式，它将不起作用。相关地，请注意使用 `rlang::quos_auto_name()`：`vars()` 函数返回一个未命名的表达式列表（技术上，quosures），但下游代码需要一个命名列表。只要你期望用户使用 `vars()`，这就是你需要的所有预处理，但如果你想支持其他输入格式，你需要更花哨一些（你可以通过查看 ggplot2 源代码来看如何做到这一点）。
+关于这个构造函数有几个注意事项。首先，为了保持示例简单，`facet_scatter()` 包含的参数比 `facet_wrap()` 少，我们将 `nrow` 和 `ncol` 作为必需参数：用户需要指定面板的网格的大小。其次，`facet_scatter()` 函数要求你使用 `vars()` 指定分面。如果用户尝试提供公式，它将不起作用。相关地，请注意使用 `rlang::quos_auto_name()`：`vars()` 函数返回一个未命名的表达式列表（技术上，quosures），但下游代码需要一个命名列表。如果你期望用户使用 `vars()`，那这就是你需要做的，但如果你想支持其他输入格式，你就还需要其他工作（你可以通过查看 ggplot2 源代码来看如何做到这一点）。
 
-无论如何，我们现在有一个工作分面：
+无论如何，我们现在有一个可以工作的分面：
 
 ```{r}
+#| label: facet_use
 #| eval: false
 ggplot(mpg, aes(displ, hwy)) + 
   geom_point() + 
@@ -750,6 +781,7 @@ ggplot(mpg, aes(displ, hwy)) +
 ```
 
 ```{r}
+#| label: facet_plot
 #| echo: false
 # 使用早期构建的，以便随机 ROW 和 COL 信息
 # 与上面显示的布局规范匹配
