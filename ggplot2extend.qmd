@@ -227,7 +227,7 @@ base + coord_annotate("annotation in blue") + theme_dark()
 
 ### 创建统计变换
 
-就像在 @sec-internals 中讨论的一样，统计变换的核心是对三个函数 `compute_layer()`、`compute_panel()` 和 `compute_group()`的调用，这三个函数都是 ggproto 对象定义的统计变换方法。默认情况下，前两个函数不执行太多操作，它们只是将数据按照下面的方式进行传递：
+就像在 @sec-ggplot2internal 中讨论的一样，统计变换的核心是对三个函数 `compute_layer()`、`compute_panel()` 和 `compute_group()`的调用，这三个函数都是 ggproto 对象定义的统计变换方法。默认情况下，前两个函数不执行太多操作，它们只是将数据按照下面的方式进行传递：
 
 -   `compute_layer()` 按 `PANEL` 列拆分数据，随后调用 `compute_panel()`，并重新组装结果。
 -   `compute_panel()` 将传递的数据按 `group` 列拆分，随后调用 `compute_group()`，并重新组装结果。
