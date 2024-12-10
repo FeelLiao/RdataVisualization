@@ -6,4 +6,4 @@
 
 笔记不会不含基础`ggplot2`绘图的相关知识，如果是初学者，建议先学习[ggplot2: Elegant Graphics for Data Analysis (3e)](https://ggplot2-book.org/)。在这里，主要主要包含ggplot2的一些高级用法，包括ggplot2内部如何工作，编写ggplot2扩展的原理和利用ggplot2进行高级绘图。
 
-本项目旨在记录自己学习R语言数据可视化的过程，如有错误，欢迎在[issue](https://github.com/FeelLiao/R_in_ASLDV/issues)中提出。
+本项目旨在记录自己学习R语言数据可视化的过程，如有错误，欢迎在[issue](https://github.com/FeelLiao/RdataVisualization/issues)中提出。

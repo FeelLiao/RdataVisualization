@@ -27,8 +27,8 @@ book:
     - ggplot2_spring.qmd
     - top50en.qmd
     - top50zh.qmd
-    # - BasicStatisticalGraph.qmd
-    # - NetworkRelatedGraph.qmd
+    - BasicStatisticalGraph.qmd
+    - NetworkRelatedGraph.qmd
 
 format:
   html:
