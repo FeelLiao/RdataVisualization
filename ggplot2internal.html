@@ -524,7 +524,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }</code></pre>
 </div>
 </div>
-<p>这个输出结果似乎有点出人意料：当我们之前定义 <code>full_name()</code> 时，我们只提供了作为 “内部函数”的代码。现在的情况是，<code>ggproto()</code> 自动将我的函数封装在一个封装函数中，该封装函数调用我的代码作为内部函数，同时确保使用了适当的 <code>self</code> 定义。当打印该方法时，控制台会同时显示封装函数（通常没什么意义）和内部函数。这种格式的输出出现在 <a href="#sec-extensions%E5%92%8C" class="quarto-xref"><span class="quarto-unresolved-ref">sec-extensions和</span></a> <a href="ggplot2_spring.html" class="quarto-xref"><span>Chapter 4</span></a> 中。</p>
+<p>这个输出结果似乎有点出人意料：当我们之前定义 <code>full_name()</code> 时，我们只提供了作为 “内部函数”的代码。现在的情况是，<code>ggproto()</code> 自动将我的函数封装在一个封装函数中，该封装函数调用我的代码作为内部函数，同时确保使用了适当的 <code>self</code> 定义。当打印该方法时，控制台会同时显示封装函数（通常没什么意义）和内部函数。这种格式的输出出现在 <a href="ggplot2extend.html" class="quarto-xref"><span>Chapter 3</span></a> 和 <a href="ggplot2_spring.html" class="quarto-xref"><span>Chapter 4</span></a> 中。</p>
 </section><section id="sec-ggproto-instances" class="level3" data-number="2.4.3"><h3 data-number="2.4.3" class="anchored" data-anchor-id="sec-ggproto-instances">
 <span class="header-section-number">2.4.3</span> 创建新的实例</h3>
 <p>既然已经定义了 <code>Person</code> 类，我们就可以创建该类的实例了。方法是将一个 ggproto 对象作为第二个参数传递给 <code>ggproto()</code>，而不在第一个参数中指定一个新的类名。例如，我们可以如下创建新对象 <code>Thomas</code> 和 <code>Danielle</code> ，它们都是 <code>Person</code> 类的实例：</p>
