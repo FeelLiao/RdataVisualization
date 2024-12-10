@@ -285,7 +285,7 @@ grid::grid.draw(p_gtable)
 
 所有的ggplot2对象都是使用面向对象编程的**ggproto**系统构建的。这是一个历史性的意外：ggplot2 最初使用 proto 进行面向对象编程，但由于 proto 系统的局限性，需要一个正式的扩展机制，这就成了一个问题。我们试图将 ggplot2 转换到其他系统（如 R6），但这种尝试是困难的，而创建一个专门针对 ggplot2 需求的面向对象系统被证明是可行的解决方案。
 
-如果你想编写 ggplot2 的扩展程序，了解 ggproto 面向对象编程系统是非常重要的。我们将在 @sec-ggplot2extend和 @sec-spring1 中遇到 ggplot2 使用的 ggproto 对象的情况。与更著名的 R6 系统一样，ggproto 使用引用语义，允许继承和访问父类方法。虽然 ggproto 并不强制执行这些设计原则，但它们对于理解如何在 ggplot2 中使用该系统至关重要。为了说明这些概念，本节将以简化的形式介绍 ggproto 的核心机制。
+如果你想编写 ggplot2 的扩展程序，了解 ggproto 面向对象编程系统是非常重要的。我们将在 @sec-ggplot2extend 和 @sec-spring1 中遇到 ggplot2 使用的 ggproto 对象的情况。与更著名的 R6 系统一样，ggproto 使用引用语义，允许继承和访问父类方法。虽然 ggproto 并不强制执行这些设计原则，但它们对于理解如何在 ggplot2 中使用该系统至关重要。为了说明这些概念，本节将以简化的形式介绍 ggproto 的核心机制。
 
 ### ggproto 对象
 
