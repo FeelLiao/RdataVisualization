@@ -21,10 +21,14 @@ book:
   chapters:
     - index.qmd
     - ChangeLog.qmd
-    - ggplot2intro.qmd
-    - ggplot2internal.qmd
-    - ggplot2extend.qmd
-    - ggplot2_spring.qmd
+
+    - part: ggplot2.qmd
+      chapters:
+        - ggplot2/ggplot2intro.qmd
+        - ggplot2/ggplot2internal.qmd
+        - ggplot2/ggplot2extend.qmd
+        - ggplot2/ggplot2_spring.qmd
+        
     - top50en.qmd
     - top50zh.qmd
     - BasicStatisticalGraph.qmd
