@@ -54,25 +54,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./ggplot2extend.html" rel="next">
-<link href="./ggplot2intro.html" rel="prev">
-<link href="./favicon.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-8da5b4427184b79ecddefad3d342027e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../ggplot2/ggplot2extend.html" rel="next">
+<link href="../ggplot2/ggplot2intro.html" rel="prev">
+<link href="../favicon.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-cd7de1037569933fbb609f06423bd096.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -107,7 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ggplot2internal.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">ggplot2工作原理</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../ggplot2/ggplot2chapter.html">ggplot2 高级</a></li><li class="breadcrumb-item"><a href="../ggplot2/ggplot2internal.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">ggplot2工作原理</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -118,7 +118,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">R语言数据可视化学习笔记</a> 
+      <a href="../">R语言数据可视化学习笔记</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/FeelLiao/RdataVisualization" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
@@ -138,52 +138,90 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">欢迎</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ChangeLog.html" class="sidebar-item-text sidebar-link">
+  <a href="../ChangeLog.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">更新日志</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../ggplot2/ggplot2chapter.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ggplot2 高级</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ggplot2intro.html" class="sidebar-item-text sidebar-link">
+  <a href="../ggplot2/ggplot2intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">ggplot2简介</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ggplot2internal.html" class="sidebar-item-text sidebar-link active">
+  <a href="../ggplot2/ggplot2internal.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">ggplot2工作原理</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ggplot2extend.html" class="sidebar-item-text sidebar-link">
+  <a href="../ggplot2/ggplot2extend.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">编写ggplot2扩展</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ggplot2_spring.html" class="sidebar-item-text sidebar-link">
+  <a href="../ggplot2/ggplot2_spring.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">学习示例</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../plot/plot_ex.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ggplot2高级绘图示例</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./top50en.html" class="sidebar-item-text sidebar-link">
+  <a href="../plot/top50en.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 Visualizations</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./top50zh.html" class="sidebar-item-text sidebar-link">
+  <a href="../plot/top50zh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 可视化</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../plot/BasicStatisticalGraph.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">基础统计绘图</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../plot/NetworkRelatedGraph.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">网络相关绘图</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">extention_chapter.html</span></span>
+  </li>
     </ul>
 </div>
 </nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
@@ -220,10 +258,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#sec-ggproto-style" id="toc-sec-ggproto-style" class="nav-link" data-scroll-target="#sec-ggproto-style"><span class="header-section-number">2.4.5</span> ggproto 代码风格</a></li>
   </ul>
 </li>
-  </ul><div class="toc-actions"><ul><li><a href="https://github.com/FeelLiao/RdataVisualization/edit/main/ggplot2internal.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/FeelLiao/RdataVisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/FeelLiao/RdataVisualization/edit/main/ggplot2/ggplot2internal.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/FeelLiao/RdataVisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../ggplot2/ggplot2chapter.html">ggplot2 高级</a></li><li class="breadcrumb-item"><a href="../ggplot2/ggplot2internal.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">ggplot2工作原理</span></a></li></ol></nav><div class="quarto-title">
 <h1 class="title"><span id="sec-ggplot2internal" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">ggplot2工作原理</span></span></h1>
 </div>
 
@@ -432,7 +470,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">2.4</span> ggproto 简介</h2>
 <p><a href="#sec-plot-method" class="quarto-xref"><span>Section 2.1</span></a> 到 <a href="#sec-ggplotgtable" class="quarto-xref"><span>Section 2.3</span></a> 的重点是如何按顺序构建 ggplot ，而有意对执行这项工作的编程对象含糊其辞。</p>
 <p>所有的ggplot2对象都是使用面向对象编程的<strong>ggproto</strong>系统构建的。这是一个历史性的意外：ggplot2 最初使用 proto 进行面向对象编程，但由于 proto 系统的局限性，需要一个正式的扩展机制，这就成了一个问题。我们试图将 ggplot2 转换到其他系统（如 R6），但这种尝试是困难的，而创建一个专门针对 ggplot2 需求的面向对象系统被证明是可行的解决方案。</p>
-<p>如果你想编写 ggplot2 的扩展程序，了解 ggproto 面向对象编程系统是非常重要的。我们将在 <a href="#sec-ggplot2extend%E5%92%8C" class="quarto-xref"><span class="quarto-unresolved-ref">sec-ggplot2extend和</span></a> <a href="ggplot2_spring.html" class="quarto-xref"><span>Chapter 4</span></a> 中遇到 ggplot2 使用的 ggproto 对象的情况。与更著名的 R6 系统一样，ggproto 使用引用语义，允许继承和访问父类方法。虽然 ggproto 并不强制执行这些设计原则，但它们对于理解如何在 ggplot2 中使用该系统至关重要。为了说明这些概念，本节将以简化的形式介绍 ggproto 的核心机制。</p>
+<p>如果你想编写 ggplot2 的扩展程序，了解 ggproto 面向对象编程系统是非常重要的。我们将在 <a href="ggplot2extend.html" class="quarto-xref"><span>Chapter 3</span></a> 和 <a href="ggplot2_spring.html" class="quarto-xref"><span>Chapter 4</span></a> 中遇到 ggplot2 使用的 ggproto 对象的情况。与更著名的 R6 系统一样，ggproto 使用引用语义，允许继承和访问父类方法。虽然 ggproto 并不强制执行这些设计原则，但它们对于理解如何在 ggplot2 中使用该系统至关重要。为了说明这些概念，本节将以简化的形式介绍 ggproto 的核心机制。</p>
 <section id="ggproto-对象" class="level3" data-number="2.4.1"><h3 data-number="2.4.1" class="anchored" data-anchor-id="ggproto-对象">
 <span class="header-section-number">2.4.1</span> ggproto 对象</h3>
 <p>创建一个新的ggproto对象需要使用<code>ggproto()</code>函数，该函数的第一个参数是新类的名称，第二个参数是新类继承的另一个ggproto对象。例如，我们可以用下面的命令创建一个ggproto对象，尽管它没有任何有用的功能：</p>
@@ -513,20 +551,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;ggproto method&gt;
   &lt;Wrapper function&gt;
-    function (...) 
-full_name(..., self = self)
+    function(...) !!call2(name, !!!args)
 
   &lt;Inner function (f)&gt;
-    function (self, family_last = TRUE) 
-{
-    if (family_last == TRUE) {
-        return(paste(self$given_name, self$family_name))
+    function(self, family_last = TRUE) {
+    if(family_last == TRUE) {
+      return(paste(self$given_name, self$family_name))
     }
     return(paste(self$family_name, self$given_name))
-}</code></pre>
+  }</code></pre>
 </div>
 </div>
-<p>这个输出结果似乎有点出人意料：当我们之前定义 <code>full_name()</code> 时，我们只提供了作为 “内部函数”的代码。现在的情况是，<code>ggproto()</code> 自动将我的函数封装在一个封装函数中，该封装函数调用我的代码作为内部函数，同时确保使用了适当的 <code>self</code> 定义。当打印该方法时，控制台会同时显示封装函数（通常没什么意义）和内部函数。这种格式的输出出现在 <a href="#sec-extensions%E5%92%8C" class="quarto-xref"><span class="quarto-unresolved-ref">sec-extensions和</span></a> <a href="ggplot2_spring.html" class="quarto-xref"><span>Chapter 4</span></a> 中。</p>
+<p>这个输出结果似乎有点出人意料：当我们之前定义 <code>full_name()</code> 时，我们只提供了作为 “内部函数”的代码。现在的情况是，<code>ggproto()</code> 自动将我的函数封装在一个封装函数中，该封装函数调用我的代码作为内部函数，同时确保使用了适当的 <code>self</code> 定义。当打印该方法时，控制台会同时显示封装函数（通常没什么意义）和内部函数。这种格式的输出出现在 <a href="ggplot2extend.html" class="quarto-xref"><span>Chapter 3</span></a> 和 <a href="ggplot2_spring.html" class="quarto-xref"><span>Chapter 4</span></a> 中。</p>
 </section><section id="sec-ggproto-instances" class="level3" data-number="2.4.3"><h3 data-number="2.4.3" class="anchored" data-anchor-id="sec-ggproto-instances">
 <span class="header-section-number">2.4.3</span> 创建新的实例</h3>
 <p>既然已经定义了 <code>Person</code> 类，我们就可以创建该类的实例了。方法是将一个 ggproto 对象作为第二个参数传递给 <code>ggproto()</code>，而不在第一个参数中指定一个新的类名。例如，我们可以如下创建新对象 <code>Thomas</code> 和 <code>Danielle</code> ，它们都是 <code>Person</code> 类的实例：</p>
@@ -645,7 +681,7 @@ full_name(..., self = self)
 <span class="header-section-number">2.4.5</span> ggproto 代码风格</h3>
 <p>由于 ggproto 是一个最小化的类系统，专门为 ggplot2 设计，不涉及其他任何内容，因此我们要认识到 ggproto 在 ggplot2 中的使用方式是特定的，它存在的目的是支持 ggplot2 的扩展系统，您不太可能在编写 ggplot2 扩展以外的任何环境中遇到 ggproto。考虑到这一点，了解 ggplot2 如何使用 ggproto 是有必要的：</p>
 <ul>
-<li><p><strong>ggproto 类被有选择地使用</strong>。在 ggplot2 中并不全面使用 ggproto ，只有部分功能是基于 ggproto 的，因此不建议在您的扩展中创建全新的 ggproto 类。作为扩展开发者，您永远不需要创建全新的 ggproto 对象，而是继承 ggplot2 提供的某些 ggproto 类。<a href="ggplot2extend.html" class="quarto-xref"><span>Chapter 4</span></a> 和 <a href="ggplot2_spring.html" class="quarto-xref"><span>Chapter 4</span></a> 将详细介绍如何做到这一点。</p></li>
+<li><p><strong>ggproto 类被有选择地使用</strong>。在 ggplot2 中并不全面使用 ggproto ，只有部分功能是基于 ggproto 的，因此不建议在您的扩展中创建全新的 ggproto 类。作为扩展开发者，您永远不需要创建全新的 ggproto 对象，而是继承 ggplot2 提供的某些 ggproto 类。<a href="ggplot2extend.html" class="quarto-xref"><span>Chapter 3</span></a> 和 <a href="ggplot2_spring.html" class="quarto-xref"><span>Chapter 4</span></a> 将详细介绍如何做到这一点。</p></li>
 <li><p><strong>ggproto 类是无状态的</strong>。除了用于渲染的少数内部类之外，ggplot2 中的 ggproto 类都被认为是”无状态的”。这意味着 ggplot2 的类在它们被构建之后，它们不会改变。这打破了基于引用的类（其中的方法通常可以安全地改变对象的状态）的常见用法。在 ggplot2 中改变类的状态是不安全的。如果您的代码违反了这个原则，并在渲染过程中改变了 Stat 或 Geom 的状态，那么绘制已保存的 ggplot 对象将会影响 <em>所有</em> 该 Stat 或 Geom 的实例（即使那些在其他图表中使用的实例），因为它们都指向同一个 ggproto 父对象。考虑到这一点，您应该只在两种情况下指定 ggplot2 中 ggproto 对象的状态。首先，您可以在创建对象时指定状态：这是可以接受的，因为此状态应该在任何实例之间共享。其次，您可以通过在别处管理的 params 对象来指定状态。正如您将在后面看到的（参见 <a href="ggplot2extend.html#sec-new-stats" class="quarto-xref"><span>Section 4.2</span></a> 和 <a href="ggplot2extend.html#sec-new-geoms" class="quarto-xref"><span>Section 4.3</span></a>），大多数 ggproto 类都有一个 <code>setup_params()</code> 方法，在那里可以检查数据并计算和存储特定的属性。</p></li>
 <li><p><strong>ggproto 类有简单的继承</strong>。由于 ggproto 类实例是无状态的，调用定义在其他类内部的方法，而不是显式地从该类继承，是相对安全的。这就是为什么在 ggplot2 源代码中很少调用 <code>ggproto_parent()</code> 函数的原因。例如，<code>GeomErrorbar</code> 中的 <code>setup_params()</code> 方法被定义为：</p></li>
 </ul>
@@ -1083,12 +1119,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="./ggplot2intro.html" class="pagination-link" aria-label="ggplot2简介">
+      <a href="../ggplot2/ggplot2intro.html" class="pagination-link" aria-label="ggplot2简介">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">ggplot2简介</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./ggplot2extend.html" class="pagination-link" aria-label="编写ggplot2扩展">
+      <a href="../ggplot2/ggplot2extend.html" class="pagination-link" aria-label="编写ggplot2扩展">
         <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">编写ggplot2扩展</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1100,7 +1136,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>博客<a href="https://blog.stariverfeel.eu.org/">Feel’s Blog</a> | 部署 <a href="https://quarto.org/">Quarto</a>.</p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/FeelLiao/RdataVisualization/edit/main/ggplot2internal.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/FeelLiao/RdataVisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/FeelLiao/RdataVisualization/edit/main/ggplot2/ggplot2internal.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/FeelLiao/RdataVisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

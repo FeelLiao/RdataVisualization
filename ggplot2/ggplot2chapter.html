@@ -8,7 +8,7 @@
 
 <meta name="author" content="Feel Liao">
 
-<title>1&nbsp; ggplot2简介 – R语言数据可视化学习笔记</title>
+<title>ggplot2 高级 – R语言数据可视化学习笔记</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,25 +24,25 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./ggplot2internal.html" rel="next">
-<link href="./ChangeLog.html" rel="prev">
-<link href="./favicon.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-cd7de1037569933fbb609f06423bd096.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../ggplot2/ggplot2intro.html" rel="next">
+<link href="../ChangeLog.html" rel="prev">
+<link href="../favicon.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-cd7de1037569933fbb609f06423bd096.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -83,7 +83,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ggplot2intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">ggplot2简介</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../ggplot2/ggplot2chapter.html">ggplot2 高级</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -98,7 +98,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">R语言数据可视化学习笔记</a> 
+      <a href="../">R语言数据可视化学习笔记</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/FeelLiao/RdataVisualization" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
@@ -118,64 +118,90 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">欢迎</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ChangeLog.html" class="sidebar-item-text sidebar-link">
+  <a href="../ChangeLog.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">更新日志</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../ggplot2/ggplot2chapter.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">ggplot2 高级</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ggplot2intro.html" class="sidebar-item-text sidebar-link active">
+  <a href="../ggplot2/ggplot2intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">ggplot2简介</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ggplot2internal.html" class="sidebar-item-text sidebar-link">
+  <a href="../ggplot2/ggplot2internal.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">ggplot2工作原理</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ggplot2extend.html" class="sidebar-item-text sidebar-link">
+  <a href="../ggplot2/ggplot2extend.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">编写ggplot2扩展</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ggplot2_spring.html" class="sidebar-item-text sidebar-link">
+  <a href="../ggplot2/ggplot2_spring.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">学习示例</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../plot/plot_ex.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ggplot2高级绘图示例</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./top50en.html" class="sidebar-item-text sidebar-link">
+  <a href="../plot/top50en.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 Visualizations</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./top50zh.html" class="sidebar-item-text sidebar-link">
+  <a href="../plot/top50zh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 可视化</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./BasicStatisticalGraph.html" class="sidebar-item-text sidebar-link">
+  <a href="../plot/BasicStatisticalGraph.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">基础统计绘图</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./NetworkRelatedGraph.html" class="sidebar-item-text sidebar-link">
+  <a href="../plot/NetworkRelatedGraph.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">网络相关绘图</span></span></a>
   </div>
 </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">extention_chapter.html</span></span>
+  </li>
     </ul>
     </div>
 </nav>
@@ -189,7 +215,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-ggplot2intro" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">ggplot2简介</span></span></h1>
+<h1 class="title"><span id="sec-ggplot2advanced" class="quarto-section-identifier">ggplot2 高级</span></h1>
 </div>
 
 
@@ -206,13 +232,14 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>在这一小节中，将会从原理介绍作为开发人员，我们可以如何使用ggplot提供的基础组件来构建自己的专属图形。本节主要包含以下内容：</p>
 <ul>
-<li>图层 Layers: 数据 data, 映射 mapping (美学 aesthetic), 几何对象 geom, 统计变换 stat, 位置调整 position adjustment</li>
-<li>标度 Scales：位置标度 position scales, 颜色标度 color scales, 大小标度 size scales, 线条标度 line scales, 形状标度 shape scales</li>
-<li>坐标系 coordinate system</li>
-<li>分面 Faceting</li>
-<li>主题 Themes</li>
+<li><a href="ggplot2intro.html" class="quarto-xref"><span>1&nbsp; ggplot2简介</span></a> 介绍了ggplot2基础的绘图内容和相关的一些概念，让读者对ggplot2有一个初步印象，这一节也规范了ggplot2中一些术语的中文翻译，这些翻译主要参考了(ggplot2:数据分析与图形艺术)[https://book.douban.com/subject/30383562/]</li>
+<li><a href="ggplot2internal.html" class="quarto-xref"><span>2&nbsp; ggplot2工作原理</span></a> 翻译自原版书籍 <a href="https://ggplot2-book.org/internals">Internals of ggplot2</a>，主要介绍了ggplot2内部如何工作，数据如何在ggplot2内部流动并最终形成用户可以看见的图形。</li>
+<li><a href="ggplot2extend.html" class="quarto-xref"><span>3&nbsp; 编写ggplot2扩展</span></a> 翻译自原版书籍 <a href="https://ggplot2-book.org/extensions">Extending ggplot2</a>，主要介绍了开发人员可以如何使用ggplot2的拓展系统来对ggplot2进行扩展，以满足复杂多样的绘图需求。一般来说，ggplot2内部提供的类已经可以满足大部分需求，但是如果要从头创建几何对象，则还需学习更为底层的<code>grid</code>包。</li>
+<li><a href="ggplot2_spring.html" class="quarto-xref"><span>4&nbsp; 学习示例</span></a> <a href="https://ggplot2-book.org/ext-springs">A case study</a> 从一个实际例子介绍了如何编写ggplot2的拓展来丰富它的功能，建议想要学习拓展开发的小伙伴将本章的代码自己敲几遍，然后研究一下ggplot2的源码。这里也简单介绍了ggplot2绘图所依赖的底层包<code>grid</code>。</li>
 </ul>
+<p>本节的很多内容比较抽象，建议多看几遍。翻译的过程中也存在不准确的地方，如果看的不是很清楚，可以参考英文原文。</p>
 
 
 
@@ -636,13 +663,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./ChangeLog.html" class="pagination-link" aria-label="更新日志">
+      <a href="../ChangeLog.html" class="pagination-link" aria-label="更新日志">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">更新日志</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./ggplot2internal.html" class="pagination-link" aria-label="ggplot2工作原理">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">ggplot2工作原理</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../ggplot2/ggplot2intro.html" class="pagination-link" aria-label="ggplot2简介">
+        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">ggplot2简介</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -654,7 +681,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>博客<a href="https://blog.stariverfeel.eu.org/">Feel’s Blog</a> | 部署 <a href="https://quarto.org/">Quarto</a>.</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/FeelLiao/RdataVisualization/edit/main/ggplot2intro.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/FeelLiao/RdataVisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions"><ul><li><a href="https://github.com/FeelLiao/RdataVisualization/edit/main/ggplot2/ggplot2chapter.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/FeelLiao/RdataVisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
