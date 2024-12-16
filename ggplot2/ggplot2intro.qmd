@@ -1,7 +1,33 @@
 # ggplot2简介 {#sec-ggplot2intro}
 
--   图层 Layers: 数据 data, 映射 mapping (美学 aesthetic), 几何对象 geom, 统计变换 stat, 位置调整 position adjustment
--   标度 Scales：位置标度 position scales, 颜色标度 color scales, 大小标度 size scales, 线条标度 line scales, 形状标度 shape scales
--   坐标系 coordinate system
--   分面 Faceting
--   主题 Themes
+## ggplot2术语
+
+ggplot2中出现了很多专用名词，这里展示了这些专有名词的中文翻译，这些中文翻译可能不是很好懂，比如什么是美学（美学即用户希望将哪些数据映射成为图表元素）？什么是位置调整（即对`x`和`y`的调整，比如抖动`jitter`等）？这里罗列这些专有名词是为使下面两章内容中的翻译统一，以免造成读者的误解。翻译参考了 [ggplot2:数据分析与图形艺术](https://book.douban.com/subject/30383562/)
+
+- 图层 Layers: 数据 data, 映射 mapping (美学 aesthetic), 几何对象 geom, 统计变换 stat, 位置调整 position adjustment
+
+- 标度 Scales：位置标度 position scales, 颜色标度 color scales, 大小标度 size scales, 线条标度 line scales, 形状标度 shape scales
+
+- 坐标系 coordinate system
+
+- 分面 Faceting
+
+- 主题 Themes
+
+## 构建一个图形
+
+ggplot2创建的图形包含以下的基本组分：
+
+- Layer 图层：图层是ggplot2创建图形的视觉部分，控制着绘图数据如何转换成视觉呈现。一个图形可以有多个图层，这些图层的组成元素相互独立，比如数据、美学映射等。这种机制使得复杂图形可以由几个简单图形叠加而来。这里的图层概念有点类似于Photoshop中的图层。
+	- data 数据：你希望什么图层使用什么数据
+	- mapping 映射：你希望将哪些数据映射成几何对象的哪些美学值 (aes)，一般的几何对象都要求`x`和`y`美学值，你还可以映射其他美学值，比如 `alpha`, `group`, `color`, `fill` 等。需要注意的是，不同的几何对象接受不同的美学值，具体请参考几何对象的文档。
+	- geom 几何对象：该图层希望展现的图形，几何对象控制着最终的视觉输出，比如点图（`geom_point()`），直方图 (`geom_histogram`) 等。
+	- stat 统计变换：控制着数据如何转换成几何对象能接受的形式，ggplot2中图形的多样性很大程度上取决于统计变换，参见 @sec-new-stats
+	- position adjustment 位置调整：对`x`和`y`的值进行偏移操作（改变`x`和`y`的值）以使得在绘图时绘图元素不会出现重叠等误导现象，比如在点图中对同一个`x`下的多个`y`值进行抖动的操作。
+- Scales 标度：控制着绘图数据如何转换成美学值，比如`aes(color=value)` 这里的value变量赋值给了color美学值，但是`value`中可能并非颜色代码，在这里，标度将控制如何将`value`中的值转换成ggplot2能识别的颜色代码。
+- coordinate system 坐标系：图形在什么坐标系下展示，比如条图在极坐标下会变成饼图。
+- Themes 主题：控制着图形的其他细节
+
+## 其他有用的信息
+
+1. 对图形进行缩放：使用坐标系的`xlim`和`ylim`参数对图形进行缩放操作 `coord_cartesian(xlim=c(),ylim=c())`，这里需要和`lims(x=c(),y=c())`和直接使用`ylim()`、`xlim()`函数区分开（这两个函数都是`scale_x_continuous()`和`scale_y_continuous()`的`limits`参数的快捷方式），前者对坐标系进行操作，后者对`x`和`y`的范围进行限制，这种限制会剔除超过限制的数据而导致图形出问题。参见 [ggplot2: Elegant Graphics for Data Analysis (3e) - 10  Position scales and axes](https://ggplot2-book.org/scales-position#sec-zooming-in)
