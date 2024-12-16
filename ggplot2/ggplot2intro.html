@@ -207,8 +207,16 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#ggplot2术语" id="toc-ggplot2术语" class="nav-link active" data-scroll-target="#ggplot2术语"><span class="header-section-number">1.1</span> ggplot2术语</a></li>
+  <li><a href="#构建一个图形" id="toc-构建一个图形" class="nav-link" data-scroll-target="#构建一个图形"><span class="header-section-number">1.2</span> 构建一个图形</a></li>
+  <li><a href="#其他有用的信息" id="toc-其他有用的信息" class="nav-link" data-scroll-target="#其他有用的信息"><span class="header-section-number">1.3</span> 其他有用的信息</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/FeelLiao/RdataVisualization/edit/main/ggplot2/ggplot2intro.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/FeelLiao/RdataVisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -232,15 +240,42 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="ggplot2术语" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="ggplot2术语"><span class="header-section-number">1.1</span> ggplot2术语</h2>
+<p>ggplot2中出现了很多专用名词，这里展示了这些专有名词的中文翻译，这些中文翻译可能不是很好懂，比如什么是美学（美学即用户希望将哪些数据映射成为图表元素）？什么是位置调整（即对<code>x</code>和<code>y</code>的调整，比如抖动<code>jitter</code>等）？这里罗列这些专有名词是为使下面两章内容中的翻译统一，以免造成读者的误解。翻译参考了 <a href="https://book.douban.com/subject/30383562/">ggplot2:数据分析与图形艺术</a></p>
 <ul>
-<li>图层 Layers: 数据 data, 映射 mapping (美学 aesthetic), 几何对象 geom, 统计变换 stat, 位置调整 position adjustment</li>
-<li>标度 Scales：位置标度 position scales, 颜色标度 color scales, 大小标度 size scales, 线条标度 line scales, 形状标度 shape scales</li>
-<li>坐标系 coordinate system</li>
-<li>分面 Faceting</li>
-<li>主题 Themes</li>
+<li><p>图层 Layers: 数据 data, 映射 mapping (美学 aesthetic), 几何对象 geom, 统计变换 stat, 位置调整 position adjustment</p></li>
+<li><p>标度 Scales：位置标度 position scales, 颜色标度 color scales, 大小标度 size scales, 线条标度 line scales, 形状标度 shape scales</p></li>
+<li><p>坐标系 coordinate system</p></li>
+<li><p>分面 Faceting</p></li>
+<li><p>主题 Themes</p></li>
 </ul>
+</section>
+<section id="构建一个图形" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="构建一个图形"><span class="header-section-number">1.2</span> 构建一个图形</h2>
+<p>ggplot2创建的图形包含以下的基本组分：</p>
+<ul>
+<li>Layer 图层：图层是ggplot2创建图形的视觉部分，控制着绘图数据如何转换成视觉呈现。一个图形可以有多个图层，这些图层的组成元素相互独立，比如数据、美学映射等。这种机制使得复杂图形可以由几个简单图形叠加而来。这里的图层概念有点类似于Photoshop中的图层。
+<ul>
+<li>data 数据：你希望什么图层使用什么数据</li>
+<li>mapping 映射：你希望将哪些数据映射成几何对象的哪些美学值 (aes)，一般的几何对象都要求<code>x</code>和<code>y</code>美学值，你还可以映射其他美学值，比如 <code>alpha</code>, <code>group</code>, <code>color</code>, <code>fill</code> 等。需要注意的是，不同的几何对象接受不同的美学值，具体请参考几何对象的文档。</li>
+<li>geom 几何对象：该图层希望展现的图形，几何对象控制着最终的视觉输出，比如点图（<code>geom_point()</code>），直方图 (<code>geom_histogram</code>) 等。</li>
+<li>stat 统计变换：控制着数据如何转换成几何对象能接受的形式，ggplot2中图形的多样性很大程度上取决于统计变换，参见 <a href="ggplot2extend.html#sec-new-stats" class="quarto-xref"><span>Section 4.2</span></a></li>
+<li>position adjustment 位置调整：对<code>x</code>和<code>y</code>的值进行偏移操作（改变<code>x</code>和<code>y</code>的值）以使得在绘图时绘图元素不会出现重叠等误导现象，比如在点图中对同一个<code>x</code>下的多个<code>y</code>值进行抖动的操作。</li>
+</ul></li>
+<li>Scales 标度：控制着绘图数据如何转换成美学值，比如<code>aes(color=value)</code> 这里的value变量赋值给了color美学值，但是<code>value</code>中可能并非颜色代码，在这里，标度将控制如何将<code>value</code>中的值转换成ggplot2能识别的颜色代码。</li>
+<li>coordinate system 坐标系：图形在什么坐标系下展示，比如条图在极坐标下会变成饼图。</li>
+<li>Themes 主题：控制着图形的其他细节</li>
+</ul>
+</section>
+<section id="其他有用的信息" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="其他有用的信息"><span class="header-section-number">1.3</span> 其他有用的信息</h2>
+<ol type="1">
+<li>对图形进行缩放：使用坐标系的<code>xlim</code>和<code>ylim</code>参数对图形进行缩放操作 <code>coord_cartesian(xlim=c(),ylim=c())</code>，这里需要和<code>lims(x=c(),y=c())</code>和直接使用<code>ylim()</code>、<code>xlim()</code>函数区分开（这两个函数都是<code>scale_x_continuous()</code>和<code>scale_y_continuous()</code>的<code>limits</code>参数的快捷方式），前者对坐标系进行操作，后者对<code>x</code>和<code>y</code>的范围进行限制，这种限制会剔除超过限制的数据而导致图形出问题。参见 <a href="https://ggplot2-book.org/scales-position#sec-zooming-in">ggplot2: Elegant Graphics for Data Analysis (3e) - 10&nbsp; Position scales and axes</a></li>
+</ol>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -680,7 +715,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>博客<a href="https://blog.stariverfeel.eu.org/">Feel’s Blog</a> | 部署 <a href="https://quarto.org/">Quarto</a>.</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/FeelLiao/RdataVisualization/edit/main/ggplot2/ggplot2intro.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/FeelLiao/RdataVisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/FeelLiao/RdataVisualization/edit/main/ggplot2/ggplot2intro.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/FeelLiao/RdataVisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
