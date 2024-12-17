@@ -219,9 +219,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </ul>
 </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">extention_chapter.html</span></span>
-  </li>
+      <div class="sidebar-item-container"> 
+            <a href="../extension/extension_chapter.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">编写 ggplot2 拓展</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../extension/gghdr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">gghdr</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../extension/introdataviz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">introdataviz</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
     </ul>
 </div>
 </nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
@@ -310,27 +329,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 5. Generating R^2
 6. Generating T-values
 7. Generating P-values
-8. Adding significant column in chromosome 1
-9. Adding significant column in chromosome 3
-10. Adding significant column in chromosome 10
+8. Adding significant column in chromosome 7
+9. Adding significant column in chromosome 11
+10. Adding significant column in chromosome 12
 DONE!</code></pre>
 </div>
+</div>
+<div class="cell">
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">gwas_data_load</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  chr        snp      bp nmiss         beta         se           r2          t
-1   1 rs55990943 1710286 19850 0.0015956018 0.28896956 2.302800e-04 -0.5182600
-2   1  rs2485316  529641 19999 0.0385451552 0.08217860 1.003227e-05  0.7015619
-3   1 rs49565877 1071155 19901 0.0694637100 0.17352173 4.259465e-06  0.1116152
-4   1 rs65171384 1199831 20000 0.0007513728 0.20053077 7.349141e-05 -1.7902317
-5   1 rs29943992  823180 19948 0.0007623012 0.13222531 1.852718e-05  0.4321002
-6   1 rs97593198 1000476 19806 0.0071975674 0.08594635 1.977640e-04  0.4429262
+1   1  rs4155881 1047370 19887 2.752251e-02 0.14289315 7.430252e-05  0.7015206
+2   1 rs85543416 1777933 19935 6.040930e-04 0.15108781 7.775624e-05 -1.9623204
+3   1 rs77801213  190664 19971 1.132082e-02 0.10271452 6.850765e-05  2.1165481
+4   1 rs38497793  911150 19823 3.538911e-05 0.04758727 5.140509e-05 -0.2382061
+5   1 rs63825472  698313 19846 2.157670e-03 0.11934574 3.316109e-05 -0.7903913
+6   1 rs40354549 1479083 20019 2.699845e-03 0.11095280 8.600896e-05  0.5175790
            p
-1 0.68755917
-2 0.63401758
-3 0.55861469
-4 0.49789319
-5 0.72810084
-6 0.09441345</code></pre>
+1 0.53251259
+2 0.37050198
+3 0.46389358
+4 0.06730728
+5 0.13124653
+6 0.05740168</code></pre>
 </div>
 </div>
 <p>从模拟的GWAS数据中选择所有 p 值小于 0.05 的行，这些行代表统计上显著的结果。</p>
@@ -362,11 +383,11 @@ DONE!</code></pre>
     chr  bp_add
   &lt;int&gt;   &lt;dbl&gt;
 1     1       0
-2     2 2199127
-3     3 4298679
-4     4 6297954
-5     5 8196989
-6     6 9996373</code></pre>
+2     2 2197321
+3     3 4295847
+4     4 6295480
+5     5 8193938
+6     6 9993804</code></pre>
 </div>
 </div>
 <p>将累积基对位置数据与原始GWAS数据合并。</p>
@@ -426,7 +447,7 @@ DONE!</code></pre>
 <span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="BasicStatisticalGraph_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="BasicStatisticalGraph_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -741,7 +762,7 @@ dbl (3): Overall, Republicans/Leaners, Democrats/Leaners
 </div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="BasicStatisticalGraph_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="BasicStatisticalGraph_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
