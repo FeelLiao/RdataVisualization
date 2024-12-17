@@ -6,6 +6,17 @@
 
 笔记不会不含基础`ggplot2`绘图的相关知识，如果是初学者，建议先学习[ggplot2: Elegant Graphics for Data Analysis (3e)](https://ggplot2-book.org/)。在这里，主要主要包含ggplot2的一些高级用法，包括ggplot2内部如何工作，编写ggplot2扩展的原理和利用ggplot2进行高级绘图。
 
+## 构建
+
+本项目使用`renv`包进行依赖管理，可以轻松下载项目依赖。注意，本项目在Ubuntu 24.04 LTS系统构建通过，别的系统，特别是Windows下，使用`renv`包可能出错。
+
+```R
+# 在R中使用以下函数来进行依赖安装
+renv::restore()
+```
+
+如果需要PDF文件，可以自己在构建时修改`_quarto.yml`文件，详细步骤请参考 [quarto-PDF](https://quarto.org/docs/output-formats/pdf-basics.html)
+
 ## 声明
 
 **本项目中的所有代码只在Linux环境下测试过，Windows环境下可能无法运行，如有问题，请自行解决。**

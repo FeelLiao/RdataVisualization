@@ -508,15 +508,15 @@ John$description()
 -   **ggproto 类有简单的继承**。由于 ggproto 类实例是无状态的，调用定义在其他类内部的方法，而不是显式地从该类继承，是相对安全的。这就是为什么在 ggplot2 源代码中很少调用 `ggproto_parent()` 函数的原因。例如，`GeomErrorbar` 中的 `setup_params()` 方法被定义为：
 
 ```{r}
-    #| eval: false
-    #| #| label: ggproto_style_1
-    GeomErrorbar <- ggproto(
-      # ...
-      setup_params = function(data, params) {
-        GeomLinerange$setup_params(data, params)
-      }
-      # ...
-    )
+#| eval: false
+#| label: ggproto_style_1
+GeomErrorbar <- ggproto(
+  # ...
+  setup_params = function(data, params) {
+    GeomLinerange$setup_params(data, params)
+  }
+  # ...
+)
 ```
 
 这种模式通常比使用 `ggproto_parent()` 更易读，而且因为 ggproto 对象是无状态的，所以也同样安全。

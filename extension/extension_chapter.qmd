@@ -1,0 +1,5 @@
+# 编写 ggplot2 拓展 {#sec-buildExtensions}
+
+通常从用户转为ggplot2的开发者是困难的，因为ggplot2提供的用户接口和开发API的区别比较大。这一节将记录自己在学习一些ggplot2插件源码时的体会，从ggplot2提供的API去理解它的插件如何从头开发。目前中文互联网上很少有相关的教程，希望这里的示例可以帮助大家理解ggplot2底层，写出自己的ggplot2插件。
+
+- 

@@ -36,7 +36,10 @@ book:
         - plot/BasicStatisticalGraph.qmd
         - plot/NetworkRelatedGraph.qmd
 
-    - part: extention/extention_chapter.qmd
+    - part: extension/extension_chapter.qmd
+      chapters: 
+        - extension/gghdr.qmd
+        - extension/introdataviz.qmd
 
 format:
   html:

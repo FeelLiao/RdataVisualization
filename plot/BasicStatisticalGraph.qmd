@@ -12,7 +12,7 @@
 
 ```{R}
 #| warning: false
-
+#| label: man-loading packages
 library(tidyverse)
 library(ggtext)
 library(normentR) # https://github.com/norment/normentR
@@ -26,8 +26,14 @@ library(janitor)
 然后，使用 `janitor::clean_names()` 来标准化数据框的列名。
 
 ```{R}
+#| warning: false
+#| label: man-simulate-data
 gwas_data_load <- simulateGWAS(nSNPs = 1e5, nSigCols = 3) |>
   janitor::clean_names()
+```
+
+```{r}
+#| label: mam-head-data
 head(gwas_data_load)
 ```
 
