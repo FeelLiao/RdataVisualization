@@ -388,7 +388,7 @@ theme_cus <- theme(
 
 ```{r}
 #| label: shadow-plot
-#| warning: true
+#| warning: false
 
 txt.sz <- 3.5
 ggplot(df, aes(y = cont)) +
