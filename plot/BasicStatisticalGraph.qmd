@@ -10,7 +10,7 @@
 
 ### 加载R包
 
-```{R}
+```{r}
 #| warning: false
 #| label: man-loading packages
 library(tidyverse)
@@ -25,9 +25,10 @@ library(janitor)
 
 然后，使用 `janitor::clean_names()` 来标准化数据框的列名。
 
-```{R}
+```{r}
 #| warning: false
 #| label: man-simulate-data
+#| include: false
 gwas_data_load <- simulateGWAS(nSNPs = 1e5, nSigCols = 3) |>
   janitor::clean_names()
 ```
@@ -47,7 +48,8 @@ head(gwas_data_load)
 
 将显著和非显著的数据行合并回一个单一的数据框中。
 
-```{R}
+```{r}
+#| label: mam-gwas_data
 sig_data <- gwas_data_load |> subset(p < 0.05)
 notsig_data <- gwas_data_load |>
   subset(p >= 0.05) |>
@@ -65,6 +67,7 @@ lag函数会将数据框或向量中的每一行向前移动指定的位置，�
 选择染色体和累积基对位置的错位值（bp_add）
 
 ```{r}
+#| label: mam-data-cumsum
 data_cum <- gwas_data |>
   group_by(chr) |>
   summarise(max_bp = max(bp)) |>
@@ -78,6 +81,7 @@ head(data_cum)
 计算每个SNP的累积基对位置（`bp_cum`），这有助于后续的可视化或分析。
 
 ```{r}
+#| label: mam-gwas-data-mu
 gwas_data <- gwas_data |>
   inner_join(data_cum, by = "chr") |>
   mutate(bp_cum = bp + bp_add)
@@ -90,6 +94,7 @@ gwas_data <- gwas_data |>
 计算Bonferroni校正后的显著性阈值。这是通过将0.05除以GWAS数据中的行数（即测试的总数）来实现的，用于调整多重比较的影响。
 
 ```{r}
+#| label: mam-sig
 axis_set <- gwas_data |>
   group_by(chr) |>
   summarize(center = mean(bp_cum))
@@ -103,6 +108,7 @@ sig <- 0.05 / nrow(gwas_data)
 ### 绘制曼哈顿图
 
 ```{r}
+#| label: mam-plot
 ggplot(gwas_data, aes(
   x = bp_cum, y = -log10(p),
   color = as_factor(chr), size = -log10(p)
@@ -122,7 +128,7 @@ ggplot(gwas_data, aes(
   scale_y_continuous(expand = c(0, 0), limits = c(0, ylim)) + # 设置y轴的范围和扩展。
   scale_color_manual(values = rep(
     c("#788FCE", "#E6956F"),
-    unique(length(axis_set$chr))
+    length(axis_set$chr)
   )) +
   # 手动设置颜色，为每个染色体分配不同的颜色。
   scale_size_continuous(range = c(0.5, 3)) + # 设置点的大小范围。
@@ -137,12 +143,17 @@ ggplot(gwas_data, aes(
   )
 ```
 
+曼哈顿图由ggplot2的点图+一条直线绘制而成。gwas数据由分布在染色体上的单核苷酸突变位点构成，每个突变位点记录了它在染色体上的绝对位置和它的p-value。为了对这个数据进行可视化，我们将每个单核苷酸突变位点的位置作为x轴，它的p-value作为y轴，然后沿y轴绘制一条p-value的阈值线，就完成可视化。在实际操作过程中，需要注意每个单核苷酸突变位点在染色体上的位置，这里的数据中，单核苷酸突变位点在染色体上的位置表示为在单个染色体上的位置，比如在2号染色体的1253位点，表示为1253，而非加上染色体1的长度，所以需要转换数据。另外，x轴和y轴的标签也做了相应转换，x轴取了每个染色体的中心位置写标签，而y轴做了-log10转换。
+
 ## 分裂小提琴图
+
+分裂小提琴图能够很方便的展示嵌套数据中两组数据的分布情况。分裂小提琴图来自`introdataviz`包`geom_split_violin()`函数，有关如何实现这个函数，请参见 @sec-introdataviz
 
 ### 加载R包
 
 ```{r}
-# | warning: false
+#| warning: false
+#| label: violinlie-library
 
 library(tidyverse)
 library(introdataviz) # https://github.com/PsyTeachR/introdataviz
@@ -153,126 +164,156 @@ library(patchwork)
 
 ### 加载数据
 
+读取数据，将`Treatment`列数据按`-`拆分成`A, B`两列，并将`A`列转换成因子类型，除去`B`列中的数字。
+
 ```{r}
-df1 <- read_tsv("data/F1ag.txt") |>
+#| warning: false
+#| label: violinlie-data
+
+df1 <- read_tsv("data/bsg/F1ag.txt") |>
   select(2, 3, -1) |>
   separate(`Treatment`, into = c("A", "B"), sep = "-", convert = TRUE) |>
   mutate(
     B = str_replace_all(B, "[0-9]", ""),
     A = as.factor(A)
   )
-df2 <- read_tsv("data/F1ag.txt") %>%
+df2 <- read_tsv("data/bsg/F1ag.txt") %>%
   select(2, 4, -1) |>
   separate(`Treatment`, into = c("A", "B"), sep = "-", convert = TRUE) |>
   mutate(
     B = str_replace_all(B, "[0-9]", ""),
     A = as.factor(A)
   )
-df3 <- read_tsv("data/F1BC.txt") |>
+df3 <- read_tsv("data/bsg/F1BC.txt") |>
   select(2, 3, -1) |>
   separate(`Treatment`, into = c("A", "B"), sep = "-", convert = TRUE) |>
   mutate(
     B = str_replace_all(B, "[0-9]", ""),
     A = as.factor(A)
   )
+
+head(df1)
 ```
 
 ### 画图
 
-```{r}
-# theme_cus <- function(...) {
-#   theme_cus <- theme(
-#     axis.text.x = element_text(
-#       angle = 0, hjust = 0.5, vjust = 0.5, colour = "black",
-#       size = 10, margin = margin(b = 2)
-#     ),
-#     axis.text.y = element_text(
-#       color = "black", size = 10,
-#       margin = margin(r = 1)
-#     ),
-#     panel.background = element_rect(fill = NA, color = NA),
-#     panel.grid.minor = element_line(linewidth = 0.2, color = "#e5e5e5"),
-#     panel.grid.major = element_line(linewidth = 0.2, color = "#e5e5e5"),
-#     panel.border = element_rect(
-#       fill = NA, color = "black",
-#       linewidth = 1, linetype = "solid"
-#     ),
-#     legend.key = element_blank(),
-#     legend.title = element_blank(),
-#     legend.text = element_text(color = "black", size = 8),
-#     legend.spacing.x = unit(0.1, "cm"),
-#     legend.key.width = unit(0.5, "cm"),
-#     legend.key.height = unit(0.5, "cm"),
-#     legend.justification = c(1, 0),
-#     legend.background = element_blank(),
-#     ...
-#   )
-#   return(theme_cus)
-# }
-# a <- ggplot(df1, aes(x = A, y = `SOC (g kg-1)`, fill = B)) +
-#   geom_split_violin(trim = FALSE, color = NA) +
-#   guides(fill = guide_legend(title = "group")) +
-#   stat_summary(
-#     fun.data = "mean_sd", position = position_dodge(0.15),
-#     geom = "errorbar", width = 0.1
-#   ) +
-#   stat_summary(
-#     fun = mean, geom = "point",
-#     position = position_dodge(0.15), show.legend = FALSE
-#   ) +
-#   stat_compare_means(aes(group = B),
-#     label = "p.signif", label.y = 15.1,
-#     method = "t.test", size = 5
-#   ) +
-#   scale_fill_manual(values = c("#788FCE", "#e6956f")) +
-#   labs(x = NULL, y = "SOC (g kg-1)") +
-#   theme_cus(legend.position = c(1, 0))
-# g <- ggplot(df2, aes(x = A, y = `DOC(mg kg-1)`, fill = B)) +
-#   geom_split_violin(trim = F, color = NA, adjust = 1.5) +
-#   guides(fill = guide_legend(title = "group")) +
-#   stat_summary(
-#     fun.data = "mean_sd",
-#     position = position_dodge(0.15), geom = "errorbar", width = .1
-#   ) +
-#   stat_summary(
-#     fun = "mean", geom = "point",
-#     position = position_dodge(0.15), show.legend = F
-#   ) +
-#   stat_compare_means(aes(group = B),
-#     label = "p.signif",
-#     label.y = 210, method = "t.test", size = 5
-#   ) +
-#   scale_fill_manual(values = c("#788FCE", "#E6956F")) +
-#   labs(x = NULL, y = "DOC(mg kg-1)") +
-#   theme_cus(legend.position = "non")
-# b <- ggplot(df3, aes(x = A, y = `Soil temperate (℃)`, fill = B)) +
-#   geom_split_violin(trim = F, color = NA, adjust = 1.5) +
-#   guides(fill = guide_legend(title = "group")) +
-#   stat_summary(
-#     fun.data = "mean_sd", position = position_dodge(0.15),
-#     geom = "errorbar", width = .1
-#   ) +
-#   stat_summary(
-#     fun = "mean", geom = "point",
-#     position = position_dodge(0.15), show.legend = F
-#   ) +
-#   stat_compare_means(aes(group = B),
-#     label = "p.signif",
-#     label.y = 17.1, method = "t.test", size = 5
-#   ) +
-#   scale_fill_manual(values = c("#788FCE", "#E6956F")) +
-#   labs(x = NULL, y = "Soil temperate") +
-#   theme_cus(legend.position = "non")
+根据图层顺序依次添加
 
-# a + b + g + plot_annotation(tag_levels = "A")
+1.  分裂小提琴图
+2.  误差线图
+3.  均值点图
+4.  两组均值t检验结果
+
+```{r}
+#| label: violinlie-plot
+
+# 定义公共主题
+theme_cus <- function(...) {
+  theme_cus <- theme(
+    axis.text.x = element_text(
+      angle = 0, hjust = 0.5, vjust = 0.5, colour = "black",
+      size = 10, margin = margin(b = 2)
+    ),
+    axis.text.y = element_text(
+      color = "black", size = 10,
+      margin = margin(r = 1)
+    ),
+    panel.background = element_rect(fill = NA, color = NA),
+    panel.grid.minor = element_line(linewidth = 0.2, color = "#e5e5e5"),
+    panel.grid.major = element_line(linewidth = 0.2, color = "#e5e5e5"),
+    panel.border = element_rect(
+      fill = NA, color = "black",
+      linewidth = 1, linetype = "solid"
+    ),
+    legend.key = element_blank(),
+    legend.title = element_blank(),
+    legend.text = element_text(color = "black", size = 8),
+    legend.spacing.x = unit(0.1, "cm"),
+    legend.key.width = unit(0.5, "cm"),
+    legend.key.height = unit(0.5, "cm"),
+    legend.justification = c(1, 0),
+    legend.background = element_blank(),
+    ...
+  )
+  return(theme_cus)
+}
+
+# 绘制分裂小提琴图
+a <- ggplot(df1, aes(x = A, y = `SOC (g kg-1)`, fill = B)) +
+  # 分裂小提琴图
+  geom_split_violin(trim = FALSE, color = NA) +
+  # 添加图例
+  guides(fill = guide_legend(title = "group")) +
+  # 绘制误差线
+  stat_summary(
+    fun.data = "mean_sd", position = position_dodge(0.15),
+    geom = "errorbar", width = 0.1
+  ) +
+  # 将均值以点的形式添加到误差线上
+  stat_summary(
+    fun = mean, geom = "point",
+    position = position_dodge(0.15), show.legend = FALSE
+  ) +
+  # 添加B列中两组均值的t检验结果
+  stat_compare_means(aes(group = B),
+    label = "p.signif", label.y = 15.1,
+    method = "t.test", size = 5
+  ) +
+  scale_fill_manual(values = c("#788FCE", "#e6956f")) +
+  labs(x = NULL, y = "SOC (g kg-1)") +
+  theme_cus(legend.position = c(1, 0))
+
+g <- ggplot(df2, aes(x = A, y = `DOC(mg kg-1)`, fill = B)) +
+  geom_split_violin(trim = F, color = NA, adjust = 1.5) +
+  guides(fill = guide_legend(title = "group")) +
+  stat_summary(
+    fun.data = "mean_sd",
+    position = position_dodge(0.15), geom = "errorbar", width = .1
+  ) +
+  stat_summary(
+    fun = "mean", geom = "point",
+    position = position_dodge(0.15), show.legend = F
+  ) +
+  stat_compare_means(aes(group = B),
+    label = "p.signif",
+    label.y = 210, method = "t.test", size = 5
+  ) +
+  scale_fill_manual(values = c("#788FCE", "#E6956F")) +
+  labs(x = NULL, y = "DOC(mg kg-1)") +
+  theme_cus(legend.position = "non")
+
+b <- ggplot(df3, aes(x = A, y = `Soil temperate (℃)`, fill = B)) +
+  geom_split_violin(trim = F, color = NA, adjust = 1.5) +
+  guides(fill = guide_legend(title = "group")) +
+  stat_summary(
+    fun.data = "mean_sd", position = position_dodge(0.15),
+    geom = "errorbar", width = .1
+  ) +
+  stat_summary(
+    fun = "mean", geom = "point",
+    position = position_dodge(0.15), show.legend = F
+  ) +
+  stat_compare_means(aes(group = B),
+    label = "p.signif",
+    label.y = 17.1, method = "t.test", size = 5
+  ) +
+  scale_fill_manual(values = c("#788FCE", "#E6956F")) +
+  labs(x = NULL, y = "Soil temperate") +
+  theme_cus(legend.position = "non")
+
+# 将3个图形按行排列在一起
+a + b + g + plot_annotation(tag_levels = "A")
 ```
 
 ## 阴影条带哑铃图
 
+用于展示每行数据从x1增长到x2比较合适，但是该图比较难以绘制。下面的示例使用基础ggplot2对象绘制，需要使用者对ggplot2很熟悉。这个示例利用`geom_rect()`绘制矩形框架，然后利用`geom_text()`将结果绘制到对应位置。
+
 ### 加载R包
 
 ```{R}
-# | warning: false
+#| warning: false
+#| label: shadow-library
 
 library(scales)
 library(tidyverse)
@@ -281,14 +322,19 @@ library(tidyverse)
 ### 数据处理
 
 ```{r}
-df <- read_csv("data/values.csv")
+#| warning: false
+#| label: shadow-data
+
+df <- read_csv("data/bsg/values.csv")
 df <- df |>
   mutate(across(2:4, ~ .x / 100)) |>
   arrange(Overall) |>
   mutate(
-    order = row_number(), # 添加一个新列order，包含每行的行号
+    # 添加一个新列order，包含每行的行号
+    order = row_number(), 
+    # 根据order列的值重新排序Institution列
     Institution = fct_reorder(Institution, order)
-  ) |> # 根据order列的值重新排序Institution列
+  ) |> 
   rename(cont = 1, overall = 2, x1 = 3, x2 = 4) |>
   mutate(
     diff = abs(x2 - x1),
@@ -300,15 +346,21 @@ df <- df |>
     x2nu = -1 * x1nu
   )
 df2 <- df |>
-  filter(row_number() %% 2 == 0) |> # 从df中筛选出行号为偶数的行
+  # 从df中筛选出行号为偶数的行
+  filter(row_number() %% 2 == 0) |> 
   mutate(xmin = -2, xmax = 2)
 df <- left_join(df, df2, by = colnames(df)) |>
   head(10)
+
+df
 ```
 
 ### 定义主题
 
 ```{r}
+#| warning: false
+#| label: shadow-theme
+
 txt_sz <- 3.5
 theme_cus <- theme(
   text = element_text(size = 14),
@@ -318,10 +370,13 @@ theme_cus <- theme(
     size = 14 / 5 * txt_sz
   ),
   axis.text.x = element_blank(),
-  axis.ticks.x = element_blank(),
-  axis.title = element_blank(),
-  axis.ticks.y = element_blank(),
-  panel.grid = element_blank(),
+  axis.ticks = element_blank(),
+  # 这里直接设置axis.title=element_blank()不会生效，需要对x,y单独设置
+  axis.title.x = element_blank(),
+  axis.title.y = element_blank(),
+  # 同上
+  panel.grid.major = element_blank(),
+  panel.grid.minor = element_blank(),
   panel.border = element_blank(),
   legend.position = "none",
   plot.title = element_text(size = rel(0.8), hjust = -1),
@@ -332,8 +387,12 @@ theme_cus <- theme(
 ### 数据可视化
 
 ```{r}
+#| label: shadow-plot
+#| warning: true
+
 txt.sz <- 3.5
 ggplot(df, aes(y = cont)) +
+  # 添加矩形图层，用于背景标记，颜色为浅灰色
   geom_rect(aes(
     xmin = xmin, xmax = xmax,
     # xmin,xmax有缺失值，只绘制没有缺失值的
@@ -343,15 +402,17 @@ ggplot(df, aes(y = cont)) +
     # xmax - (required) right edge of rectangle
     # ymin - (required) bottom edge of rectangle
     # ymax - (required) top edge of rectangle
-  ), fill = "#f6f6f6") + # 添加矩形图层，用于背景标记，颜色为浅灰色
+  ), fill = "#f6f6f6") + 
+  # 添加文本标签"Institution"
   geom_text(
     label = "Institution", x = -0.675, y = dim(df)[1] + 1,
     size = txt.sz, color = "black", fontface = 2, hjust = 0
-  ) + # 添加文本标签"Institution"
+  ) + 
+  # 添加文本标签"Overall"
   geom_text(
     label = "Overall", x = 1.075, y = dim(df)[1] + 1,
     size = txt.sz, color = "black", fontface = 2
-  ) + # 添加文本标签"Overall" +
+  ) + 
   geom_text(
     label = "\u0394", x = 1.2, y = dim(df)[1] + 1,
     size = txt_sz, color = "black", fontface = 2, hjust = 0
@@ -360,34 +421,44 @@ ggplot(df, aes(y = cont)) +
     size = txt_sz, color = "#e6956f",
     nudge_x = df$x1nu
   ) +
+  # 在x2位置添加文本，显示x2的百分比值
   geom_text(aes(x = x2, label = x2pr),
     size = txt.sz,
     color = "#112fb3", nudge_x = df$x2nu
-  ) + # 在x2位置添加文本，显示x2的百分比值
+  ) + 
+  # 在固定位置添加文本，显示overall的百分比值
   geom_text(aes(x = x1 * 0 + 1.075, label = ovpr),
     size = txt.sz,
     color = "black"
-  ) + # 在固定位置添加文本，显示overall的百分比值
+  ) + 
+  # 在固定位置添加文本，显示差异的百分比值
   geom_text(aes(x = x1 * 0 + 1.2, label = dipr),
     size = txt.sz,
     color = "black"
-  ) + # 在固定位置添加文本，显示差异的百分比值
+  ) + 
+  # 添加线段，连接x1和x2点
   geom_segment(aes(x = x1, xend = x2, yend = cont),
-    color = "gray40", size = 1
-  ) + # 添加线段，连接x1和x2点
+    color = "gray40", linewidth = 1
+  ) + 
+  # 在x1位置添加点
   geom_point(aes(x = x1),
     shape = 16, size = 2.5,
     color = "#E6956F"
-  ) + # 在x1位置添加点
+  ) + 
+  # 在x2位置添加点
   geom_point(aes(x = x2),
     shape = 16, size = 2.5,
     color = "#E6956F"
-  ) + # 在x2位置添加点
-  scale_y_discrete(expand = c(0, 0)) + # 设置y轴为离散值并调整扩展
-  scale_x_continuous() + # 设置x轴为连续值
+  ) + 
+  # 设置y轴为离散值并调整扩展
+  scale_y_discrete(expand = c(0, 0)) + 
+  # 设置x轴为连续值
+  scale_x_continuous() + 
+  # 设置坐标轴范围和裁剪行为
   coord_cartesian(
     ylim = c(0.2, 12.5),
     xlim = c(0, 1.2), clip = "off"
-  ) + # 设置坐标轴范围和裁剪行为
-  theme_cus # 应用自定义主题
+  ) + 
+   # 应用自定义主题
+  theme_cus
 ```
