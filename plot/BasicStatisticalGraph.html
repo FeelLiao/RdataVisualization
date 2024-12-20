@@ -321,19 +321,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">gwas_data_load</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  chr        snp      bp nmiss         beta         se           r2           t
-1   1  rs8362938 2032367 19887 0.0130716452 0.21058166 2.505315e-05 -0.52822306
-2   1 rs34152860 2092617 19805 0.0006478008 0.05386714 4.997473e-05 -0.87089325
-3   1 rs32032726  177536 19918 0.0030045042 0.07366827 6.118792e-05 -1.13391172
-4   1 rs95542246 1685443 19819 0.0001414855 0.20959385 2.612299e-04 -0.48267455
-5   1 rs80818094 1334597 19951 0.0268974304 0.06748894 2.184488e-05  0.01131999
-6   1 rs61596946 1091020 19931 0.0001365704 0.07833745 1.073401e-04  0.12769194
-           p
-1 0.03895889
-2 0.84419451
-3 0.95413523
-4 0.54168814
-5 0.14537791
-6 0.86036367</code></pre>
+1   1 rs59346176 1957130 19968 0.0010191411 0.06035634 1.717418e-05  0.75999298
+2   1 rs27766427 1316767 19979 0.0552289231 0.05132598 5.212665e-05  0.80518560
+3   1 rs96451638 1088009 19978 0.0499324423 0.06009654 9.737752e-05  0.26592711
+4   1 rs72872281  549976 19982 0.0006084011 0.12063076 1.484856e-05 -1.11669369
+5   1 rs88544126 1924870 19939 0.0003927547 0.09751701 1.621896e-05  0.77595549
+6   1 rs65046737  163030 19813 0.0093289786 0.07487060 1.322594e-04  0.08637463
+          p
+1 0.4730538
+2 0.3383660
+3 0.5583708
+4 0.4521043
+5 0.6714805
+6 0.1302971</code></pre>
 </div>
 </div>
 <p>从模拟的GWAS数据中选择所有 p 值小于 0.05 的行，这些行代表统计上显著的结果。</p>
@@ -365,11 +365,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     chr  bp_add
   &lt;int&gt;   &lt;dbl&gt;
 1     1       0
-2     2 2199263
-3     3 4298467
-4     4 6297588
-5     5 8197481
-6     6 9996476</code></pre>
+2     2 2196368
+3     3 4294125
+4     4 6291968
+5     5 8186388
+6     6 9984390</code></pre>
 </div>
 </div>
 <p>将累积基对位置数据与原始GWAS数据合并。</p>
@@ -755,9 +755,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>  <span class="op">)</span> <span class="op">+</span> </span>
 <span>   <span class="co"># 应用自定义主题</span></span>
 <span>  <span class="va">theme_cus</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 5 rows containing missing values (`geom_rect()`).</code></pre>
-</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="BasicStatisticalGraph_files/figure-html/shadow-plot-1.png" class="img-fluid figure-img" width="672"></p>
