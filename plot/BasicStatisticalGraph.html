@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.39">
+<meta name="generator" content="quarto-1.6.40">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Feel Liao">
 <title>7&nbsp; 基础统计绘图 – R语言数据可视化学习笔记</title>
@@ -69,7 +69,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-cd7de1037569933fbb609f06423bd096.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
@@ -320,20 +320,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">gwas_data_load</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  chr        snp      bp nmiss         beta         se           r2           t
-1   1 rs59346176 1957130 19968 0.0010191411 0.06035634 1.717418e-05  0.75999298
-2   1 rs27766427 1316767 19979 0.0552289231 0.05132598 5.212665e-05  0.80518560
-3   1 rs96451638 1088009 19978 0.0499324423 0.06009654 9.737752e-05  0.26592711
-4   1 rs72872281  549976 19982 0.0006084011 0.12063076 1.484856e-05 -1.11669369
-5   1 rs88544126 1924870 19939 0.0003927547 0.09751701 1.621896e-05  0.77595549
-6   1 rs65046737  163030 19813 0.0093289786 0.07487060 1.322594e-04  0.08637463
+<pre><code>  chr        snp      bp nmiss         beta         se           r2          t
+1   1 rs72856312  244712 20005 0.0018111094 0.11073044 2.416564e-05  0.5761324
+2   1 rs78888116 1637647 19935 0.0179781127 0.20202913 1.091059e-05 -1.1406344
+3   1 rs58204531  845680 20013 0.0192169547 0.09234262 8.576886e-05  0.1169285
+4   1 rs45437342 1208628 19920 0.0005866030 0.11645077 7.835872e-05 -0.7791452
+5   1 rs82135151 2197718 20010 0.0004883489 0.05530017 1.406059e-04 -0.2819915
+6   1 rs45692472  155819 19915 0.0002244879 0.20190582 7.230098e-06  0.5908885
           p
-1 0.4730538
-2 0.3383660
-3 0.5583708
-4 0.4521043
-5 0.6714805
-6 0.1302971</code></pre>
+1 0.8411186
+2 0.9621069
+3 0.4363827
+4 0.2837579
+5 0.7629989
+6 0.7515393</code></pre>
 </div>
 </div>
 <p>从模拟的GWAS数据中选择所有 p 值小于 0.05 的行，这些行代表统计上显著的结果。</p>
@@ -365,11 +365,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     chr  bp_add
   &lt;int&gt;   &lt;dbl&gt;
 1     1       0
-2     2 2196368
-3     3 4294125
-4     4 6291968
-5     5 8186388
-6     6 9984390</code></pre>
+2     2 2199808
+3     3 4297188
+4     4 6295102
+5     5 8194204
+6     6 9991929</code></pre>
 </div>
 </div>
 <p>将累积基对位置数据与原始GWAS数据合并。</p>
@@ -495,7 +495,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>均值点图</li>
 <li>两组均值t检验结果</li>
 </ol>
-<div class="cell">
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># 定义公共主题</span></span>
 <span><span class="va">theme_cus</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">theme_cus</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
@@ -550,9 +549,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"#788FCE"</span>, <span class="st">"#e6956f"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"SOC (g kg-1)"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme_cus</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">A</span>, y <span class="op">=</span> <span class="va">`DOC(mg kg-1)`</span>, fill <span class="op">=</span> <span class="va">B</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_cus</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: A numeric `legend.position` argument in `theme()` was deprecated in ggplot2
+3.5.0.
+ℹ Please use the `legend.position.inside` argument of `theme()` instead.</code></pre>
+</div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">A</span>, y <span class="op">=</span> <span class="va">`DOC(mg kg-1)`</span>, fill <span class="op">=</span> <span class="va">B</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/introdataviz/man/geom_split_violin.html">geom_split_violin</a></span><span class="op">(</span>trim <span class="op">=</span> <span class="cn">F</span>, color <span class="op">=</span> <span class="cn">NA</span>, adjust <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html">guide_legend</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"group"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html">stat_summary</a></span><span class="op">(</span></span>
@@ -591,11 +594,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>  <span class="fu">theme_cus</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"non"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># 将3个图形按行排列在一起</span></span>
-<span><span class="va">a</span> <span class="op">+</span> <span class="va">b</span> <span class="op">+</span> <span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>tag_levels <span class="op">=</span> <span class="st">"A"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="BasicStatisticalGraph_files/figure-html/violinlie-plot-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<span></span>
+<span><span class="co"># a + b + g + plot_annotation(tag_levels = "A")</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell quarto-layout-panel" data-layout-nrow="3">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<p><img src="BasicStatisticalGraph_files/figure-html/violinlie-plot-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<p><img src="BasicStatisticalGraph_files/figure-html/violinlie-plot-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<p><img src="BasicStatisticalGraph_files/figure-html/violinlie-plot-3.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -605,13 +623,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="加载r包-2" class="level3" data-number="7.3.1"><h3 data-number="7.3.1" class="anchored" data-anchor-id="加载r包-2">
 <span class="header-section-number">7.3.1</span> 加载R包</h3>
 <div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://scales.r-lib.org">scales</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://scales.r-lib.org">scales</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="数据处理" class="level3" data-number="7.3.2"><h3 data-number="7.3.2" class="anchored" data-anchor-id="数据处理">
 <span class="header-section-number">7.3.2</span> 数据处理</h3>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/bsg/values.csv"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/bsg/values.csv"</span><span class="op">)</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">/</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">Overall</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -659,7 +677,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section><section id="定义主题" class="level3" data-number="7.3.3"><h3 data-number="7.3.3" class="anchored" data-anchor-id="定义主题">
 <span class="header-section-number">7.3.3</span> 定义主题</h3>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">txt_sz</span> <span class="op">&lt;-</span> <span class="fl">3.5</span></span>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">txt_sz</span> <span class="op">&lt;-</span> <span class="fl">3.5</span></span>
 <span><span class="va">theme_cus</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
 <span>  text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span>,</span>
 <span>  panel.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -684,7 +702,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section><section id="数据可视化" class="level3" data-number="7.3.4"><h3 data-number="7.3.4" class="anchored" data-anchor-id="数据可视化">
 <span class="header-section-number">7.3.4</span> 数据可视化</h3>
 <div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">txt.sz</span> <span class="op">&lt;-</span> <span class="fl">3.5</span></span>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">txt.sz</span> <span class="op">&lt;-</span> <span class="fl">3.5</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">cont</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># 添加矩形图层，用于背景标记，颜色为浅灰色</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_rect</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span></span>

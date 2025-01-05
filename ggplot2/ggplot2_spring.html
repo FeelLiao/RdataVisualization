@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.39">
+<meta name="generator" content="quarto-1.6.40">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Feel Liao">
 <title>4&nbsp; 学习示例 – R语言数据可视化学习笔记</title>
@@ -69,7 +69,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-cd7de1037569933fbb609f06423bd096.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
@@ -813,7 +813,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, xend <span class="op">=</span> <span class="va">xend</span>, yend <span class="op">=</span> <span class="va">yend</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_spring</span><span class="op">(</span>diameter <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in geom_spring(diameter = 0.5): Ignoring unknown parameters: `diameter`</span></span>
-<span><span class="co">#&gt; Warning: Computation failed in `stat_spring()`</span></span>
+<span><span class="co">#&gt; Warning: Computation failed in `stat_spring()`.</span></span>
 <span><span class="co">#&gt; Caused by error in `if (tension &lt;= 0) ...`:</span></span>
 <span><span class="co">#&gt; ! argument is of length zero</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -855,7 +855,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section><section id="creating-the-geom" class="level3" data-number="4.4.2"><h3 data-number="4.4.2" class="anchored" data-anchor-id="creating-the-geom">
 <span class="header-section-number">4.4.2</span> Creating the geom</h3>
-<p>In much the same way that a stat uses the <code>compute_layer()</code>, <code>compute_panel()</code>, and <code>compute_group()</code> methods to transform the data, a geom uses <code>draw_layer()</code>, <code>draw_panel()</code>, and <code>draw_group()</code> to create graphical representations of the data. In the same way that we created <code>StatSpring</code> by writing a <code>compute_panel()</code> method to do the heavy lifting, we’ll create <code>GeomSpring</code> by writing a <code>draw_panel()</code> method:</p>
+<p>In much the same way that a stat uses the <code>compute_layer()</code>, <code>compute_panel()</code>, and <code>compute_group()</code> methods to transform the data <a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> , a geom uses <code>draw_layer()</code>, <code>draw_panel()</code>, and <code>draw_group()</code> to create graphical representations of the data. In the same way that we created <code>StatSpring</code> by writing a <code>compute_panel()</code> method to do the heavy lifting, we’ll create <code>GeomSpring</code> by writing a <code>draw_panel()</code> method:</p>
 <div class="cell">
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GeomSpring</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"GeomSpring"</span>, <span class="va">Geom</span>,</span>
 <span>  </span>
@@ -1029,7 +1029,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>  r <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">circles</span></span>
-<span><span class="co">#&gt; circle[GRID.circle.606]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; circle[GRID.circle.582]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Note that this code doesn’t draw anything: it’s just a description of a set of circles. To draw it, we first call <code><a href="https://rdrr.io/r/grid/grid.newpage.html">grid.newpage()</a></code> to clear the current graphics device then <code><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw()</a></code>:</p>
 <div class="cell">
@@ -1227,26 +1227,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">grob_table</span> <span class="op">&lt;-</span> <span class="fu">ggplotGrob</span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span>
 <span><span class="va">grob_table</span></span>
-<span><span class="co">#&gt; TableGrob (12 x 9) "layout": 18 grobs</span></span>
-<span><span class="co">#&gt;     z         cells       name                                          grob</span></span>
-<span><span class="co">#&gt; 1   0 ( 1-12, 1- 9) background               rect[plot.background..rect.654]</span></span>
-<span><span class="co">#&gt; 2   5 ( 6- 6, 4- 4)     spacer                                zeroGrob[NULL]</span></span>
-<span><span class="co">#&gt; 3   7 ( 7- 7, 4- 4)     axis-l           absoluteGrob[GRID.absoluteGrob.642]</span></span>
-<span><span class="co">#&gt; 4   3 ( 8- 8, 4- 4)     spacer                                zeroGrob[NULL]</span></span>
-<span><span class="co">#&gt; 5   6 ( 6- 6, 5- 5)     axis-t                                zeroGrob[NULL]</span></span>
-<span><span class="co">#&gt; 6   1 ( 7- 7, 5- 5)      panel                      gTree[panel-1.gTree.634]</span></span>
-<span><span class="co">#&gt; 7   9 ( 8- 8, 5- 5)     axis-b           absoluteGrob[GRID.absoluteGrob.638]</span></span>
-<span><span class="co">#&gt; 8   4 ( 6- 6, 6- 6)     spacer                                zeroGrob[NULL]</span></span>
-<span><span class="co">#&gt; 9   8 ( 7- 7, 6- 6)     axis-r                                zeroGrob[NULL]</span></span>
-<span><span class="co">#&gt; 10  2 ( 8- 8, 6- 6)     spacer                                zeroGrob[NULL]</span></span>
-<span><span class="co">#&gt; 11 10 ( 5- 5, 5- 5)     xlab-t                                zeroGrob[NULL]</span></span>
-<span><span class="co">#&gt; 12 11 ( 9- 9, 5- 5)     xlab-b titleGrob[axis.title.x.bottom..titleGrob.645]</span></span>
-<span><span class="co">#&gt; 13 12 ( 7- 7, 3- 3)     ylab-l   titleGrob[axis.title.y.left..titleGrob.648]</span></span>
-<span><span class="co">#&gt; 14 13 ( 7- 7, 7- 7)     ylab-r                                zeroGrob[NULL]</span></span>
-<span><span class="co">#&gt; 15 14 ( 4- 4, 5- 5)   subtitle         zeroGrob[plot.subtitle..zeroGrob.650]</span></span>
-<span><span class="co">#&gt; 16 15 ( 3- 3, 5- 5)      title            zeroGrob[plot.title..zeroGrob.649]</span></span>
-<span><span class="co">#&gt; 17 16 (10-10, 5- 5)    caption          zeroGrob[plot.caption..zeroGrob.652]</span></span>
-<span><span class="co">#&gt; 18 17 ( 2- 2, 2- 2)        tag              zeroGrob[plot.tag..zeroGrob.651]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; TableGrob (16 x 13) "layout": 22 grobs</span></span>
+<span><span class="co">#&gt;     z         cells             name</span></span>
+<span><span class="co">#&gt; 1   0 ( 1-16, 1-13)       background</span></span>
+<span><span class="co">#&gt; 2   5 ( 8- 8, 6- 6)           spacer</span></span>
+<span><span class="co">#&gt; 3   7 ( 9- 9, 6- 6)           axis-l</span></span>
+<span><span class="co">#&gt; 4   3 (10-10, 6- 6)           spacer</span></span>
+<span><span class="co">#&gt; 5   6 ( 8- 8, 7- 7)           axis-t</span></span>
+<span><span class="co">#&gt; 6   1 ( 9- 9, 7- 7)            panel</span></span>
+<span><span class="co">#&gt; 7   9 (10-10, 7- 7)           axis-b</span></span>
+<span><span class="co">#&gt; 8   4 ( 8- 8, 8- 8)           spacer</span></span>
+<span><span class="co">#&gt; 9   8 ( 9- 9, 8- 8)           axis-r</span></span>
+<span><span class="co">#&gt; 10  2 (10-10, 8- 8)           spacer</span></span>
+<span><span class="co">#&gt; 11 10 ( 7- 7, 7- 7)           xlab-t</span></span>
+<span><span class="co">#&gt; 12 11 (11-11, 7- 7)           xlab-b</span></span>
+<span><span class="co">#&gt; 13 12 ( 9- 9, 5- 5)           ylab-l</span></span>
+<span><span class="co">#&gt; 14 13 ( 9- 9, 9- 9)           ylab-r</span></span>
+<span><span class="co">#&gt; 15 14 ( 9- 9,11-11)  guide-box-right</span></span>
+<span><span class="co">#&gt; 16 15 ( 9- 9, 3- 3)   guide-box-left</span></span>
+<span><span class="co">#&gt; 17 16 (13-13, 7- 7) guide-box-bottom</span></span>
+<span><span class="co">#&gt; 18 17 ( 5- 5, 7- 7)    guide-box-top</span></span>
+<span><span class="co">#&gt; 19 18 ( 9- 9, 7- 7) guide-box-inside</span></span>
+<span><span class="co">#&gt; 20 19 ( 4- 4, 7- 7)         subtitle</span></span>
+<span><span class="co">#&gt; 21 20 ( 3- 3, 7- 7)            title</span></span>
+<span><span class="co">#&gt; 22 21 (14-14, 7- 7)          caption</span></span>
+<span><span class="co">#&gt;                                             grob</span></span>
+<span><span class="co">#&gt; 1                rect[plot.background..rect.629]</span></span>
+<span><span class="co">#&gt; 2                                 zeroGrob[NULL]</span></span>
+<span><span class="co">#&gt; 3            absoluteGrob[GRID.absoluteGrob.618]</span></span>
+<span><span class="co">#&gt; 4                                 zeroGrob[NULL]</span></span>
+<span><span class="co">#&gt; 5                                 zeroGrob[NULL]</span></span>
+<span><span class="co">#&gt; 6                       gTree[panel-1.gTree.610]</span></span>
+<span><span class="co">#&gt; 7            absoluteGrob[GRID.absoluteGrob.614]</span></span>
+<span><span class="co">#&gt; 8                                 zeroGrob[NULL]</span></span>
+<span><span class="co">#&gt; 9                                 zeroGrob[NULL]</span></span>
+<span><span class="co">#&gt; 10                                zeroGrob[NULL]</span></span>
+<span><span class="co">#&gt; 11                                zeroGrob[NULL]</span></span>
+<span><span class="co">#&gt; 12 titleGrob[axis.title.x.bottom..titleGrob.621]</span></span>
+<span><span class="co">#&gt; 13   titleGrob[axis.title.y.left..titleGrob.624]</span></span>
+<span><span class="co">#&gt; 14                                zeroGrob[NULL]</span></span>
+<span><span class="co">#&gt; 15                                zeroGrob[NULL]</span></span>
+<span><span class="co">#&gt; 16                                zeroGrob[NULL]</span></span>
+<span><span class="co">#&gt; 17                                zeroGrob[NULL]</span></span>
+<span><span class="co">#&gt; 18                                zeroGrob[NULL]</span></span>
+<span><span class="co">#&gt; 19                                zeroGrob[NULL]</span></span>
+<span><span class="co">#&gt; 20         zeroGrob[plot.subtitle..zeroGrob.626]</span></span>
+<span><span class="co">#&gt; 21            zeroGrob[plot.title..zeroGrob.625]</span></span>
+<span><span class="co">#&gt; 22          zeroGrob[plot.caption..zeroGrob.627]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The output illustrates how the ggplot2 layout is structured. The plot is comprised of 18 distinct grobs that are arranged in a <code>TableGrob</code> that specifies a 12 x 9 grid, which in turn supplies a collection of viewports within which individual grobs can be drawn. This <code>TableGrob</code> is itself a grobtree, and can be rendered with grid in by calling <code><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw()</a></code>:</p>
 <div class="cell">
@@ -1327,9 +1354,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">plot_layout</span></span>
 <span><span class="co">#&gt; TableGrob (4 x 4) "layout": 3 grobs</span></span>
 <span><span class="co">#&gt;   z     cells   name                    grob</span></span>
-<span><span class="co">#&gt; 1 1 (2-2,3-3) layout points[GRID.points.655]</span></span>
-<span><span class="co">#&gt; 2 2 (3-3,3-3) layout   xaxis[GRID.xaxis.656]</span></span>
-<span><span class="co">#&gt; 3 3 (2-2,2-2) layout   yaxis[GRID.yaxis.657]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; 1 1 (2-2,3-3) layout points[GRID.points.630]</span></span>
+<span><span class="co">#&gt; 2 2 (3-3,3-3) layout   xaxis[GRID.xaxis.631]</span></span>
+<span><span class="co">#&gt; 3 3 (2-2,2-2) layout   yaxis[GRID.yaxis.632]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can now draw our plot using <code><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw()</a></code>:</p>
 <div class="cell">
@@ -1597,7 +1624,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>  <span class="fu">continuous_scale</span><span class="op">(</span></span>
 <span>    aesthetics <span class="op">=</span> <span class="st">"tension"</span>, </span>
 <span>    scale_name <span class="op">=</span> <span class="st">"tension_c"</span>, </span>
-<span>    palette <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/rescale_pal.html">rescale_pal</a></span><span class="op">(</span><span class="va">range</span><span class="op">)</span>, </span>
+<span>    palette <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pal_rescale.html">rescale_pal</a></span><span class="op">(</span><span class="va">range</span><span class="op">)</span>, </span>
 <span>    <span class="va">...</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1627,7 +1654,7 @@ For the tension aesthetic, we expect that users will apply it to continuous scal
 <span>  <span class="fu">continuous_scale</span><span class="op">(</span></span>
 <span>    aesthetics <span class="op">=</span> <span class="st">"diameter"</span>, </span>
 <span>    scale_name <span class="op">=</span> <span class="st">"diameter_c"</span>, </span>
-<span>    palette <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/rescale_pal.html">rescale_pal</a></span><span class="op">(</span><span class="va">range</span><span class="op">)</span>, </span>
+<span>    palette <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pal_rescale.html">rescale_pal</a></span><span class="op">(</span><span class="va">range</span><span class="op">)</span>, </span>
 <span>    <span class="va">...</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">}</span></span>
@@ -1648,7 +1675,9 @@ For the tension aesthetic, we expect that users will apply it to continuous scal
 <span>    tension <span class="op">=</span> <span class="va">tension</span>, </span>
 <span>    diameter <span class="op">=</span> <span class="va">diameter</span></span>
 <span>  <span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">scale_tension</span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">scale_tension</span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="co">#&gt; Warning: The `scale_name` argument of `continuous_scale()` is deprecated as of ggplot2</span></span>
+<span><span class="co">#&gt; 3.5.0.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ggplot2_spring_files/figure-html/unnamed-chunk-59-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -1678,13 +1707,13 @@ For the tension aesthetic, we expect that users will apply it to continuous scal
 <span><span class="co">#&gt;     pch = data$shape,</span></span>
 <span><span class="co">#&gt;     gp = gpar(</span></span>
 <span><span class="co">#&gt;       col = alpha(data$colour %||% "black", data$alpha),</span></span>
-<span><span class="co">#&gt;       fill = alpha(data$fill %||% "black", data$alpha),</span></span>
+<span><span class="co">#&gt;       fill = fill_alpha(data$fill %||% "black", data$alpha),</span></span>
 <span><span class="co">#&gt;       fontsize = (data$size %||% 1.5) * .pt + stroke_size * .stroke / 2,</span></span>
 <span><span class="co">#&gt;       lwd = stroke_size * .stroke / 2</span></span>
 <span><span class="co">#&gt;     )</span></span>
 <span><span class="co">#&gt;   )</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x5647e2ef5658&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x56315120b730&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:ggplot2&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In this code, <code>data</code> is a data frame with a single row giving the aesthetic values to use for the key, <code>params</code> are the geom parameters for the layer, and <code>size</code> is the size of the key area in centimeters. The <code>%||%</code> operator, which you often see in tidyverse source code, is used to supply default values whenever a variable has a null value:</p>
@@ -1786,6 +1815,7 @@ For the tension aesthetic, we expect that users will apply it to continuous scal
 <li id="fn3"><p>If we were planning to bundle this code as an R package, we could expand on this and write formal unit tests for <code>create_spring()</code> using the testthat package.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>By convention ggproto classes always use CamelCase for naming, and the new class is always saved into a variable with the same name.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>As we mentioned earlier, ggproto doesn’t make a strong distinction between methods and fields. <code>Stat</code> objects expect <code>compute_group()</code> to be a function, so we refer to <code>compute_group()</code> as a method because that is the standard terminology in object oriented programming. In contrast, <code>Stat</code> expects <code>required_aes</code> to be a variable, so we call it a field.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>You coud find more information here <a href="ggplot2extend.html#sec-new-stats" class="quarto-xref"><span>Section 4.2</span></a><a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

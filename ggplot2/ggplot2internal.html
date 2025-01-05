@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.39">
+<meta name="generator" content="quarto-1.6.40">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Feel Liao">
 <title>2&nbsp; ggplot2工作原理 – R语言数据可视化学习笔记</title>
@@ -69,7 +69,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-cd7de1037569933fbb609f06423bd096.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
@@ -312,9 +312,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="sec-plot-method" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="sec-plot-method">
 <span class="header-section-number">2.1</span> The <code>plot</code> method</h2>
 <p>在了解 ggplot2 的底层机制时，重要的是要认识到与绘图相关的几乎所有内容都是在打印 ggplot 对象时发生的，而不是在构建对象时发生的。例如，下面的代码中，对象 <code>p</code> 是绘图数据的抽象表示，如图层等。它并没有构造图像本身：</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, color <span class="op">=</span> <span class="va">drv</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span>position <span class="op">=</span> <span class="st">"jitter"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_smooth</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, formula <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"A plot for expository purposes"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>ggplot2 被设计成允许用户向图中添加新元素，而无需重新计算任何内容。这种设计的一个含义是，如果你想了解 ggplot2 的机制，你必须跟踪你的绘图是如何进入 <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>的。你可以通过在控制台中输入 <code>ggplot2:::plot.ggplot</code> 来检查 ggplot 对象的打印方法，但本章我们将使用一个简化的版本。剥离到最基本的形式，ggplot2 的绘图方法与以下 <code>ggprint()</code> 函数的结构相同：</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ggprint</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ggprint</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">ggplot_build</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span>  <span class="va">gtable</span> <span class="op">&lt;-</span> <span class="fu">ggplot_gtable</span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span>  <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/grid.newpage.html">grid.newpage</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -324,7 +331,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>这个函数并不处理所有可能的情况，但它足以绘制上面指定的图表：</p>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggprint</span><span class="op">(</span><span class="va">p</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggprint</span><span class="op">(</span><span class="va">p</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img src="assets/unnamed-chunk-5-1.png" class="img-fluid"></p>
 <p>在我们简化的打印方法的代码中，显示了四个不同的步骤：</p>
@@ -335,7 +342,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>第四，将原始 ggplot 对象隐形返回给用户。</p></li>
 </ul>
 <p>这个过程揭示了 ggplot2 本身并不进行底层绘图：当创建了 <code>gtable</code> 对象后，它的责任就结束了。 gtable 包（实现了 gtable 类）也不进行任何绘制。 所有绘图工作都由 grid 软件包和激活的图形设备共同完成。 这是非常重要的一点，因为这意味着 ggplot2 或 ggplot2 的任何扩展都不会关心可视化输出的细枝末节。 相反，它的工作是将用户数据转换为一个或多个图形基元，如多边形、线、点等，然后将责任移交给 grid 包。</p>
-<p>尽管严格来说并不正确，但我们将称这个过程为<strong>渲染过程</strong>。接下来的两个部分数据将沿着渲染过程向下推进，通过 build step（<a href="#sec-ggplotbuild" class="quarto-xref"><span>Section 2.2</span></a>）和 gtable step（<a href="#sec-ggplotgtable" class="quarto-xref"><span>Section 2.3</span></a>），最终将图形基元的集合传给 grid 。</p>
+<p>我们将ggplot2的处理过程称为<strong>渲染过程</strong>，尽管这一说法并不严谨。在接下来的两个部分中,数据将沿着渲染过程向前推进，通过 build step（<a href="#sec-ggplotbuild" class="quarto-xref"><span>Section 2.2</span></a>）和 gtable step（<a href="#sec-ggplotgtable" class="quarto-xref"><span>Section 2.3</span></a>），最终将图形基元的集合传给 grid 。</p>
 </section><section id="sec-ggplotbuild" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="sec-ggplotbuild">
 <span class="header-section-number">2.2</span> The build step</h2>
 <p>正如上面讨论的，<code>ggplot_build()</code> 接受使用公共 API 构建的声明性表示，并通过准备数据以将其转换为图形基元来增强它。</p>
@@ -344,7 +351,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>数据准备的第一步是获取每个图层的相关数据，并将其转换成可预测的格式。 图层数据可以通过以下三种方式提供：自己提供数据（由 geom 的 <code>data</code> 参数提供），继承 <code>ggplot()</code> 提供的全局数据，由一个函数提供，这个函数会在行使功能时返回一个data frame。 在所有三种情况下，图层数据都是一个data frame，它将传递给绘图布局，来协调坐标系和分面。 数据首先传递到绘图坐标系，坐标系可能会改变数据（但通常不会），然后传递到分面，分面会检查数据以确定绘图中应该有多少个面板以及如何组织这些面板。在这个过程中，每一个图层的数据都会增加一列名叫 “PANEL”的数据 。 这一列数据将（必须）在整个渲染过程中保留，用于将数据的每一行链接到最终绘图中的特定面板。</p>
 <p>数据准备的第二步是将图层数据转换为经过计算的美学（aesthetic）值。 这包括在图层数据上评估来自 <code>aes()</code> 的所有美学表达式。 此外，如果没有明确给出，<code>group</code>美学值会从所有非连续美学值的交互中计算出来。 <code>group</code>美学和<code>PANEL</code>一样，是必须在整个处理过程中保留的特殊列。 例如，前面创建的<code>p</code>图只包含<code>geom_point()</code>指定的一个图层，在数据准备过程结束时，与该图层相关的前 10 行数据是这样的：</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#&gt;      x  y colour PANEL group</span></span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#&gt;      x  y colour PANEL group</span></span>
 <span><span class="co">#&gt; 1  1.8 29      f     1     2</span></span>
 <span><span class="co">#&gt; 2  1.8 29      f     1     2</span></span>
 <span><span class="co">#&gt; 3  2.0 31      f     2     2</span></span>
@@ -371,21 +378,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>图层数据转换为可预测的格式后，还需要进行一系列转换，直到转换为绘图所需的格式。</p>
 <p>该过程的第一步是对数据中的列进行标度（scale）转换。 在这一阶段，任何标度中的 <code>trans</code> 参数都会产生影响，所有后续的渲染都将在这一转换后进行。 这就是在标度中设置位置变换（对<code>x</code>和<code>y</code>进行变换）与在坐标系中设置位置变换效果不同的原因。 如果在标度中指定变换，则变换会在任何其他计算<em>之前</em>应用，但如果在坐标系中指定变换，则变换会在这些计算<em>之后</em>应用。 例如，我们最初绘制的<code>p</code>图不涉及标度变换，因此图层数据在此阶段保持不变。 前三行如下所示：</p>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#&gt;     x  y colour PANEL group</span></span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#&gt;     x  y colour PANEL group</span></span>
 <span><span class="co">#&gt; 1 1.8 29      f     1     2</span></span>
 <span><span class="co">#&gt; 2 1.8 29      f     1     2</span></span>
 <span><span class="co">#&gt; 3 2.0 31      f     2     2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>相反，如果我们的绘图对象是 <code>p + scale_x_log10()</code>，并在处理过程中检查此时的图层数据，我们就会看到 <code>x</code> 变量已进行了适当的转换：</p>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#&gt;       x  y colour PANEL group</span></span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#&gt;       x  y colour PANEL group</span></span>
 <span><span class="co">#&gt; 1 0.255 29      f     1     2</span></span>
 <span><span class="co">#&gt; 2 0.255 29      f     1     2</span></span>
 <span><span class="co">#&gt; 3 0.301 31      f     2     2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>该过程的第二步是使用位置标度（position scales 即<code>x</code>和<code>y</code>）映射位置美学 (position aesthetic)，根据所涉及的位置标度类型（连续，离散，bins），映射过程会有所不同。 对于连续位置标度（例如我们示例中使用的标度），此时会应用 <code>oob</code> 参数中指定的出界函数，并删除图层数据中的 <code>NA</code> 值。 这对 <code>p</code> 没有什么影响，但如果我们绘制的是 <code>p + xlim(2, 8)</code>，则 <code>oob</code> 函数 – 本例中的 <code><a href="https://scales.r-lib.org/reference/oob.html">scales::censor()</a></code> – 会用 <code>NA</code> 替换 2 以下的 <code>x</code> 值，如下图所示：</p>
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#&gt; Warning: Removed 22 rows containing non-finite values (`stat_smooth()`).</span></span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#&gt; Warning: Removed 22 rows containing non-finite values (`stat_smooth()`).</span></span>
 <span><span class="co">#&gt;    x  y colour PANEL group</span></span>
 <span><span class="co">#&gt; 1 NA 29      f     1     2</span></span>
 <span><span class="co">#&gt; 2 NA 29      f     1     2</span></span>
@@ -395,21 +402,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>在该过程的第三步中，数据被移交给统计变换（stat），由统计变换进行统计转换。程序如下：首先，统计变换可以检查数据并修改其参数，然后对数据进行一次性处理。接下来，按 “PANEL”和 “group”对图层数据进行拆分，并在数据重新组合之前计算统计数据。 一旦数据以新的形式重新组合，就会经过另一个美学映射过程。在这个过程中，使用 <code>stat()</code>（或旧的 <code>...var...</code>符号）延迟计算的任何美学数据都会被添加到数据中。请注意，这就是为什么<code>stat()</code>表达式（包括用于在示例图<code>p</code>的<code>geom_smooth()</code>层中指定回归模型的公式）不能引用原始数据。此时，原始数据根本不存在。</p>
 <p>举例来说，我们可以看一下图中的第二图层，它可以产生线性回归结果。在进行统计计算之前，该图层的数据只包含坐标以及所需的 “PANEL”和 “group”列。</p>
 <div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#&gt;     x  y colour PANEL group</span></span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#&gt;     x  y colour PANEL group</span></span>
 <span><span class="co">#&gt; 1 1.8 29      f     1     2</span></span>
 <span><span class="co">#&gt; 2 1.8 29      f     1     2</span></span>
 <span><span class="co">#&gt; 3 2.0 31      f     2     2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>在统计计算结束后，图层数据也会相应的改变：</p>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#&gt;      x    y ymin ymax    se flipped_aes colour PANEL group</span></span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#&gt;      x    y ymin ymax    se flipped_aes colour PANEL group</span></span>
 <span><span class="co">#&gt; 1 1.80 24.3 23.1 25.6 0.625       FALSE      4     1     1</span></span>
 <span><span class="co">#&gt; 2 1.86 24.2 22.9 25.4 0.612       FALSE      4     1     1</span></span>
 <span><span class="co">#&gt; 3 1.92 24.0 22.8 25.2 0.598       FALSE      4     1     1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>此时，geom 接管了 stat 的工作（几乎）。它要做的第一件事就是检查数据、更新参数，并可能对数据进行第一次修改（与 stat 的设置相同）。这可能会对某些列进行重新参数化，例如将 <code>x</code>+<code>width</code> 改为 <code>xmin</code>+<code>xmax</code>。之后，位置调整将被应用，例如，重叠的条形图将被堆叠等。对于我们的示例图 <code>p</code> 来说，这一步是在图的第一层应用抖动，并对 <code>x</code> 和 <code>y</code> 坐标进行扰动：</p>
 <div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#&gt;      x    y colour PANEL group</span></span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#&gt;      x    y colour PANEL group</span></span>
 <span><span class="co">#&gt; 1 1.84 28.7      f     1     2</span></span>
 <span><span class="co">#&gt; 2 1.77 29.1      f     1     2</span></span>
 <span><span class="co">#&gt; 3 2.03 31.3      f     2     2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -417,7 +424,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>接下来，位置标度将全部重置、重新训练并应用于图层数据。仔细想想，这绝对是必要的，因为，例如，堆叠会极大地改变其中一个坐标轴的范围。在某些情况下（例如在上面的直方图示例中），其中一个位置美学可能甚至要到统计计算之后才能获得，如果不对刻度进行重新训练，它就永远不会得到训练。</p>
 <p>数据转换的最后一步是训练和映射所有非位置美学，即把映射的离散或连续输入转换成图形参数，如颜色、线型、大小等。此外，还将添加地形图中的任何默认美学，以便数据现在处于地形图的可预测状态。在最后一步，在构建步骤完成之前，stat 和 facet 都有最后一次机会使用它们的 “finish_data()”方法修改数据的最终映射形式。对于绘图对象 <code>p</code> 来说，图层数据最终状态的前几行是这样的：</p>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#&gt;    colour    x    y PANEL group shape size fill alpha stroke</span></span>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#&gt;    colour    x    y PANEL group shape size fill alpha stroke</span></span>
 <span><span class="co">#&gt; 1 #00BA38 1.83 29.1     1     2    19  1.5   NA    NA    0.5</span></span>
 <span><span class="co">#&gt; 2 #00BA38 1.79 29.2     1     2    19  1.5   NA    NA    0.5</span></span>
 <span><span class="co">#&gt; 3 #00BA38 1.99 30.7     2     2    19  1.5   NA    NA    0.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -443,7 +450,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">2.3.4</span> 输出</h3>
 <p>至此，ggplot2 已准备好移交给 grid。我们的渲染过程大致相当于下面的代码，最终结果如上所述，是一个 <code>gtable</code>：</p>
 <div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p_built</span> <span class="op">&lt;-</span> <span class="fu">ggplot_build</span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p_built</span> <span class="op">&lt;-</span> <span class="fu">ggplot_build</span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span>
 <span><span class="va">p_gtable</span> <span class="op">&lt;-</span> <span class="fu">ggplot_gtable</span><span class="op">(</span><span class="va">p_built</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">p_gtable</span><span class="op">)</span></span>
@@ -452,7 +459,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>下面的代码显示了我们的绘图 <code>p</code> 的 <code>gtable</code>：</p>
 <div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p_gtable</span></span>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p_gtable</span></span>
 <span></span>
 <span><span class="co">#&gt; TableGrob (13 x 15) "layout": 22 grobs</span></span>
 <span><span class="co">#&gt;     z         cells        name                                          grob</span></span>
@@ -481,7 +488,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>正如我们所希望的那样，最终的绘图看起来与之前的完全相同：</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/grid.newpage.html">grid.newpage</a></span><span class="op">(</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/grid.newpage.html">grid.newpage</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span><span class="op">(</span><span class="va">p_gtable</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img src="assets/unnamed-chunk-18-1.png" class="img-fluid"></p>
@@ -494,18 +501,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">2.4.1</span> ggproto 对象</h3>
 <p>创建一个新的ggproto对象需要使用<code>ggproto()</code>函数，该函数的第一个参数是新类的名称，第二个参数是新类继承的另一个ggproto对象。例如，我们可以用下面的命令创建一个ggproto对象，尽管它没有任何有用的功能：</p>
 <div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NewObject</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span></span>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NewObject</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span></span>
 <span>  `_class` <span class="op">=</span> <span class="cn">NULL</span>, </span>
 <span>  `_inherits` <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>按照惯例，ggproto 对象使用 “UpperCamelCase”命名，每个单词都以大写字母开头。省略<code>`_class`</code>和<code>`_inherits`</code>参数的名称也是惯例，因此该命令的常规形式如下：</p>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NewObject</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="cn">NULL</span>, <span class="cn">NULL</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NewObject</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="cn">NULL</span>, <span class="cn">NULL</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>如果我们打印这个对象，就会发现它确实是一个 ggproto 对象，但没有显示其他信息。</p>
 <div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NewObject</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NewObject</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;ggproto object: Class gg&gt;</code></pre>
 </div>
@@ -514,11 +521,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">2.4.2</span> 创建新类</h3>
 <p>要创建一个新的 ggproto 类，唯一需要做的是提供一个类名作为 <code>ggproto()</code> 的第一个参数。定义一个新类的最简单命令是这样的</p>
 <div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NewClass</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"NewClass"</span>, <span class="cn">NULL</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NewClass</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"NewClass"</span>, <span class="cn">NULL</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>NewClass</code>变量仍然指向一个 ggproto 对象，我们可以通过打印它来验证它是否具有所需的类名：</p>
 <div class="cell">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NewClass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NewClass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;ggproto object: Class NewClass, gg&gt;</code></pre>
 </div>
@@ -526,7 +533,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>然而，到目前为止，我们所做的唯一一件事就是创建一个指定类的对象。<code>NewClass</code>对象什么也不做。要创建一个有用的 ggproto 类，我们需要在定义类时提供一个变量和方法列表。在这里，“变量”用于存储与对象相关的数据，而 “方法”则是可以使用对象中存储的数据的函数。变量和方法的构造是一样的，从用户的角度来看，它们没有什么不同。</p>
 <p>为了说明这一点，我们将创建一个名为 <code>Person</code> 的新类，用来存储和操作一个人的信息。我们可以通过向 <code>ggproto()</code> 函数提供名称/值对来实现这一点：</p>
 <div class="cell">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Person</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"Person"</span>, <span class="cn">NULL</span>,</span>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Person</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"Person"</span>, <span class="cn">NULL</span>,</span>
 <span>  </span>
 <span>  <span class="co"># fields                  </span></span>
 <span>  given_name <span class="op">=</span> <span class="cn">NA</span>,</span>
@@ -552,7 +559,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>现在，<code>Person</code>类有三个变量，分别对应人的 <code>given_name</code>, <code>family_name</code>和<code>birth_date</code>。它还拥有三个方法：<code>full_name()</code>方法是一个构造人的全名函数，使用的惯例是将给名放在前面，姓氏放在后面；<code>age()</code>方法以年为单位计算人的年龄；<code>description()</code>方法打印出人的简短描述。</p>
 <p>打印对象会显示与其相关的变量和方法：</p>
 <div class="cell">
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Person</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Person</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;ggproto object: Class Person, gg&gt;
     age: function
@@ -566,19 +573,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><code>Person</code>这个 ggproto 对象本质上是类的模板，我们可以用它来创建单个人的特定记录（在@sec-ggproto-instances 中讨论）。如果你熟悉其他面向对象编程系统，你可能会期待一些不同的东西：通常新类的定义有一个专门的构造函数。ggproto的一个怪癖是<code>ggproto()</code>不会这样做：相反，类的构造函数本身就是一个对象。</p>
 <p>定义方法时需要注意的另一点是使用 <code>self</code> 作为第一个参数。这是一个特殊参数，用于让方法访问与 ggproto 对象相关的变量和方法（示例参见 <a href="#sec-ggproto-subclass" class="quarto-xref"><span>Section 2.4.4</span></a>）。这个参数的特殊地位在打印 ggproto 方法时显而易见：</p>
 <div class="cell">
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Person</span><span class="op">$</span><span class="va">full_name</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Person</span><span class="op">$</span><span class="va">full_name</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;ggproto method&gt;
   &lt;Wrapper function&gt;
     function(...) !!call2(name, !!!args)
 
   &lt;Inner function (f)&gt;
-    function(self, family_last = TRUE) {
-    if(family_last == TRUE) {
-      return(paste(self$given_name, self$family_name))
-    }
-    return(paste(self$family_name, self$given_name))
-  }</code></pre>
+    &lt;srcref: file "" chars 9:15 to 14:3&gt;</code></pre>
 </div>
 </div>
 <p>这个输出结果似乎有点出人意料：当我们之前定义 <code>full_name()</code> 时，我们只提供了作为 “内部函数”的代码。现在的情况是，<code>ggproto()</code> 自动将我的函数封装在一个封装函数中，该封装函数调用我的代码作为内部函数，同时确保使用了适当的 <code>self</code> 定义。当打印该方法时，控制台会同时显示封装函数（通常没什么意义）和内部函数。这种格式的输出出现在 <a href="ggplot2extend.html" class="quarto-xref"><span>Chapter 3</span></a> 和 <a href="ggplot2_spring.html" class="quarto-xref"><span>Chapter 4</span></a> 中。</p>
@@ -586,7 +588,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">2.4.3</span> 创建新的实例</h3>
 <p>既然已经定义了 <code>Person</code> 类，我们就可以创建该类的实例了。方法是将一个 ggproto 对象作为第二个参数传递给 <code>ggproto()</code>，而不在第一个参数中指定一个新的类名。例如，我们可以如下创建新对象 <code>Thomas</code> 和 <code>Danielle</code> ，它们都是 <code>Person</code> 类的实例：</p>
 <div class="cell">
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Thomas</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="cn">NULL</span>, <span class="va">Person</span>,</span>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Thomas</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="cn">NULL</span>, <span class="va">Person</span>,</span>
 <span>  given_name <span class="op">=</span> <span class="st">"Thomas Lin"</span>,</span>
 <span>  family_name <span class="op">=</span> <span class="st">"Pedersen"</span>,</span>
 <span>  birth_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"1985/10/12"</span><span class="op">)</span></span>
@@ -600,11 +602,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>将 <code>NULL</code> 指定为第一个参数，将指示 <code>ggproto()</code> 不定义一个新类，而是创建第二个参数中指定类的新实例。由于 <code>Thomas</code> 和 <code>Danielle</code> 都是 <code>Person</code> 类的实例，它们自动继承了 <code>age()</code>, <code>full_name()</code> 和 <code>description()</code> 方法：</p>
 <div class="cell">
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Thomas</span><span class="op">$</span><span class="fu">description</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Thomas</span><span class="op">$</span><span class="fu">description</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Thomas Lin Pedersen is 39 years old"</code></pre>
 </div>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Danielle</span><span class="op">$</span><span class="fu">description</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Danielle</span><span class="op">$</span><span class="fu">description</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Danielle Jasmine Navarro is 47 years old"</code></pre>
 </div>
@@ -613,7 +615,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">2.4.4</span> 创建子类</h3>
 <p>在前面的示例中，我们创建了一个全新的类 <code>Person</code>。在实践中，你几乎永远不需要这样做：相反，你可能会使用现有的 ggproto 对象创建一个子类。为此，您可以在调用 <code>ggproto()</code> 时指定子类的名称及其继承对象：</p>
 <div class="cell">
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># define the subclass</span></span>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># define the subclass</span></span>
 <span><span class="va">NewSubClass</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"NewSubClass"</span>, <span class="va">Person</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># verify that this works</span></span>
@@ -632,7 +634,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>上面的输出显示，<code>NewSubClass</code>现在提供了自己的类，它继承了我们之前创建的 <code>Person</code>对象的所有变量和方法。但是，这个新的子类并没有添加任何新功能。</p>
 <p>在创建子类时，我们经常要添加新的变量或方法，并覆盖一些已有的变量或方法。例如，假设我们要将 <code>Royalty</code>定义为<code>Person</code>的子类，并添加与相关皇室成员的 <code>rank</code>及其统治的<code>territory</code>相对应的变量。由于皇室成员通常以头衔和领地而不是姓氏和名字来称呼，因此我们还需要更改 <code>full_name()</code> 方法的定义方式：</p>
 <div class="cell">
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Royalty</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"Royalty"</span>, <span class="va">Person</span>,</span>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Royalty</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"Royalty"</span>, <span class="va">Person</span>,</span>
 <span>  rank <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  territory <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  full_name <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">self</span><span class="op">)</span> <span class="op">{</span></span>
@@ -643,7 +645,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><code>Royalty</code> 对象现在定义了一个 <code>Person</code> 类的子类，它从 <code>Person</code> 类继承了一些变量（<code>given_name</code>、<code>family_name</code>、<code>birth_date</code>），并提供其他变量（<code>rank</code>、<code>territory</code>）。它从 <code>Person</code> 类继承了 <code>age()</code> 和 <code>description()</code> 方法，但它重写了 <code>full_name()</code> 方法。</p>
 <p>我们可以使用 <code>ggproto()</code> 创建 <code>Royalty</code> 类的实例，如下所示：</p>
 <div class="cell">
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Victoria</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="cn">NULL</span>, <span class="va">Royalty</span>,</span>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Victoria</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="cn">NULL</span>, <span class="va">Royalty</span>,</span>
 <span>  given_name <span class="op">=</span> <span class="st">"Victoria"</span>,</span>
 <span>  family_name <span class="op">=</span> <span class="st">"Hanover"</span>,</span>
 <span>  rank <span class="op">=</span> <span class="st">"Queen"</span>,</span>
@@ -653,21 +655,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>因此，当我们调用 <code>Victoria</code> 的 <code>full_name()</code> 方法时，输出结果会使用 <code>Royalty</code> 类中指定的方法，而不是 <code>Person</code> 类中定义的方法：</p>
 <div class="cell">
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Victoria</span><span class="op">$</span><span class="fu">full_name</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Victoria</span><span class="op">$</span><span class="fu">full_name</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Queen Victoria of the United Kingdom"</code></pre>
 </div>
 </div>
 <p>值得注意的是，当我们调用 <code>description()</code> 方法时会发生什么。该方法继承自 <code>Person</code>，但该方法的定义调用了 <code>self$full_name()</code>。尽管 <code>description()</code> 是在 <code>Person</code> 中定义的，但在此处，<code>self</code> 仍然指的是 <code>Victoria</code>，她仍然是 <code>Royalty</code>。这意味着继承的 <code>description()</code> 方法的输出将使用为子类定义的 <code>full_name()</code> 方法：</p>
 <div class="cell">
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Victoria</span><span class="op">$</span><span class="fu">description</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Victoria</span><span class="op">$</span><span class="fu">description</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Queen Victoria of the United Kingdom is 205 years old"</code></pre>
 </div>
 </div>
 <p>创建子类有时需要访问父类及其方法，我们可以借助 <code>ggproto_parent()</code> 函数来实现。例如，我们可以定义一个 <code>Police</code>子类，该子类与 <code>Royalty</code>子类一样包含一个 <code>rank</code>变量，但只将该rank用作 <code>description()</code>方法的一部分：</p>
 <div class="cell">
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Police</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"Police"</span>, <span class="va">Person</span>,</span>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Police</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"Police"</span>, <span class="va">Person</span>,</span>
 <span>  rank <span class="op">=</span> <span class="cn">NA</span>, </span>
 <span>  description <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">self</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span></span>
@@ -679,7 +681,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>在这个例子中，<code>Police</code> 子类的 <code>description()</code> 方法被定义成明确引用 <code>Person</code> 父类的 <code>description()</code> 方法。通过使用 <code>ggproto_parent(Person, self)</code> 的这种方式，我们能够引用父类内的方法，同时仍然保留 <code>self</code> 的适当定义。和之前一样，我们将创建一个特定的实例并验证这如预期般工作：</p>
 <div class="cell">
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">John</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="cn">NULL</span>, <span class="va">Police</span>,</span>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">John</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="cn">NULL</span>, <span class="va">Police</span>,</span>
 <span>  given_name <span class="op">=</span> <span class="st">"John"</span>,</span>
 <span>  family_name <span class="op">=</span> <span class="st">"McClane"</span>,</span>
 <span>  rank <span class="op">=</span> <span class="st">"Detective"</span>,</span>
@@ -690,7 +692,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "John McClane"</code></pre>
 </div>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">John</span><span class="op">$</span><span class="fu">description</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">John</span><span class="op">$</span><span class="fu">description</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Detective John McClane is 69 years old"</code></pre>
 </div>
@@ -705,7 +707,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><strong>ggproto 类有简单的继承</strong>。由于 ggproto 类实例是无状态的，调用定义在其他类内部的方法，而不是显式地从该类继承，是相对安全的。这就是为什么在 ggplot2 源代码中很少调用 <code>ggproto_parent()</code> 函数的原因。例如，<code>GeomErrorbar</code> 中的 <code>setup_params()</code> 方法被定义为：</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GeomErrorbar</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span></span>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GeomErrorbar</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span></span>
 <span>  <span class="co"># ...</span></span>
 <span>  setup_params <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">GeomLinerange</span><span class="op">$</span><span class="fu">setup_params</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span><span class="op">)</span></span>
