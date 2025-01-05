@@ -21,7 +21,6 @@ source("scripts/internals_ggtable.R")
 
 ```{r}
 #| label: plot-method-p
-#| echo: false
 #| eval: false
 p <- ggplot(mpg, aes(displ, hwy, color = drv)) + 
   geom_point(position = "jitter") +
@@ -68,7 +67,7 @@ ggprint(p)
 
 这个过程揭示了 ggplot2 本身并不进行底层绘图：当创建了 `gtable` 对象后，它的责任就结束了。 gtable 包（实现了 gtable 类）也不进行任何绘制。 所有绘图工作都由 grid 软件包和激活的图形设备共同完成。 这是非常重要的一点，因为这意味着 ggplot2 或 ggplot2 的任何扩展都不会关心可视化输出的细枝末节。 相反，它的工作是将用户数据转换为一个或多个图形基元，如多边形、线、点等，然后将责任移交给 grid 包。
 
-尽管严格来说并不正确，但我们将称这个过程为**渲染过程**。接下来的两个部分数据将沿着渲染过程向下推进，通过 build step（@sec-ggplotbuild）和 gtable step（@sec-ggplotgtable），最终将图形基元的集合传给 grid 。
+我们将ggplot2的处理过程称为**渲染过程**，尽管这一说法并不严谨。在接下来的两个部分中,数据将沿着渲染过程向前推进，通过 build step（@sec-ggplotbuild）和 gtable step（@sec-ggplotgtable），最终将图形基元的集合传给 grid 。
 
 ## The build step {#sec-ggplotbuild}
 

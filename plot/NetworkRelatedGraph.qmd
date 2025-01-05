@@ -20,7 +20,7 @@ library(igraph)
 ### 数据处理
 
 ```{r}
-df <- read_tsv("data/gene.csv") |>
+df <- read_tsv("data/nrg/gene.csv") |>
   column_to_rownames(var = "id")
 
 # 计算相关性

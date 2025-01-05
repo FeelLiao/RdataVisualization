@@ -526,7 +526,9 @@ Geom
 
 ### Creating the geom
 
-In much the same way that a stat uses the `compute_layer()`, `compute_panel()`, and `compute_group()` methods to transform the data, a geom uses `draw_layer()`, `draw_panel()`, and `draw_group()` to create graphical representations of the data. In the same way that we created `StatSpring` by writing a `compute_panel()` method to do the heavy lifting, we'll create `GeomSpring` by writing a `draw_panel()` method:
+In much the same way that a stat uses the `compute_layer()`, `compute_panel()`, and `compute_group()` methods to transform the data [^ggplot2_spring-6] , a geom uses `draw_layer()`, `draw_panel()`, and `draw_group()` to create graphical representations of the data. In the same way that we created `StatSpring` by writing a `compute_panel()` method to do the heavy lifting, we'll create `GeomSpring` by writing a `draw_panel()` method:
+
+[^ggplot2_spring-6]: You coud find more information here @sec-new-stats
 
 ```{r}
 GeomSpring <- ggproto("GeomSpring", Geom,

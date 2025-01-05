@@ -206,6 +206,7 @@ head(df1)
 
 ```{r}
 #| label: violinlie-plot
+#| layout-nrow: 3
 
 # 定义公共主题
 theme_cus <- function(...) {
@@ -302,7 +303,12 @@ b <- ggplot(df3, aes(x = A, y = `Soil temperate (℃)`, fill = B)) +
   theme_cus(legend.position = "non")
 
 # 将3个图形按行排列在一起
-a + b + g + plot_annotation(tag_levels = "A")
+
+# a + b + g + plot_annotation(tag_levels = "A")
+
+plot(a)
+plot(b)
+plot(g)
 ```
 
 ## 阴影条带哑铃图
