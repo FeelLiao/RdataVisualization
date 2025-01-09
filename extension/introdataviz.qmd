@@ -1,1 +1,251 @@
 # introdataviz {#sec-introdataviz}
+
+[introdataviz](https://github.com/PsyTeachR/introdataviz)包来自github，目前该包没有在CRAN上提供，所以用户需要从github用源码安装。本节主要介绍introdataviz 包中分裂小提琴图（split-violin plot）和云雨图（raincloud plot）的源码实现原理。
+
+分裂小提琴图的示例 @sec-split-violin-plot
+
+```{r}
+#| label: required-lib
+#| echo: false
+
+library(tidyverse)
+library(introdataviz)
+```
+
+## ggplot2数据处理过程
+
+在 @sec-ggplot2internal 中提到，ggplot2在绘图中行使的主要功能是将用户数据转换成一个或多个图形基元，然后交给grid包来负责底层的图形绘制，并最终呈现给用户。ggplot2的工作类似于渲染图形，主要负责对用户数据进行处理，对于ggplot2拓展的开发，意识到这一点尤为重要。
+
+首先，我们先来回忆一下ggplot2内部是如何工作的。这里使用下面的图形为例子：
+
+```{r}
+#| label: example-p
+#| eval: true
+
+p <- ggplot(mpg, aes(displ, hwy, color = drv)) +
+  geom_point(position = "jitter") +
+  geom_smooth(method = "lm", formula = y ~ x) +
+  facet_wrap(vars(year)) +
+  ggtitle("A plot for expository purposes")
+```
+
+我们构建的`p`图具有两个图层，一个是 `geom_point()` ，一个是 `geom_smooth()` 。这两个图层会分别处理用户数据并转换成grid包能够识别的样式：在构建步骤 @sec-ggplotbuild 结束后，会得到两个图层的可绘图数据。这一结果可以通过 `ggplot_build()` 函数查看和验证：
+
+```{r}
+#| label: table-p
+
+plot_data <- ggplot_build(p)
+length(plot_data$data)
+```
+
+输出用于绘制 `geom_point()` 的数据的前5行：
+
+```{r}
+#| label: table-p-point
+
+head(plot_data$data[[1]])
+```
+
+输出用于绘制 `geom_smooth()` 的数据的前5行：
+
+```{r}
+#| label: table-p-smooth
+
+head(plot_data$data[[2]])
+```
+
+那么这些数据是如何生成的呢？详细过程可以参考 @sec-ggplotbuild 。下面只做简要介绍，理解和熟悉这部分内容非常重要，在开发ggplot2的拓展时，你需要清楚的知道数据在ggplot2内部是如何流动的。
+
+**The build step `ggplot_build()` **
+
+1. 用户数据将按照 `PANEL` （分面facet）和 `group` 美学值和进行划分（即每行数据属于哪一类的 `PANEL` 和 `group` ）。
+2. 标度scale的 `trans` 参数转换。
+3. 位置标度（position scales 即`x`和`y`）的转换。
+4. 统计变换stat，按`layer`, `panel` 和 `group` 对数据进行统计变换，[^ggplot2-data-render] @sec-create-stats 位置调整也发生在这一步。
+7. 映射所有非位置美学值
+
+[^ggplot2-data-render]: 类似的，在几何对象geom中也通过对 `draw_*()` 函数的调用来实现图形的绘制。
+
+**The gtable step `ggplot_gtable()` **
+
+获取 build step 的输出，并在 gtable 软件包的帮助下将其转化为可以使用grid绘制的对象。此时，负责进一步计算的主要元素是**几何对象、坐标系、分面和主题。**
+
+::: {.callout-important}
+统计变换stat对数据的处理发生在几何对象geom之前。
+:::
+
+## `geom_split_violin()` 的实现原理 {#sec-geom-split-violin}
+
+`geom_split_violin()` 对应的 `ggproto` 类为 `GeomSplitViolin` ，该类继承自 `GeomViolin` （ggplot2中小提琴图具体的实现类）。所以，`GeomSplitViolin` 类拥有 `GeomViolin` 类的所有方法和属性。
+
+```{r}
+#| label: split_violin_class
+#| eval: false
+
+GeomSplitViolin <- ggplot2::ggproto(
+    "GeomSplitViolin",
+    GeomViolin,
+    ...
+)
+```
+
+我们想要实现分裂小提琴图的效果，就需要重写 `GeomViolin` 类的 `draw_group()` 方法。
+
+::: {.callout-important}
+调用 `draw_group()` 方法进行绘图时，geom会读取绘图数据中的`group`列，按照不同group进行绘图，也就是每个group的数据在geom中是独立的，geom会在绘制完一个group后才开始绘制下一个group。
+:::
+
+### `geom_violin()` 几何对象的绘制过程
+
+首先我们来看一下 `GeomViolin` 类的 `draw_group()` 方法都做了什么？
+
+```{r}
+#| label: violin_draw_group
+#| eval: false
+
+draw_group = function(self, data, ..., draw_quantiles = NULL, flipped_aes = FALSE) {
+    data <- flip_data(data, flipped_aes)
+    # Find the points for the line to go all the way around
+    # 2. 小提琴图的左侧和右侧边界
+    data <- transform(data,
+      xminv = x - violinwidth * (x - xmin),
+      xmaxv = x + violinwidth * (xmax - x)
+    )
+
+    # Make sure it's sorted properly to draw the outline
+    # 3. 数据排序和整合
+    newdata <- rbind(
+      transform(data, x = xminv)[order(data$y), ],
+      transform(data, x = xmaxv)[order(data$y, decreasing = TRUE), ]
+    )
+
+    # Close the polygon: set first and last point the same
+    # Needed for coord_polar and such
+    # 4. 闭合多边形
+    newdata <- rbind(newdata, newdata[1,])
+    newdata <- flip_data(newdata, flipped_aes)
+
+    # Draw quantiles if requested, so long as there is non-zero y range
+    # 5. 如果指定了 `draw_quantiles`，则绘制分位数线
+    if (length(draw_quantiles) > 0 & !scales::zero_range(range(data$y))) {
+      if (!(all(draw_quantiles >= 0) && all(draw_quantiles <= 1))) {
+        abort("`draw_quantiles must be between 0 and 1")
+      }
+
+      # Compute the quantile segments and combine with existing aesthetics
+      quantiles <- create_quantile_segment_frame(data, draw_quantiles)
+      aesthetics <- data[
+        rep(1, nrow(quantiles)),
+        setdiff(names(data), c("x", "y", "group")),
+        drop = FALSE
+      ]
+      aesthetics$alpha <- rep(1, nrow(quantiles))
+      both <- cbind(quantiles, aesthetics)
+      both <- both[!is.na(both$group), , drop = FALSE]
+      both <- flip_data(both, flipped_aes)
+      quantile_grob <- if (nrow(both) == 0) {
+        zeroGrob()
+      } else {
+        GeomPath$draw_panel(both, ...)
+      }
+
+      ggname("geom_violin", grobTree(
+        GeomPolygon$draw_panel(newdata, ...),
+        quantile_grob)
+      )
+    } else {
+      ggname("geom_violin", GeomPolygon$draw_panel(newdata, ...))
+    }
+  }
+```
+
+这段代码主要做了以下事情：
+
+1. 首先，数据通过 `flip_data` 函数进行翻转处理（如果需要）。
+2. 然后，计算 `xminv` 和 `xmaxv`，分别表示小提琴图的左侧和右侧边界。
+3. 将数据按 `y` 值升序和降序排序。
+4. 将第一个和最后一个点设置为相同，以闭合多边形。
+5. 如果指定了 `draw_quantiles`，则绘制分位数线。
+
+这里，绘制小提琴图的任务交给了 `GeomPolygon` 类（ggplot2中绘制多边形的类），要实现绘制小提琴图，我们就需要将数据处理成`GeomPolygon`能够识别的样子。在上面的小提琴图示例中，首先在数据中计算`xminv`和`xmaxv`列，分别表示小提琴图的左侧和右侧边界，随后分别将`xminv`和`xmaxv`赋值给`x`，并按照`y`的大小排序。最后将数据的第一行添加到数据的最后一行，以闭合多边形。这里可以把这个过程想象为你要在一个平面上画一个图形，画笔的移动顺序遵循所给数据中（x,y）出现的顺序。在小提琴图中，`y`的值在`stat_ydensity()`中就计算好了（也就是统计变换步骤），而`x`的值则在geom中处理。在`xminv`赋值给`x`，并按照`y`从大到小排序后，就得到了小提琴图左侧的画笔绘制路径，即从`y`最大的开始移动到`y`最小的位置（即从上方移动到下方）。随后`xmax`赋值给`x`，并按照`y`从小到大排序，这里是为了让画笔衔接上前面，不然就会出现跳跃绘制。最后，将数据的第一行添加到最后一行，方便画笔回到最开始的地方，形成闭合多边形。
+
+### `geom_split_violin()` 的绘制过程
+
+有了上面介绍的小提琴图的绘制过程，我们就可以思考如何绘制分裂小提琴图了。在`introdataviz`中，开发者是这样思考的：`xminv`和`xmaxv`两列数据分别表示小提琴图的左侧和右侧边界，那么在每一个`group`绘图时只使用一列数据（即只使用`xminv`或者`xmaxv`），就可以只绘制一半的小提琴图，也就得到了分裂小提琴图。那么另一半用来干什么呢？开发者在这里将小提琴图的另一半用来表示下一个分组。用户在映射美学值时，可以指定一个`fill`美学值，用来表示`x`的二分类信息。这样在数据处理过程中，同一类的`x`就会同时拥有一个单数和一个双数的分类值（即在数据处理过程中生成的`group`值），这样就可以用分组编号将同一个`x`中的两个类区分开，并在绘制分裂小提琴图时将左右两侧的图形分配给`x`中的两个类，实现两个类对应`y`的密度可视化。
+
+可以通过下面的示例查看分裂小提琴图绘制时的分组数据：
+
+```{r}
+#| label: splitviolin_sample_data
+
+# 使用示例数据构建分裂小提琴图
+sample_plot<-ggplot(ldt_long, aes(x = condition, y = rt, fill = language)) +
+  geom_split_violin(alpha = .4)
+
+# ggplot_build()函数得到处理后的数据
+sample_data<-ggplot_build(sample_plot)
+
+sample_data<-sample_data$data[[1]]
+
+unique(sample_data[,"group"])
+```
+
+这里，x1的两个分类在数据处理完成后被分配了 1,2 的分组编号，而x2则是 3,4 。
+
+::: {.callout-warning}
+分裂小提琴图只适合`x`是二分类变量的情况，其它情况下使用可能会出问题。
+:::
+
+现在，我们就可以来看`geom_split_violin()`的核心代码了。
+
+```{r}
+#| label: splitviolin_source_code
+#| eval: false
+
+GeomSplitViolin <- ggplot2::ggproto(
+    "GeomSplitViolin", 
+    GeomViolin, 
+    draw_group = function(self, data, ..., draw_quantiles = NULL) {
+      data <- transform(data, 
+                        xminv = x - violinwidth * (x - xmin), 
+                        xmaxv = x + violinwidth * (xmax - x))
+      # 1.提取分组信息
+      grp <- data[1,'group']
+      # 2.分组为奇数，绘制左侧，并按照 y 从大到小排序
+      # 2.分组为偶数，绘制右侧，并按照 y 从小到大排序
+      newdata <- plyr::arrange(
+        transform(data, x = if(grp%%2==1) xminv else xmaxv), 
+        if(grp%%2==1) y else -y
+      )
+      # 3.闭合多边形
+      newdata <- rbind(newdata[1, ], newdata, newdata[nrow(newdata), ], newdata[1, ])
+      newdata[c(1,nrow(newdata)-1,nrow(newdata)), 'x'] <- round(newdata[1, 'x']) 
+      # 其它代码，和 GeomViolin 的基本一致
+      if (length(draw_quantiles) > 0 & !scales::zero_range(range(data$y))) {
+        stopifnot(all(draw_quantiles >= 0), all(draw_quantiles <= 1))
+        quantiles <- ggplot2:::create_quantile_segment_frame(data, draw_quantiles)
+        aesthetics <- data[rep(1, nrow(quantiles)), setdiff(names(data), c("x", "y")), drop = FALSE]
+        aesthetics$alpha <- rep(1, nrow(quantiles))
+        both <- cbind(quantiles, aesthetics)
+        quantile_grob <- ggplot2::GeomPath$draw_panel(both, ...)
+        ggplot2:::ggname("geom_split_violin", 
+                         grid::grobTree(ggplot2::GeomPolygon$draw_panel(newdata, ...), quantile_grob))
+      } else {
+        ggplot2:::ggname("geom_split_violin", ggplot2::GeomPolygon$draw_panel(newdata, ...))
+      }
+    }
+  )
+```
+
+第一步，首先提取数据的第一个分组信息，用于后续的条件判断。这里需要注意的是，`draw_group()`函数将分组绘制图形，也就是说，绘制完一组再绘制另一组，由 @sec-ggplotbuild 处理后的数据不是全部传入`draw_group()`中，而是分组传入的，所以`grp <- data[1,'group']`实际上能够处理所有分组的信息。
+
+第二步，根据`group`的奇偶性对`x`进行赋值，这里和小提琴图最大的区别是，只使用了一半的数据，要么为`xminv`，要么为`xmaxv`。
+
+第三步，确保小提琴图的多边形能够正确闭合，从而实现分裂小提琴图的绘制。第一行代码将 newdata 的第一行、整个 newdata、newdata 的最后一行以及 newdata 的第一行绑定在一起。这样做的目的是确保多边形的路径能够正确闭合。通过在数据的开头和结尾添加相同的点，确保绘制的路径能够回到起点，形成一个闭合的多边形。第二行代码将 newdata 的第一行、倒数第二行和最后一行的 x 值设置为 newdata 第一行的 x 值的四舍五入结果。这样做的目的是确保多边形的左右两侧能够正确对齐，从而避免绘制过程中出现跳跃或不连续的情况。
+
+通过以上三个步骤，就实现了分裂小提琴图的绘制。
+
+## `geom_flat_violin()` 的实现原理
+
+
+

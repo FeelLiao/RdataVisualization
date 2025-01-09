@@ -9,6 +9,7 @@
     -   ggplot2内部 翻译完成 2024-12-02 @sec-ggplot2internal
     -   ggplot2扩展 翻译完成 2024-12-05 @sec-ggplot2extend
     -   ggplot2扩展学习案例 英文版 2024-12-05 @sec-spring1
+    -   ggplot2内部 scale的`trans`参数已弃用，目前使用`transform`参数代替 2025-01-07 @sec-ggplot2internal
 
 -   Top 50 ggplot2 Visualizations: 简单介绍了一些常用的绘图原则，以及如何组合ggplot2本身自带的函数来绘制一些高级图形，部分图形会用到ggplot2的拓展包。
 
@@ -25,3 +26,7 @@
 -   网络相关绘图更新
 
     -   相关性网络图 2024-11-07
+
+- 编写ggplot2拓展
+
+  - 更新分裂小提琴图的源码解析 @sec-geom-split-violin
