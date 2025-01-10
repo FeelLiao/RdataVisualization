@@ -6,6 +6,7 @@
 
 ```{r}
 #| label: required-lib
+#| warning: false
 #| echo: false
 
 library(tidyverse)
