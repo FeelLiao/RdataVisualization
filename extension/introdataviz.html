@@ -277,26 +277,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header><p><a href="https://github.com/PsyTeachR/introdataviz">introdataviz</a>包来自github，目前该包没有在CRAN上提供，所以用户需要从github用源码安装。本节主要介绍introdataviz 包中分裂小提琴图（split-violin plot）和云雨图（raincloud plot）的源码实现原理。</p>
 <p>分裂小提琴图的示例 <a href="../plot/BasicStatisticalGraph.html#sec-split-violin-plot" class="quarto-xref"><span>Section 7.2</span></a></p>
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ readr     2.1.5
-✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.5.1     ✔ tibble    3.2.1
-✔ lubridate 1.9.3     ✔ tidyr     1.3.1
-✔ purrr     1.0.2     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-</div>
 <section id="ggplot2数据处理过程" class="level2" data-number="10.1"><h2 data-number="10.1" class="anchored" data-anchor-id="ggplot2数据处理过程">
 <span class="header-section-number">10.1</span> ggplot2数据处理过程</h2>
 <p>在 <a href="../ggplot2/ggplot2internal.html" class="quarto-xref"><span>Chapter 2</span></a> 中提到，ggplot2在绘图中行使的主要功能是将用户数据转换成一个或多个图形基元，然后交给grid包来负责底层的图形绘制，并最终呈现给用户。ggplot2的工作类似于渲染图形，主要负责对用户数据进行处理，对于ggplot2拓展的开发，意识到这一点尤为重要。</p>
 <p>首先，我们先来回忆一下ggplot2内部是如何工作的。这里使用下面的图形为例子：</p>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, color <span class="op">=</span> <span class="va">drv</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, color <span class="op">=</span> <span class="va">drv</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span>position <span class="op">=</span> <span class="st">"jitter"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_smooth</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, formula <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -304,7 +290,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>我们构建的<code>p</code>图具有两个图层，一个是 <code>geom_point()</code> ，一个是 <code>geom_smooth()</code> 。这两个图层会分别处理用户数据并转换成grid包能够识别的样式：在构建步骤 <a href="../ggplot2/ggplot2internal.html#sec-ggplotbuild" class="quarto-xref"><span>Section 2.2</span></a> 结束后，会得到两个图层的可绘图数据。这一结果可以通过 <code>ggplot_build()</code> 函数查看和验证：</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">plot_data</span> <span class="op">&lt;-</span> <span class="fu">ggplot_build</span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">plot_data</span> <span class="op">&lt;-</span> <span class="fu">ggplot_build</span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">plot_data</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2</code></pre>
@@ -312,20 +298,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>输出用于绘制 <code>geom_point()</code> 的数据的前5行：</p>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">plot_data</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">plot_data</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   colour        x        y PANEL group shape size fill alpha stroke
-1 #00BA38 1.830679 28.62445     1     2    19  1.5   NA    NA    0.5
-2 #00BA38 1.839066 29.11649     1     2    19  1.5   NA    NA    0.5
-3 #00BA38 1.974704 31.08545     2     2    19  1.5   NA    NA    0.5
-4 #00BA38 2.005439 30.36582     2     2    19  1.5   NA    NA    0.5
-5 #00BA38 2.777548 26.06843     1     2    19  1.5   NA    NA    0.5
-6 #00BA38 2.839146 26.20741     1     2    19  1.5   NA    NA    0.5</code></pre>
+1 #00BA38 1.761551 29.17864     1     2    19  1.5   NA    NA    0.5
+2 #00BA38 1.816865 29.05999     1     2    19  1.5   NA    NA    0.5
+3 #00BA38 2.017311 31.11060     2     2    19  1.5   NA    NA    0.5
+4 #00BA38 1.963715 30.13303     2     2    19  1.5   NA    NA    0.5
+5 #00BA38 2.818371 26.36987     1     2    19  1.5   NA    NA    0.5
+6 #00BA38 2.789037 25.61813     1     2    19  1.5   NA    NA    0.5</code></pre>
 </div>
 </div>
 <p>输出用于绘制 <code>geom_smooth()</code> 的数据的前5行：</p>
 <div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">plot_data</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">plot_data</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   colour        x        y     ymin     ymax        se flipped_aes PANEL group
 1 #F8766D 1.800000 24.33592 23.07845 25.59339 0.6250675       FALSE     1     1
@@ -368,7 +354,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">10.2</span> <code>geom_split_violin()</code> 的实现原理</h2>
 <p><code>geom_split_violin()</code> 对应的 <code>ggproto</code> 类为 <code>GeomSplitViolin</code> ，该类继承自 <code>GeomViolin</code> （ggplot2中小提琴图具体的实现类）。所以，<code>GeomSplitViolin</code> 类拥有 <code>GeomViolin</code> 类的所有方法和属性。</p>
 <div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GeomSplitViolin</span> <span class="op">&lt;-</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggproto.html">ggproto</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GeomSplitViolin</span> <span class="op">&lt;-</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggproto.html">ggproto</a></span><span class="op">(</span></span>
 <span>    <span class="st">"GeomSplitViolin"</span>,</span>
 <span>    <span class="va">GeomViolin</span>,</span>
 <span>    <span class="va">...</span></span>
@@ -389,7 +375,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">10.2.1</span> <code>geom_violin()</code> 几何对象的绘制过程</h3>
 <p>首先我们来看一下 <code>GeomViolin</code> 类的 <code>draw_group()</code> 方法都做了什么？</p>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">draw_group</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">self</span>, <span class="va">data</span>, <span class="va">...</span>, <span class="va">draw_quantiles</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">flipped_aes</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">draw_group</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">self</span>, <span class="va">data</span>, <span class="va">...</span>, <span class="va">draw_quantiles</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">flipped_aes</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">flip_data</span><span class="op">(</span><span class="va">data</span>, <span class="va">flipped_aes</span><span class="op">)</span></span>
 <span>    <span class="co"># Find the points for the line to go all the way around</span></span>
 <span>    <span class="co"># 2. 小提琴图的左侧和右侧边界</span></span>
@@ -458,7 +444,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>有了上面介绍的小提琴图的绘制过程，我们就可以思考如何绘制分裂小提琴图了。在<code>introdataviz</code>中，开发者是这样思考的：<code>xminv</code>和<code>xmaxv</code>两列数据分别表示小提琴图的左侧和右侧边界，那么在每一个<code>group</code>绘图时只使用一列数据（即只使用<code>xminv</code>或者<code>xmaxv</code>），就可以只绘制一半的小提琴图，也就得到了分裂小提琴图。那么另一半用来干什么呢？开发者在这里将小提琴图的另一半用来表示下一个分组。用户在映射美学值时，可以指定一个<code>fill</code>美学值，用来表示<code>x</code>的二分类信息。这样在数据处理过程中，同一类的<code>x</code>就会同时拥有一个单数和一个双数的分类值（即在数据处理过程中生成的<code>group</code>值），这样就可以用分组编号将同一个<code>x</code>中的两个类区分开，并在绘制分裂小提琴图时将左右两侧的图形分配给<code>x</code>中的两个类，实现两个类对应<code>y</code>的密度可视化。</p>
 <p>可以通过下面的示例查看分裂小提琴图绘制时的分组数据：</p>
 <div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># 使用示例数据构建分裂小提琴图</span></span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># 使用示例数据构建分裂小提琴图</span></span>
 <span><span class="va">sample_plot</span><span class="op">&lt;-</span><span class="fu">ggplot</span><span class="op">(</span><span class="va">ldt_long</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">condition</span>, y <span class="op">=</span> <span class="va">rt</span>, fill <span class="op">=</span> <span class="va">language</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_split_violin</span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">.4</span><span class="op">)</span></span>
 <span></span>
@@ -485,7 +471,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>现在，我们就可以来看<code>geom_split_violin()</code>的核心代码了。</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GeomSplitViolin</span> <span class="op">&lt;-</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggproto.html">ggproto</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GeomSplitViolin</span> <span class="op">&lt;-</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggproto.html">ggproto</a></span><span class="op">(</span></span>
 <span>    <span class="st">"GeomSplitViolin"</span>, </span>
 <span>    <span class="va">GeomViolin</span>, </span>
 <span>    draw_group <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">self</span>, <span class="va">data</span>, <span class="va">...</span>, <span class="va">draw_quantiles</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">{</span></span>

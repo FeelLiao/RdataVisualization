@@ -321,19 +321,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">gwas_data_load</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  chr        snp      bp nmiss        beta         se           r2          t
-1   1 rs41372223  598188 19964 0.016805860 0.04715671 6.534163e-05  2.2687766
-2   1 rs28517828 1189703 19887 0.005010764 0.18967299 7.437440e-06 -0.3894573
-3   1 rs22842323  779157 20007 0.018371079 0.15658603 3.800519e-05 -0.8652915
-4   1 rs33721358 1049027 19904 0.024214521 0.07030106 7.719985e-05  1.1486527
-5   1 rs46094355 2085466 19717 0.005051830 0.18024336 1.414180e-04  1.9785820
-6   1 rs90094592 1823704 19975 0.004942381 0.15149591 4.588980e-05  1.5239697
+1   1 rs90578709 1792930 20000 0.028629422 0.08827353 2.524271e-05  1.5888569
+2   1 rs47937938 2194939 20003 0.008846140 0.06841859 1.036697e-04 -1.4265594
+3   1 rs62499553  399524 19959 0.011786914 0.16753433 6.561403e-05 -0.8456437
+4   1 rs74488285 1715827 19934 0.054787018 0.18286659 2.880185e-05 -1.6648839
+5   1 rs76191429  256078 19892 0.009700569 0.13516717 3.942546e-05  1.2122360
+6   1 rs97368765  843372 19719 0.166006546 0.20609338 7.874865e-05  0.5277339
            p
-1 0.09278327
-2 0.86871019
-3 0.82009250
-4 0.84496065
-5 0.28407903
-6 0.24790171</code></pre>
+1 0.06548946
+2 0.65420950
+3 0.61314289
+4 0.78773539
+5 0.42533221
+6 0.04793131</code></pre>
 </div>
 </div>
 <p>从模拟的GWAS数据中选择所有 p 值小于 0.05 的行，这些行代表统计上显著的结果。</p>
@@ -365,11 +365,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     chr  bp_add
   &lt;int&gt;   &lt;dbl&gt;
 1     1       0
-2     2 2199178
-3     3 4298491
-4     4 6297300
-5     5 8196147
-6     6 9995887</code></pre>
+2     2 2198735
+3     3 4296366
+4     4 6294848
+5     5 8193847
+6     6 9991547</code></pre>
 </div>
 </div>
 <p>将累积基对位置数据与原始GWAS数据合并。</p>
