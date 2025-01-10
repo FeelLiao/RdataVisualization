@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-cd7de1037569933fbb609f06423bd096.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap-78faf54a06e50be45dc6d83ab59297a7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -258,7 +258,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul>
 </li>
   <li>
-<a href="#%E5%88%86%E8%A3%82%E5%B0%8F%E6%8F%90%E7%90%B4%E5%9B%BE" id="toc-分裂小提琴图" class="nav-link" data-scroll-target="#%E5%88%86%E8%A3%82%E5%B0%8F%E6%8F%90%E7%90%B4%E5%9B%BE"><span class="header-section-number">7.2</span> 分裂小提琴图</a>
+<a href="#sec-split-violin-plot" id="toc-sec-split-violin-plot" class="nav-link" data-scroll-target="#sec-split-violin-plot"><span class="header-section-number">7.2</span> 分裂小提琴图</a>
   <ul class="collapse">
 <li><a href="#%E5%8A%A0%E8%BD%BDr%E5%8C%85-1" id="toc-加载r包-1" class="nav-link" data-scroll-target="#%E5%8A%A0%E8%BD%BDr%E5%8C%85-1"><span class="header-section-number">7.2.1</span> 加载R包</a></li>
   <li><a href="#%E5%8A%A0%E8%BD%BD%E6%95%B0%E6%8D%AE" id="toc-加载数据" class="nav-link" data-scroll-target="#%E5%8A%A0%E8%BD%BD%E6%95%B0%E6%8D%AE"><span class="header-section-number">7.2.2</span> 加载数据</a></li>
@@ -320,20 +320,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">gwas_data_load</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  chr        snp      bp nmiss         beta         se           r2          t
-1   1 rs72856312  244712 20005 0.0018111094 0.11073044 2.416564e-05  0.5761324
-2   1 rs78888116 1637647 19935 0.0179781127 0.20202913 1.091059e-05 -1.1406344
-3   1 rs58204531  845680 20013 0.0192169547 0.09234262 8.576886e-05  0.1169285
-4   1 rs45437342 1208628 19920 0.0005866030 0.11645077 7.835872e-05 -0.7791452
-5   1 rs82135151 2197718 20010 0.0004883489 0.05530017 1.406059e-04 -0.2819915
-6   1 rs45692472  155819 19915 0.0002244879 0.20190582 7.230098e-06  0.5908885
-          p
-1 0.8411186
-2 0.9621069
-3 0.4363827
-4 0.2837579
-5 0.7629989
-6 0.7515393</code></pre>
+<pre><code>  chr        snp      bp nmiss        beta         se           r2          t
+1   1 rs41372223  598188 19964 0.016805860 0.04715671 6.534163e-05  2.2687766
+2   1 rs28517828 1189703 19887 0.005010764 0.18967299 7.437440e-06 -0.3894573
+3   1 rs22842323  779157 20007 0.018371079 0.15658603 3.800519e-05 -0.8652915
+4   1 rs33721358 1049027 19904 0.024214521 0.07030106 7.719985e-05  1.1486527
+5   1 rs46094355 2085466 19717 0.005051830 0.18024336 1.414180e-04  1.9785820
+6   1 rs90094592 1823704 19975 0.004942381 0.15149591 4.588980e-05  1.5239697
+           p
+1 0.09278327
+2 0.86871019
+3 0.82009250
+4 0.84496065
+5 0.28407903
+6 0.24790171</code></pre>
 </div>
 </div>
 <p>从模拟的GWAS数据中选择所有 p 值小于 0.05 的行，这些行代表统计上显著的结果。</p>
@@ -365,11 +365,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     chr  bp_add
   &lt;int&gt;   &lt;dbl&gt;
 1     1       0
-2     2 2199808
-3     3 4297188
-4     4 6295102
-5     5 8194204
-6     6 9991929</code></pre>
+2     2 2199178
+3     3 4298491
+4     4 6297300
+5     5 8196147
+6     6 9995887</code></pre>
 </div>
 </div>
 <p>将累积基对位置数据与原始GWAS数据合并。</p>
@@ -435,7 +435,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>曼哈顿图由ggplot2的点图+一条直线绘制而成。gwas数据由分布在染色体上的单核苷酸突变位点构成，每个突变位点记录了它在染色体上的绝对位置和它的p-value。为了对这个数据进行可视化，我们将每个单核苷酸突变位点的位置作为x轴，它的p-value作为y轴，然后沿y轴绘制一条p-value的阈值线，就完成可视化。在实际操作过程中，需要注意每个单核苷酸突变位点在染色体上的位置，这里的数据中，单核苷酸突变位点在染色体上的位置表示为在单个染色体上的位置，比如在2号染色体的1253位点，表示为1253，而非加上染色体1的长度，所以需要转换数据。另外，x轴和y轴的标签也做了相应转换，x轴取了每个染色体的中心位置写标签，而y轴做了-log10转换。</p>
-</section></section><section id="分裂小提琴图" class="level2" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="分裂小提琴图">
+</section></section><section id="sec-split-violin-plot" class="level2" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="sec-split-violin-plot">
 <span class="header-section-number">7.2</span> 分裂小提琴图</h2>
 <p>分裂小提琴图能够很方便的展示嵌套数据中两组数据的分布情况。分裂小提琴图来自<code>introdataviz</code>包<code><a href="https://rdrr.io/pkg/introdataviz/man/geom_split_violin.html">geom_split_violin()</a></code>函数，有关如何实现这个函数，请参见 <a href="../extension/introdataviz.html" class="quarto-xref"><span>Chapter 10</span></a></p>
 <section id="加载r包-1" class="level3" data-number="7.2.1"><h3 data-number="7.2.1" class="anchored" data-anchor-id="加载r包-1">

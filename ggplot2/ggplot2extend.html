@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-cd7de1037569933fbb609f06423bd096.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap-78faf54a06e50be45dc6d83ab59297a7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -263,7 +263,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li>
 <a href="#sec-new-stats" id="toc-sec-new-stats" class="nav-link" data-scroll-target="#sec-new-stats"><span class="header-section-number">4.2</span> 新统计变换</a>
   <ul class="collapse">
-<li><a href="#%E5%88%9B%E5%BB%BA%E7%BB%9F%E8%AE%A1%E5%8F%98%E6%8D%A2" id="toc-创建统计变换" class="nav-link" data-scroll-target="#%E5%88%9B%E5%BB%BA%E7%BB%9F%E8%AE%A1%E5%8F%98%E6%8D%A2"><span class="header-section-number">4.2.1</span> 创建统计变换</a></li>
+<li><a href="#sec-create-stats" id="toc-sec-create-stats" class="nav-link" data-scroll-target="#sec-create-stats"><span class="header-section-number">4.2.1</span> 创建统计变换</a></li>
   <li><a href="#sec-modifying-stat-params" id="toc-sec-modifying-stat-params" class="nav-link" data-scroll-target="#sec-modifying-stat-params"><span class="header-section-number">4.2.2</span> 修改参数和数据</a></li>
   </ul>
 </li>
@@ -510,7 +510,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section></section><section id="sec-new-stats" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="sec-new-stats">
 <span class="header-section-number">4.2</span> 新统计变换</h2>
 <p>创建新统计变换是扩展 ggplot2 功能最有用的方式之一。当用户向图表添加新图层时，他们通常使用 geom 函数，因此作为开发人员，你可能会认为你的 ggplot2 扩展应该封装为一个新的 geom。这在一定程度上是正确的，因为你的用户可能会想要使用 geom 函数，但实际上不同 geoms 之间的多样性主要是由不同的统计变换决定的。使用统计变换的好处之一是它们纯粹是关于数据的转换。大多数 R 用户和开发人员对数据转换非常熟悉，这使得定义新统计变得很容易。只要所需的功能可以封装在一个统计中，就无需对任何 grid 调用进行调整。</p>
-<section id="创建统计变换" class="level3" data-number="4.2.1"><h3 data-number="4.2.1" class="anchored" data-anchor-id="创建统计变换">
+<section id="sec-create-stats" class="level3" data-number="4.2.1"><h3 data-number="4.2.1" class="anchored" data-anchor-id="sec-create-stats">
 <span class="header-section-number">4.2.1</span> 创建统计变换</h3>
 <p>就像在 <a href="ggplot2internal.html" class="quarto-xref"><span>Chapter 2</span></a> 中讨论的一样，统计变换的核心是对三个函数 <code>compute_layer()</code>、<code>compute_panel()</code> 和 <code>compute_group()</code>的调用，这三个函数都是 ggproto 对象定义的统计变换方法。默认情况下，前两个函数不执行太多操作，它们只是将数据按照下面的方式进行传递：</p>
 <ul>

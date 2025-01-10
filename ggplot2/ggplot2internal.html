@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-cd7de1037569933fbb609f06423bd096.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap-78faf54a06e50be45dc6d83ab59297a7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -376,7 +376,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section><section id="数据转换" class="level3" data-number="2.2.2"><h3 data-number="2.2.2" class="anchored" data-anchor-id="数据转换">
 <span class="header-section-number">2.2.2</span> 数据转换</h3>
 <p>图层数据转换为可预测的格式后，还需要进行一系列转换，直到转换为绘图所需的格式。</p>
-<p>该过程的第一步是对数据中的列进行标度（scale）转换。 在这一阶段，任何标度中的 <code>trans</code> 参数都会产生影响，所有后续的渲染都将在这一转换后进行。 这就是在标度中设置位置变换（对<code>x</code>和<code>y</code>进行变换）与在坐标系中设置位置变换效果不同的原因。 如果在标度中指定变换，则变换会在任何其他计算<em>之前</em>应用，但如果在坐标系中指定变换，则变换会在这些计算<em>之后</em>应用。 例如，我们最初绘制的<code>p</code>图不涉及标度变换，因此图层数据在此阶段保持不变。 前三行如下所示：</p>
+<p>该过程的第一步是对数据中的列进行标度（scale）转换。 在这一阶段，任何标度中的 <code>trans</code> 参数 <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> 都会产生影响，所有后续的渲染都将在这一转换后进行。 这就是在标度中设置位置变换（对<code>x</code>和<code>y</code>进行变换）与在坐标系中设置位置变换效果不同的原因。 如果在标度中指定变换，则变换会在任何其他计算<strong>之前</strong>应用，但如果在坐标系中指定变换，则变换会在这些计算<strong>之后</strong>应用。 例如，我们最初绘制的<code>p</code>图不涉及标度变换，因此图层数据在此阶段保持不变。 前三行如下所示：</p>
 <div class="cell">
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#&gt;     x  y colour PANEL group</span></span>
 <span><span class="co">#&gt; 1 1.8 29      f     1     2</span></span>
@@ -580,7 +580,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     function(...) !!call2(name, !!!args)
 
   &lt;Inner function (f)&gt;
-    &lt;srcref: file "" chars 9:15 to 14:3&gt;</code></pre>
+    function (self, family_last = TRUE) 
+{
+    if (family_last == TRUE) {
+        return(paste(self$given_name, self$family_name))
+    }
+    return(paste(self$family_name, self$given_name))
+}</code></pre>
 </div>
 </div>
 <p>这个输出结果似乎有点出人意料：当我们之前定义 <code>full_name()</code> 时，我们只提供了作为 “内部函数”的代码。现在的情况是，<code>ggproto()</code> 自动将我的函数封装在一个封装函数中，该封装函数调用我的代码作为内部函数，同时确保使用了适当的 <code>self</code> 定义。当打印该方法时，控制台会同时显示封装函数（通常没什么意义）和内部函数。这种格式的输出出现在 <a href="ggplot2extend.html" class="quarto-xref"><span>Chapter 3</span></a> 和 <a href="ggplot2_spring.html" class="quarto-xref"><span>Chapter 4</span></a> 中。</p>
@@ -721,6 +727,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
 <ol>
 <li id="fn1"><p>你通常不会直接调用这个 <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> 方法，因为它是由打印方法调用的，因此每当打印 ggplot 对象时都会调用它。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><code>trans</code>参数在ggplot2 v3.5.1 已经弃用（deprecated），新的参数为 <code>transform</code><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

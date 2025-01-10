@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-cd7de1037569933fbb609f06423bd096.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap-78faf54a06e50be45dc6d83ab59297a7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -1713,7 +1713,7 @@ For the tension aesthetic, we expect that users will apply it to continuous scal
 <span><span class="co">#&gt;     )</span></span>
 <span><span class="co">#&gt;   )</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x56315120b730&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x55b60eade018&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:ggplot2&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In this code, <code>data</code> is a data frame with a single row giving the aesthetic values to use for the key, <code>params</code> are the geom parameters for the layer, and <code>size</code> is the size of the key area in centimeters. The <code>%||%</code> operator, which you often see in tidyverse source code, is used to supply default values whenever a variable has a null value:</p>
@@ -1733,9 +1733,9 @@ For the tension aesthetic, we expect that users will apply it to continuous scal
 <span>    diameter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">diameter</span>, <span class="st">"cm"</span><span class="op">)</span>, </span>
 <span>    tension <span class="op">=</span> <span class="va">data</span><span class="op">$</span><span class="va">tension</span>,</span>
 <span>    gp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/gpar.html">gpar</a></span><span class="op">(</span></span>
-<span>      col <span class="op">=</span> <span class="fu">alpha</span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">colour</span> <span class="op">%||%</span> <span class="st">"black"</span>, <span class="va">data</span><span class="op">$</span><span class="va">alpha</span><span class="op">)</span>,</span>
-<span>      lwd <span class="op">=</span> <span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">size</span> <span class="op">%||%</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">*</span> <span class="va">.pt</span>,</span>
-<span>      lty <span class="op">=</span> <span class="va">data</span><span class="op">$</span><span class="va">linetype</span> <span class="op">%||%</span> <span class="fl">1</span></span>
+<span>      col <span class="op">=</span> <span class="fu">alpha</span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">colour</span> <span class="op"><a href="https://rdrr.io/r/base/Control.html">%||%</a></span> <span class="st">"black"</span>, <span class="va">data</span><span class="op">$</span><span class="va">alpha</span><span class="op">)</span>,</span>
+<span>      lwd <span class="op">=</span> <span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">size</span> <span class="op"><a href="https://rdrr.io/r/base/Control.html">%||%</a></span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">*</span> <span class="va">.pt</span>,</span>
+<span>      lty <span class="op">=</span> <span class="va">data</span><span class="op">$</span><span class="va">linetype</span> <span class="op"><a href="https://rdrr.io/r/base/Control.html">%||%</a></span> <span class="fl">1</span></span>
 <span>    <span class="op">)</span>,</span>
 <span>    vp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/viewport.html">viewport</a></span><span class="op">(</span>clip <span class="op">=</span> <span class="st">"on"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>

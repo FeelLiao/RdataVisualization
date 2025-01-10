@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.6.40">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Feel Liao">
-
 <title>10&nbsp; introdataviz – R语言数据可视化学习笔记</title>
 <style>
 code{white-space: pre-wrap;}
@@ -21,8 +18,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
-
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
@@ -41,8 +71,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-cd7de1037569933fbb609f06423bd096.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap-78faf54a06e50be45dc6d83ab59297a7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -69,16 +98,11 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-
-
 </head>
-
 <body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
@@ -89,13 +113,9 @@ ul.task-list li input[type="checkbox"] {
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="../">R语言数据可视化学习笔记</a> 
         <div class="sidebar-tools-main">
@@ -115,7 +135,7 @@ ul.task-list li input[type="checkbox"] {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">欢迎</span></a>
@@ -135,8 +155,8 @@ ul.task-list li input[type="checkbox"] {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ggplot2/ggplot2intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">ggplot2简介</span></span></a>
@@ -161,7 +181,7 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../plot/plot_ex.html" class="sidebar-item-text sidebar-link">
@@ -170,8 +190,8 @@ ul.task-list li input[type="checkbox"] {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../plot/top50en.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 Visualizations</span></span></a>
@@ -196,7 +216,7 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../extension/extension_chapter.html" class="sidebar-item-text sidebar-link">
@@ -205,8 +225,8 @@ ul.task-list li input[type="checkbox"] {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../extension/gghdr.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">gghdr</span></span></a>
@@ -219,20 +239,28 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
       </ul>
-  </li>
+</li>
     </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#ggplot2%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B" id="toc-ggplot2数据处理过程" class="nav-link active" data-scroll-target="#ggplot2%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B"><span class="header-section-number">10.1</span> ggplot2数据处理过程</a></li>
+  <li>
+<a href="#sec-geom-split-violin" id="toc-sec-geom-split-violin" class="nav-link" data-scroll-target="#sec-geom-split-violin"><span class="header-section-number">10.2</span> <code>geom_split_violin()</code> 的实现原理</a>
+  <ul class="collapse">
+<li><a href="#geom_violin-%E5%87%A0%E4%BD%95%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%BB%98%E5%88%B6%E8%BF%87%E7%A8%8B" id="toc-geom_violin-几何对象的绘制过程" class="nav-link" data-scroll-target="#geom_violin-%E5%87%A0%E4%BD%95%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%BB%98%E5%88%B6%E8%BF%87%E7%A8%8B"><span class="header-section-number">10.2.1</span> <code>geom_violin()</code> 几何对象的绘制过程</a></li>
+  <li><a href="#geom_split_violin-%E7%9A%84%E7%BB%98%E5%88%B6%E8%BF%87%E7%A8%8B" id="toc-geom_split_violin-的绘制过程" class="nav-link" data-scroll-target="#geom_split_violin-%E7%9A%84%E7%BB%98%E5%88%B6%E8%BF%87%E7%A8%8B"><span class="header-section-number">10.2.2</span> <code>geom_split_violin()</code> 的绘制过程</a></li>
+  </ul>
+</li>
+  <li><a href="#geom_flat_violin-%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86" id="toc-geom_flat_violin-的实现原理" class="nav-link" data-scroll-target="#geom_flat_violin-%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="header-section-number">10.3</span> <code>geom_flat_violin()</code> 的实现原理</a></li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/FeelLiao/RdataVisualization/edit/main/extension/introdataviz.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/FeelLiao/RdataVisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../extension/extension_chapter.html">编写 ggplot2 拓展</a></li><li class="breadcrumb-item"><a href="../extension/introdataviz.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">introdataviz</span></a></li></ol></nav>
-<div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../extension/extension_chapter.html">编写 ggplot2 拓展</a></li><li class="breadcrumb-item"><a href="../extension/introdataviz.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">introdataviz</span></a></li></ol></nav><div class="quarto-title">
 <h1 class="title"><span id="sec-introdataviz" class="quarto-section-identifier"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">introdataviz</span></span></h1>
 </div>
 
@@ -247,14 +275,262 @@ ul.task-list li input[type="checkbox"] {
   
 
 
-</header>
+</header><p><a href="https://github.com/PsyTeachR/introdataviz">introdataviz</a>包来自github，目前该包没有在CRAN上提供，所以用户需要从github用源码安装。本节主要介绍introdataviz 包中分裂小提琴图（split-violin plot）和云雨图（raincloud plot）的源码实现原理。</p>
+<p>分裂小提琴图的示例 <a href="../plot/BasicStatisticalGraph.html#sec-split-violin-plot" class="quarto-xref"><span>Section 7.2</span></a></p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+</div>
+<section id="ggplot2数据处理过程" class="level2" data-number="10.1"><h2 data-number="10.1" class="anchored" data-anchor-id="ggplot2数据处理过程">
+<span class="header-section-number">10.1</span> ggplot2数据处理过程</h2>
+<p>在 <a href="../ggplot2/ggplot2internal.html" class="quarto-xref"><span>Chapter 2</span></a> 中提到，ggplot2在绘图中行使的主要功能是将用户数据转换成一个或多个图形基元，然后交给grid包来负责底层的图形绘制，并最终呈现给用户。ggplot2的工作类似于渲染图形，主要负责对用户数据进行处理，对于ggplot2拓展的开发，意识到这一点尤为重要。</p>
+<p>首先，我们先来回忆一下ggplot2内部是如何工作的。这里使用下面的图形为例子：</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, color <span class="op">=</span> <span class="va">drv</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span>position <span class="op">=</span> <span class="st">"jitter"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_smooth</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, formula <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"A plot for expository purposes"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>我们构建的<code>p</code>图具有两个图层，一个是 <code>geom_point()</code> ，一个是 <code>geom_smooth()</code> 。这两个图层会分别处理用户数据并转换成grid包能够识别的样式：在构建步骤 <a href="../ggplot2/ggplot2internal.html#sec-ggplotbuild" class="quarto-xref"><span>Section 2.2</span></a> 结束后，会得到两个图层的可绘图数据。这一结果可以通过 <code>ggplot_build()</code> 函数查看和验证：</p>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">plot_data</span> <span class="op">&lt;-</span> <span class="fu">ggplot_build</span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">plot_data</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+</div>
+<p>输出用于绘制 <code>geom_point()</code> 的数据的前5行：</p>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">plot_data</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   colour        x        y PANEL group shape size fill alpha stroke
+1 #00BA38 1.830679 28.62445     1     2    19  1.5   NA    NA    0.5
+2 #00BA38 1.839066 29.11649     1     2    19  1.5   NA    NA    0.5
+3 #00BA38 1.974704 31.08545     2     2    19  1.5   NA    NA    0.5
+4 #00BA38 2.005439 30.36582     2     2    19  1.5   NA    NA    0.5
+5 #00BA38 2.777548 26.06843     1     2    19  1.5   NA    NA    0.5
+6 #00BA38 2.839146 26.20741     1     2    19  1.5   NA    NA    0.5</code></pre>
+</div>
+</div>
+<p>输出用于绘制 <code>geom_smooth()</code> 的数据的前5行：</p>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">plot_data</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   colour        x        y     ymin     ymax        se flipped_aes PANEL group
+1 #F8766D 1.800000 24.33592 23.07845 25.59339 0.6250675       FALSE     1     1
+2 #F8766D 1.859494 24.17860 22.94830 25.40890 0.6115600       FALSE     1     1
+3 #F8766D 1.918987 24.02127 22.81795 25.22460 0.5981528       FALSE     1     1
+4 #F8766D 1.978481 23.86395 22.68738 25.04052 0.5848527       FALSE     1     1
+5 #F8766D 2.037975 23.70663 22.55658 24.85668 0.5716673       FALSE     1     1
+6 #F8766D 2.097468 23.54931 22.42554 24.67307 0.5586045       FALSE     1     1
+    fill linewidth linetype weight alpha
+1 grey60         1        1      1   0.4
+2 grey60         1        1      1   0.4
+3 grey60         1        1      1   0.4
+4 grey60         1        1      1   0.4
+5 grey60         1        1      1   0.4
+6 grey60         1        1      1   0.4</code></pre>
+</div>
+</div>
+<p>那么这些数据是如何生成的呢？详细过程可以参考 <a href="../ggplot2/ggplot2internal.html#sec-ggplotbuild" class="quarto-xref"><span>Section 2.2</span></a> 。下面只做简要介绍，理解和熟悉这部分内容非常重要，在开发ggplot2的拓展时，你需要清楚的知道数据在ggplot2内部是如何流动的。</p>
+<p><strong>The build step <code>ggplot_build()</code> </strong></p>
+<ol type="1">
+<li>用户数据将按照 <code>PANEL</code> （分面facet）和 <code>group</code> 美学值和进行划分（即每行数据属于哪一类的 <code>PANEL</code> 和 <code>group</code> ）。</li>
+<li>标度scale的 <code>trans</code> 参数转换。</li>
+<li>位置标度（position scales 即<code>x</code>和<code>y</code>）的转换。</li>
+<li>统计变换stat，按<code>layer</code>, <code>panel</code> 和 <code>group</code> 对数据进行统计变换，<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> <a href="../ggplot2/ggplot2extend.html#sec-create-stats" class="quarto-xref"><span>Section 4.2.1</span></a> 位置调整也发生在这一步。</li>
+<li>映射所有非位置美学值</li>
+</ol>
+<p><strong>The gtable step <code>ggplot_gtable()</code> </strong></p>
+<p>获取 build step 的输出，并在 gtable 软件包的帮助下将其转化为可以使用grid绘制的对象。此时，负责进一步计算的主要元素是<strong>几何对象、坐标系、分面和主题。</strong></p>
+<div class="callout callout-style-simple callout-important">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>统计变换stat对数据的处理发生在几何对象geom之前。</p>
+</div>
+</div>
+</div>
+</section><section id="sec-geom-split-violin" class="level2" data-number="10.2"><h2 data-number="10.2" class="anchored" data-anchor-id="sec-geom-split-violin">
+<span class="header-section-number">10.2</span> <code>geom_split_violin()</code> 的实现原理</h2>
+<p><code>geom_split_violin()</code> 对应的 <code>ggproto</code> 类为 <code>GeomSplitViolin</code> ，该类继承自 <code>GeomViolin</code> （ggplot2中小提琴图具体的实现类）。所以，<code>GeomSplitViolin</code> 类拥有 <code>GeomViolin</code> 类的所有方法和属性。</p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GeomSplitViolin</span> <span class="op">&lt;-</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggproto.html">ggproto</a></span><span class="op">(</span></span>
+<span>    <span class="st">"GeomSplitViolin"</span>,</span>
+<span>    <span class="va">GeomViolin</span>,</span>
+<span>    <span class="va">...</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>我们想要实现分裂小提琴图的效果，就需要重写 <code>GeomViolin</code> 类的 <code>draw_group()</code> 方法。</p>
+<div class="callout callout-style-simple callout-important">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>调用 <code>draw_group()</code> 方法进行绘图时，geom会读取绘图数据中的<code>group</code>列，按照不同group进行绘图，也就是每个group的数据在geom中是独立的，geom会在绘制完一个group后才开始绘制下一个group。</p>
+</div>
+</div>
+</div>
+<section id="geom_violin-几何对象的绘制过程" class="level3" data-number="10.2.1"><h3 data-number="10.2.1" class="anchored" data-anchor-id="geom_violin-几何对象的绘制过程">
+<span class="header-section-number">10.2.1</span> <code>geom_violin()</code> 几何对象的绘制过程</h3>
+<p>首先我们来看一下 <code>GeomViolin</code> 类的 <code>draw_group()</code> 方法都做了什么？</p>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">draw_group</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">self</span>, <span class="va">data</span>, <span class="va">...</span>, <span class="va">draw_quantiles</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">flipped_aes</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">flip_data</span><span class="op">(</span><span class="va">data</span>, <span class="va">flipped_aes</span><span class="op">)</span></span>
+<span>    <span class="co"># Find the points for the line to go all the way around</span></span>
+<span>    <span class="co"># 2. 小提琴图的左侧和右侧边界</span></span>
+<span>    <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/transform.html">transform</a></span><span class="op">(</span><span class="va">data</span>,</span>
+<span>      xminv <span class="op">=</span> <span class="va">x</span> <span class="op">-</span> <span class="va">violinwidth</span> <span class="op">*</span> <span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">xmin</span><span class="op">)</span>,</span>
+<span>      xmaxv <span class="op">=</span> <span class="va">x</span> <span class="op">+</span> <span class="va">violinwidth</span> <span class="op">*</span> <span class="op">(</span><span class="va">xmax</span> <span class="op">-</span> <span class="va">x</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span></span>
+<span>    <span class="co"># Make sure it's sorted properly to draw the outline</span></span>
+<span>    <span class="co"># 3. 数据排序和整合</span></span>
+<span>    <span class="va">newdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/transform.html">transform</a></span><span class="op">(</span><span class="va">data</span>, x <span class="op">=</span> <span class="va">xminv</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">y</span><span class="op">)</span>, <span class="op">]</span>,</span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/transform.html">transform</a></span><span class="op">(</span><span class="va">data</span>, x <span class="op">=</span> <span class="va">xmaxv</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">y</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="op">]</span></span>
+<span>    <span class="op">)</span></span>
+<span></span>
+<span>    <span class="co"># Close the polygon: set first and last point the same</span></span>
+<span>    <span class="co"># Needed for coord_polar and such</span></span>
+<span>    <span class="co"># 4. 闭合多边形</span></span>
+<span>    <span class="va">newdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">newdata</span>, <span class="va">newdata</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span><span class="op">)</span></span>
+<span>    <span class="va">newdata</span> <span class="op">&lt;-</span> <span class="fu">flip_data</span><span class="op">(</span><span class="va">newdata</span>, <span class="va">flipped_aes</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="co"># Draw quantiles if requested, so long as there is non-zero y range</span></span>
+<span>    <span class="co"># 5. 如果指定了 `draw_quantiles`，则绘制分位数线</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">draw_quantiles</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/zero_range.html">zero_range</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">y</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="va">draw_quantiles</span> <span class="op">&gt;=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="va">draw_quantiles</span> <span class="op">&lt;=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="fu">abort</span><span class="op">(</span><span class="st">"`draw_quantiles must be between 0 and 1"</span><span class="op">)</span></span>
+<span>      <span class="op">}</span></span>
+<span></span>
+<span>      <span class="co"># Compute the quantile segments and combine with existing aesthetics</span></span>
+<span>      <span class="va">quantiles</span> <span class="op">&lt;-</span> <span class="fu">create_quantile_segment_frame</span><span class="op">(</span><span class="va">data</span>, <span class="va">draw_quantiles</span><span class="op">)</span></span>
+<span>      <span class="va">aesthetics</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">quantiles</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"group"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>        drop <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>      <span class="op">]</span></span>
+<span>      <span class="va">aesthetics</span><span class="op">$</span><span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">quantiles</span><span class="op">)</span><span class="op">)</span></span>
+<span>      <span class="va">both</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">quantiles</span>, <span class="va">aesthetics</span><span class="op">)</span></span>
+<span>      <span class="va">both</span> <span class="op">&lt;-</span> <span class="va">both</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">both</span><span class="op">$</span><span class="va">group</span><span class="op">)</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
+<span>      <span class="va">both</span> <span class="op">&lt;-</span> <span class="fu">flip_data</span><span class="op">(</span><span class="va">both</span>, <span class="va">flipped_aes</span><span class="op">)</span></span>
+<span>      <span class="va">quantile_grob</span> <span class="op">&lt;-</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">both</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="fu">zeroGrob</span><span class="op">(</span><span class="op">)</span></span>
+<span>      <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>        <span class="va">GeomPath</span><span class="op">$</span><span class="fu">draw_panel</span><span class="op">(</span><span class="va">both</span>, <span class="va">...</span><span class="op">)</span></span>
+<span>      <span class="op">}</span></span>
+<span></span>
+<span>      <span class="fu">ggname</span><span class="op">(</span><span class="st">"geom_violin"</span>, <span class="fu">grobTree</span><span class="op">(</span></span>
+<span>        <span class="va">GeomPolygon</span><span class="op">$</span><span class="fu">draw_panel</span><span class="op">(</span><span class="va">newdata</span>, <span class="va">...</span><span class="op">)</span>,</span>
+<span>        <span class="va">quantile_grob</span><span class="op">)</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>      <span class="fu">ggname</span><span class="op">(</span><span class="st">"geom_violin"</span>, <span class="va">GeomPolygon</span><span class="op">$</span><span class="fu">draw_panel</span><span class="op">(</span><span class="va">newdata</span>, <span class="va">...</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>  <span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>这段代码主要做了以下事情：</p>
+<ol type="1">
+<li>首先，数据通过 <code>flip_data</code> 函数进行翻转处理（如果需要）。</li>
+<li>然后，计算 <code>xminv</code> 和 <code>xmaxv</code>，分别表示小提琴图的左侧和右侧边界。</li>
+<li>将数据按 <code>y</code> 值升序和降序排序。</li>
+<li>将第一个和最后一个点设置为相同，以闭合多边形。</li>
+<li>如果指定了 <code>draw_quantiles</code>，则绘制分位数线。</li>
+</ol>
+<p>这里，绘制小提琴图的任务交给了 <code>GeomPolygon</code> 类（ggplot2中绘制多边形的类），要实现绘制小提琴图，我们就需要将数据处理成<code>GeomPolygon</code>能够识别的样子。在上面的小提琴图示例中，首先在数据中计算<code>xminv</code>和<code>xmaxv</code>列，分别表示小提琴图的左侧和右侧边界，随后分别将<code>xminv</code>和<code>xmaxv</code>赋值给<code>x</code>，并按照<code>y</code>的大小排序。最后将数据的第一行添加到数据的最后一行，以闭合多边形。这里可以把这个过程想象为你要在一个平面上画一个图形，画笔的移动顺序遵循所给数据中（x,y）出现的顺序。在小提琴图中，<code>y</code>的值在<code>stat_ydensity()</code>中就计算好了（也就是统计变换步骤），而<code>x</code>的值则在geom中处理。在<code>xminv</code>赋值给<code>x</code>，并按照<code>y</code>从大到小排序后，就得到了小提琴图左侧的画笔绘制路径，即从<code>y</code>最大的开始移动到<code>y</code>最小的位置（即从上方移动到下方）。随后<code>xmax</code>赋值给<code>x</code>，并按照<code>y</code>从小到大排序，这里是为了让画笔衔接上前面，不然就会出现跳跃绘制。最后，将数据的第一行添加到最后一行，方便画笔回到最开始的地方，形成闭合多边形。</p>
+</section><section id="geom_split_violin-的绘制过程" class="level3" data-number="10.2.2"><h3 data-number="10.2.2" class="anchored" data-anchor-id="geom_split_violin-的绘制过程">
+<span class="header-section-number">10.2.2</span> <code>geom_split_violin()</code> 的绘制过程</h3>
+<p>有了上面介绍的小提琴图的绘制过程，我们就可以思考如何绘制分裂小提琴图了。在<code>introdataviz</code>中，开发者是这样思考的：<code>xminv</code>和<code>xmaxv</code>两列数据分别表示小提琴图的左侧和右侧边界，那么在每一个<code>group</code>绘图时只使用一列数据（即只使用<code>xminv</code>或者<code>xmaxv</code>），就可以只绘制一半的小提琴图，也就得到了分裂小提琴图。那么另一半用来干什么呢？开发者在这里将小提琴图的另一半用来表示下一个分组。用户在映射美学值时，可以指定一个<code>fill</code>美学值，用来表示<code>x</code>的二分类信息。这样在数据处理过程中，同一类的<code>x</code>就会同时拥有一个单数和一个双数的分类值（即在数据处理过程中生成的<code>group</code>值），这样就可以用分组编号将同一个<code>x</code>中的两个类区分开，并在绘制分裂小提琴图时将左右两侧的图形分配给<code>x</code>中的两个类，实现两个类对应<code>y</code>的密度可视化。</p>
+<p>可以通过下面的示例查看分裂小提琴图绘制时的分组数据：</p>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># 使用示例数据构建分裂小提琴图</span></span>
+<span><span class="va">sample_plot</span><span class="op">&lt;-</span><span class="fu">ggplot</span><span class="op">(</span><span class="va">ldt_long</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">condition</span>, y <span class="op">=</span> <span class="va">rt</span>, fill <span class="op">=</span> <span class="va">language</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_split_violin</span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">.4</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ggplot_build()函数得到处理后的数据</span></span>
+<span><span class="va">sample_data</span><span class="op">&lt;-</span><span class="fu">ggplot_build</span><span class="op">(</span><span class="va">sample_plot</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sample_data</span><span class="op">&lt;-</span><span class="va">sample_data</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">sample_data</span><span class="op">[</span>,<span class="st">"group"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 3 4</code></pre>
+</div>
+</div>
+<p>这里，x1的两个分类在数据处理完成后被分配了 1,2 的分组编号，而x2则是 3,4 。</p>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>分裂小提琴图只适合<code>x</code>是二分类变量的情况，其它情况下使用可能会出问题。</p>
+</div>
+</div>
+</div>
+<p>现在，我们就可以来看<code>geom_split_violin()</code>的核心代码了。</p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GeomSplitViolin</span> <span class="op">&lt;-</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggproto.html">ggproto</a></span><span class="op">(</span></span>
+<span>    <span class="st">"GeomSplitViolin"</span>, </span>
+<span>    <span class="va">GeomViolin</span>, </span>
+<span>    draw_group <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">self</span>, <span class="va">data</span>, <span class="va">...</span>, <span class="va">draw_quantiles</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/transform.html">transform</a></span><span class="op">(</span><span class="va">data</span>, </span>
+<span>                        xminv <span class="op">=</span> <span class="va">x</span> <span class="op">-</span> <span class="va">violinwidth</span> <span class="op">*</span> <span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">xmin</span><span class="op">)</span>, </span>
+<span>                        xmaxv <span class="op">=</span> <span class="va">x</span> <span class="op">+</span> <span class="va">violinwidth</span> <span class="op">*</span> <span class="op">(</span><span class="va">xmax</span> <span class="op">-</span> <span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span>      <span class="co"># 1.提取分组信息</span></span>
+<span>      <span class="va">grp</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span><span class="fl">1</span>,<span class="st">'group'</span><span class="op">]</span></span>
+<span>      <span class="co"># 2.分组为奇数，绘制左侧，并按照 y 从大到小排序</span></span>
+<span>      <span class="co"># 2.分组为偶数，绘制右侧，并按照 y 从小到大排序</span></span>
+<span>      <span class="va">newdata</span> <span class="op">&lt;-</span> <span class="fu">plyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyr/man/arrange.html">arrange</a></span><span class="op">(</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/transform.html">transform</a></span><span class="op">(</span><span class="va">data</span>, x <span class="op">=</span> <span class="kw">if</span><span class="op">(</span><span class="va">grp</span><span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html">%%</a></span><span class="fl">2</span><span class="op">==</span><span class="fl">1</span><span class="op">)</span> <span class="va">xminv</span> <span class="kw">else</span> <span class="va">xmaxv</span><span class="op">)</span>, </span>
+<span>        <span class="kw">if</span><span class="op">(</span><span class="va">grp</span><span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html">%%</a></span><span class="fl">2</span><span class="op">==</span><span class="fl">1</span><span class="op">)</span> <span class="va">y</span> <span class="kw">else</span> <span class="op">-</span><span class="va">y</span></span>
+<span>      <span class="op">)</span></span>
+<span>      <span class="co"># 3.闭合多边形</span></span>
+<span>      <span class="va">newdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">newdata</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>, <span class="va">newdata</span>, <span class="va">newdata</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">newdata</span><span class="op">)</span>, <span class="op">]</span>, <span class="va">newdata</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span><span class="op">)</span></span>
+<span>      <span class="va">newdata</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">newdata</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span>,<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">newdata</span><span class="op">)</span><span class="op">)</span>, <span class="st">'x'</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">newdata</span><span class="op">[</span><span class="fl">1</span>, <span class="st">'x'</span><span class="op">]</span><span class="op">)</span> </span>
+<span>      <span class="co"># 其它代码，和 GeomViolin 的基本一致</span></span>
+<span>      <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">draw_quantiles</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/zero_range.html">zero_range</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">y</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="va">draw_quantiles</span> <span class="op">&gt;=</span> <span class="fl">0</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="va">draw_quantiles</span> <span class="op">&lt;=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span>        <span class="va">quantiles</span> <span class="op">&lt;-</span> <span class="fu">ggplot2</span><span class="fu">:::</span><span class="fu">create_quantile_segment_frame</span><span class="op">(</span><span class="va">data</span>, <span class="va">draw_quantiles</span><span class="op">)</span></span>
+<span>        <span class="va">aesthetics</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">quantiles</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span><span class="op">)</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
+<span>        <span class="va">aesthetics</span><span class="op">$</span><span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">quantiles</span><span class="op">)</span><span class="op">)</span></span>
+<span>        <span class="va">both</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">quantiles</span>, <span class="va">aesthetics</span><span class="op">)</span></span>
+<span>        <span class="va">quantile_grob</span> <span class="op">&lt;-</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="va"><a href="https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html">GeomPath</a></span><span class="op">$</span><span class="fu">draw_panel</span><span class="op">(</span><span class="va">both</span>, <span class="va">...</span><span class="op">)</span></span>
+<span>        <span class="fu">ggplot2</span><span class="fu">:::</span><span class="fu">ggname</span><span class="op">(</span><span class="st">"geom_split_violin"</span>, </span>
+<span>                         <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/grid.grob.html">grobTree</a></span><span class="op">(</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="va"><a href="https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html">GeomPolygon</a></span><span class="op">$</span><span class="fu">draw_panel</span><span class="op">(</span><span class="va">newdata</span>, <span class="va">...</span><span class="op">)</span>, <span class="va">quantile_grob</span><span class="op">)</span><span class="op">)</span></span>
+<span>      <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>        <span class="fu">ggplot2</span><span class="fu">:::</span><span class="fu">ggname</span><span class="op">(</span><span class="st">"geom_split_violin"</span>, <span class="fu">ggplot2</span><span class="fu">::</span><span class="va"><a href="https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html">GeomPolygon</a></span><span class="op">$</span><span class="fu">draw_panel</span><span class="op">(</span><span class="va">newdata</span>, <span class="va">...</span><span class="op">)</span><span class="op">)</span></span>
+<span>      <span class="op">}</span></span>
+<span>    <span class="op">}</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>第一步，首先提取数据的第一个分组信息，用于后续的条件判断。这里需要注意的是，<code>draw_group()</code>函数将分组绘制图形，也就是说，绘制完一组再绘制另一组，由 <a href="../ggplot2/ggplot2internal.html#sec-ggplotbuild" class="quarto-xref"><span>Section 2.2</span></a> 处理后的数据不是全部传入<code>draw_group()</code>中，而是分组传入的，所以<code>grp &lt;- data[1,'group']</code>实际上能够处理所有分组的信息。</p>
+<p>第二步，根据<code>group</code>的奇偶性对<code>x</code>进行赋值，这里和小提琴图最大的区别是，只使用了一半的数据，要么为<code>xminv</code>，要么为<code>xmaxv</code>。</p>
+<p>第三步，确保小提琴图的多边形能够正确闭合，从而实现分裂小提琴图的绘制。第一行代码将 newdata 的第一行、整个 newdata、newdata 的最后一行以及 newdata 的第一行绑定在一起。这样做的目的是确保多边形的路径能够正确闭合。通过在数据的开头和结尾添加相同的点，确保绘制的路径能够回到起点，形成一个闭合的多边形。第二行代码将 newdata 的第一行、倒数第二行和最后一行的 x 值设置为 newdata 第一行的 x 值的四舍五入结果。这样做的目的是确保多边形的左右两侧能够正确对齐，从而避免绘制过程中出现跳跃或不连续的情况。</p>
+<p>通过以上三个步骤，就实现了分裂小提琴图的绘制。</p>
+</section></section><section id="geom_flat_violin-的实现原理" class="level2" data-number="10.3"><h2 data-number="10.3" class="anchored" data-anchor-id="geom_flat_violin-的实现原理">
+<span class="header-section-number">10.3</span> <code>geom_flat_violin()</code> 的实现原理</h2>
 
 
-
-
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+<ol>
+<li id="fn1"><p>类似的，在几何对象geom中也通过对 <code>draw_*()</code> 函数的调用来实现图形的绘制。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -670,9 +946,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="../extension/gghdr.html" class="pagination-link" aria-label="gghdr">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">gghdr</span></span>
       </a>          
@@ -681,21 +955,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
+<footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
       &nbsp;
     </div>   
     <div class="nav-footer-center">
 <p>博客<a href="https://blog.stariverfeel.eu.org/">Feel’s Blog</a> | 部署 <a href="https://quarto.org/">Quarto</a>.</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/FeelLiao/RdataVisualization/edit/main/extension/introdataviz.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/FeelLiao/RdataVisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/FeelLiao/RdataVisualization/edit/main/extension/introdataviz.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/FeelLiao/RdataVisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
   </div>
 </footer>
-
-
 
 
 </body></html>
