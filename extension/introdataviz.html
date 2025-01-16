@@ -256,7 +256,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#geom_split_violin-%E7%9A%84%E7%BB%98%E5%88%B6%E8%BF%87%E7%A8%8B" id="toc-geom_split_violin-的绘制过程" class="nav-link" data-scroll-target="#geom_split_violin-%E7%9A%84%E7%BB%98%E5%88%B6%E8%BF%87%E7%A8%8B"><span class="header-section-number">10.2.2</span> <code>geom_split_violin()</code> 的绘制过程</a></li>
   </ul>
 </li>
-  <li><a href="#geom_flat_violin-%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86" id="toc-geom_flat_violin-的实现原理" class="nav-link" data-scroll-target="#geom_flat_violin-%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="header-section-number">10.3</span> <code>geom_flat_violin()</code> 的实现原理</a></li>
+  <li><a href="#sec-geom-flat-violin" id="toc-sec-geom-flat-violin" class="nav-link" data-scroll-target="#sec-geom-flat-violin"><span class="header-section-number">10.3</span> <code>geom_flat_violin()</code> 的实现原理</a></li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/FeelLiao/RdataVisualization/edit/main/extension/introdataviz.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/FeelLiao/RdataVisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
@@ -301,12 +301,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">plot_data</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   colour        x        y PANEL group shape size fill alpha stroke
-1 #00BA38 1.761551 29.17864     1     2    19  1.5   NA    NA    0.5
-2 #00BA38 1.816865 29.05999     1     2    19  1.5   NA    NA    0.5
-3 #00BA38 2.017311 31.11060     2     2    19  1.5   NA    NA    0.5
-4 #00BA38 1.963715 30.13303     2     2    19  1.5   NA    NA    0.5
-5 #00BA38 2.818371 26.36987     1     2    19  1.5   NA    NA    0.5
-6 #00BA38 2.789037 25.61813     1     2    19  1.5   NA    NA    0.5</code></pre>
+1 #00BA38 1.770152 29.09401     1     2    19  1.5   NA    NA    0.5
+2 #00BA38 1.781438 29.35214     1     2    19  1.5   NA    NA    0.5
+3 #00BA38 2.035901 31.04183     2     2    19  1.5   NA    NA    0.5
+4 #00BA38 1.976412 29.98016     2     2    19  1.5   NA    NA    0.5
+5 #00BA38 2.774115 25.71663     1     2    19  1.5   NA    NA    0.5
+6 #00BA38 2.779935 25.61601     1     2    19  1.5   NA    NA    0.5</code></pre>
 </div>
 </div>
 <p>输出用于绘制 <code>geom_smooth()</code> 的数据的前5行：</p>
@@ -509,13 +509,156 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>第二步，根据<code>group</code>的奇偶性对<code>x</code>进行赋值，这里和小提琴图最大的区别是，只使用了一半的数据，要么为<code>xminv</code>，要么为<code>xmaxv</code>。</p>
 <p>第三步，确保小提琴图的多边形能够正确闭合，从而实现分裂小提琴图的绘制。第一行代码将 newdata 的第一行、整个 newdata、newdata 的最后一行以及 newdata 的第一行绑定在一起。这样做的目的是确保多边形的路径能够正确闭合。通过在数据的开头和结尾添加相同的点，确保绘制的路径能够回到起点，形成一个闭合的多边形。第二行代码将 newdata 的第一行、倒数第二行和最后一行的 x 值设置为 newdata 第一行的 x 值的四舍五入结果。这样做的目的是确保多边形的左右两侧能够正确对齐，从而避免绘制过程中出现跳跃或不连续的情况。</p>
 <p>通过以上三个步骤，就实现了分裂小提琴图的绘制。</p>
-</section></section><section id="geom_flat_violin-的实现原理" class="level2" data-number="10.3"><h2 data-number="10.3" class="anchored" data-anchor-id="geom_flat_violin-的实现原理">
+</section></section><section id="sec-geom-flat-violin" class="level2" data-number="10.3"><h2 data-number="10.3" class="anchored" data-anchor-id="sec-geom-flat-violin">
 <span class="header-section-number">10.3</span> <code>geom_flat_violin()</code> 的实现原理</h2>
+<p><code>geom_flat_violin()</code>用于创建云雨图中的云，其实也就是将小提琴图位于左边的那一半挪到右边来形成的图形。我们首先来看开发者的实现代码。</p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GeomFlatViolin</span> <span class="op">&lt;-</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggproto.html">ggproto</a></span><span class="op">(</span></span>
+<span>    <span class="st">"Violinist"</span>, </span>
+<span>    <span class="va">Geom</span>,</span>
+<span>    setup_data <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="va">data</span><span class="op">$</span><span class="va">width</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">$</span><span class="va">width</span> <span class="op"><a href="https://rdrr.io/r/base/Control.html">%||%</a></span></span>
+<span>        <span class="va">params</span><span class="op">$</span><span class="va">width</span> <span class="op"><a href="https://rdrr.io/r/base/Control.html">%||%</a></span> <span class="op">(</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/resolution.html">resolution</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">x</span>, <span class="cn">FALSE</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.9</span><span class="op">)</span></span>
+<span>      </span>
+<span>      <span class="co"># ymin, ymax, xmin, and xmax define the bounding rectangle for each group</span></span>
+<span>      <span class="va">data</span> <span class="op">%&gt;%</span></span>
+<span>        <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">group</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>        <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>,</span>
+<span>               ymax <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>,</span>
+<span>               xmin <span class="op">=</span> <span class="va">x</span>,</span>
+<span>               xmax <span class="op">=</span> <span class="va">x</span> <span class="op">+</span> <span class="va">width</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>        <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>      </span>
+<span>    <span class="op">}</span>,</span>
+<span>    draw_group <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">panel_scales</span>, <span class="va">coord</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="co"># Find the points for the line to go all the way around</span></span>
+<span>      <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/transform.html">transform</a></span><span class="op">(</span><span class="va">data</span>, xminv <span class="op">=</span> <span class="va">x</span>,</span>
+<span>      xmaxv <span class="op">=</span> <span class="va">x</span> <span class="op">+</span> <span class="va">violinwidth</span> <span class="op">*</span> <span class="op">(</span><span class="va">xmax</span> <span class="op">-</span> <span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span>      </span>
+<span>      <span class="co"># Make sure it's sorted properly to draw the outline</span></span>
+<span>      <span class="va">newdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu">plyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyr/man/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/transform.html">transform</a></span><span class="op">(</span><span class="va">data</span>, x <span class="op">=</span> <span class="va">xminv</span><span class="op">)</span>, <span class="va">y</span><span class="op">)</span>,</span>
+<span>      <span class="fu">plyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyr/man/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/transform.html">transform</a></span><span class="op">(</span><span class="va">data</span>, x <span class="op">=</span> <span class="va">xmaxv</span><span class="op">)</span>, <span class="op">-</span><span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
+<span>      </span>
+<span>      <span class="co"># Close the polygon: set first and last point the same</span></span>
+<span>      <span class="co"># Needed for coord_polar and such</span></span>
+<span>      <span class="va">newdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">newdata</span>, <span class="va">newdata</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span><span class="op">)</span></span>
+<span>      </span>
+<span>      <span class="fu">ggplot2</span><span class="fu">:::</span><span class="fu">ggname</span><span class="op">(</span><span class="st">"geom_flat_violin"</span>, </span>
+<span>                       <span class="fu">ggplot2</span><span class="fu">::</span><span class="va"><a href="https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html">GeomPolygon</a></span><span class="op">$</span><span class="fu">draw_panel</span><span class="op">(</span><span class="va">newdata</span>, <span class="va">panel_scales</span>, <span class="va">coord</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">}</span>,</span>
+<span>    draw_key <span class="op">=</span> <span class="va">draw_key_polygon</span>,</span>
+<span>    default_aes <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>weight <span class="op">=</span> <span class="fl">1</span>, colour <span class="op">=</span> <span class="st">"grey20"</span>, </span>
+<span>                      fill <span class="op">=</span> <span class="st">"white"</span>, size <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>                      alpha <span class="op">=</span> <span class="cn">NA</span>, linetype <span class="op">=</span> <span class="st">"solid"</span><span class="op">)</span>,</span>
+<span>    required_aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>GeomFlatViolin</code>类继承自<code>Geom</code>类而非<code>GeomViolin</code>类，那么很多方法的实现就需要自己写了。</p>
+<p><code>setup_data</code> 函数</p>
+<ol type="1">
+<li><p>宽度计算：首先，函数计算每个数据点的宽度。<code>data$width</code> 如果为空，则使用 <code>params$width</code>，如果 <code>params$width</code> 也为空，则使用 <code>ggplot2::resolution(data$x, FALSE) * 0.9</code> 计算默认宽度。<code><a href="https://ggplot2.tidyverse.org/reference/resolution.html">ggplot2::resolution</a></code> 函数用于计算数据的分辨率，即数据点之间的最小间隔。它的第一个参数是数据向量，第二个参数是一个布尔值，表示是否考虑数据的连续性（<code>FALSE</code> 表示不考虑）。在这里，如果用户使用默认的统计变换（<code>ydensity</code>变换），那么值为<code>data$width</code>。</p></li>
+<li><p>定义边界矩形：使用 <code>dplyr</code> 包对数据进行分组（按 <code>group</code> 列），并计算每组数据的 <code>ymin</code>（最小 <code>y</code> 值）、<code>ymax</code>（最大 <code>y</code> 值）、<code>xmin</code>（<code>x</code> 值）和 <code>xmax</code>（<code>x</code> 值加上宽度的一半）。这些值定义了每组数据的边界矩形 <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>。</p></li>
+</ol>
+<p><code>draw_group</code> 函数</p>
+<ol type="1">
+<li>计算边界点：函数通过 <code>transform</code> 函数计算每个数据点的 <code>xminv</code> 和 <code>xmaxv</code>，这些值用于绘制小提琴图的边界。这里，<code>xminv = x</code>就相当于不绘制小提琴图的左侧图形。<code>xmaxv = x + violinwidth * (xmax - x)</code>用于计算右侧的小提琴图边界。</li>
+<li>排序数据：使用 <code><a href="https://rdrr.io/pkg/plyr/man/arrange.html">plyr::arrange</a></code> 函数对数据进行排序，以确保绘制轮廓时顺序正确。首先按 <code>y</code> 值升序排列 <code>xminv</code>，然后按 <code>y</code> 值降序排列 <code>xmaxv</code>。</li>
+<li>闭合多边形：为了确保多边形闭合（例如在 <code>coord_polar</code> 坐标系中），将第一个数据点添加到 <code>newdata</code> 的末尾。</li>
+<li>绘制多边形：使用 <code>ggplot2::GeomPolygon$draw_panel</code> 函数绘制多边形，并使用 <code>ggplot2:::ggname</code> 给图形命名。</li>
+</ol>
+<p>其他组件</p>
+<ol type="1">
+<li>
+<code>draw_key</code>：定义了图例的绘制方式，使用 <code>draw_key_polygon</code>。</li>
+<li>
+<code>default_aes</code>：定义了默认的美学映射，包括颜色、填充、大小等。</li>
+<li>
+<code>required_aes</code>：定义了必须提供的美学映射，这里是 <code>x</code> 和 <code>y</code>。</li>
+</ol>
+<p>由于<code>geom_flat_violin()</code>的构造函数中使用了<code>position = "dodge"</code>参数，所以在<code>x</code>最终参与绘图的值会有所变化，反应到图中就是同一个<code>x</code>中如果有两个分组的话，那么在图里会有两个分开的图。</p>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geom_flat_violin</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">data</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">stat</span> <span class="op">=</span> <span class="st">"ydensity"</span>,</span>
+<span>                             <span class="va">position</span> <span class="op">=</span> <span class="st">"dodge"</span>, <span class="va">trim</span> <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">scale</span> <span class="op">=</span> <span class="st">"area"</span>,</span>
+<span>                             <span class="va">show.legend</span> <span class="op">=</span> <span class="cn">NA</span>, <span class="va">inherit.aes</span> <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span><span class="op">{</span></span>
+<span>                              <span class="va">...</span></span>
+<span>                             <span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>简单修改<code>GeomSplitViolin</code>类也可以实现类似的效果，代码如下：</p>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geom_flat_violin</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                              <span class="va">data</span> <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                              <span class="va">stat</span> <span class="op">=</span> <span class="st">"ydensity"</span>,</span>
+<span>                              <span class="va">position</span> <span class="op">=</span> <span class="st">"identity"</span>, <span class="va">...</span>,</span>
+<span>                              <span class="va">draw_quantiles</span> <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                              <span class="va">trim</span> <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                              <span class="va">scale</span> <span class="op">=</span> <span class="st">"area"</span>,</span>
+<span>                              <span class="va">na.rm</span> <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                              <span class="va">show.legend</span> <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>                              <span class="va">inherit.aes</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">GeomFlatViolin</span> <span class="op">&lt;-</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggproto.html">ggproto</a></span><span class="op">(</span></span>
+<span>    <span class="st">"GeomFlatViolin"</span>,</span>
+<span>    <span class="va">GeomViolin</span>,</span>
+<span>    draw_group <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">self</span>, <span class="va">data</span>, <span class="va">...</span>, <span class="va">draw_quantiles</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/transform.html">transform</a></span><span class="op">(</span><span class="va">data</span>, xminv <span class="op">=</span> <span class="va">x</span>,</span>
+<span>      xmaxv <span class="op">=</span> <span class="va">x</span> <span class="op">+</span> <span class="va">violinwidth</span> <span class="op">*</span> <span class="op">(</span><span class="va">xmax</span> <span class="op">-</span> <span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span>      </span>
+<span>      <span class="co"># Make sure it's sorted properly to draw the outline</span></span>
+<span>      <span class="va">newdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu">plyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyr/man/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/transform.html">transform</a></span><span class="op">(</span><span class="va">data</span>, x <span class="op">=</span> <span class="va">xminv</span><span class="op">)</span>, <span class="va">y</span><span class="op">)</span>,</span>
+<span>      <span class="fu">plyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyr/man/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/transform.html">transform</a></span><span class="op">(</span><span class="va">data</span>, x <span class="op">=</span> <span class="va">xmaxv</span><span class="op">)</span>, <span class="op">-</span><span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
+<span>      </span>
+<span>      <span class="co"># Close the polygon: set first and last point the same</span></span>
+<span>      <span class="co"># Needed for coord_polar and such</span></span>
+<span>      <span class="va">newdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">newdata</span>, <span class="va">newdata</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span><span class="op">)</span></span>
+<span>      <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">draw_quantiles</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/zero_range.html">zero_range</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">y</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="va">draw_quantiles</span> <span class="op">&gt;=</span> <span class="fl">0</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="va">draw_quantiles</span> <span class="op">&lt;=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span>        <span class="va">quantiles</span> <span class="op">&lt;-</span> <span class="fu">ggplot2</span><span class="fu">:::</span><span class="fu">create_quantile_segment_frame</span><span class="op">(</span><span class="va">data</span>, <span class="va">draw_quantiles</span><span class="op">)</span></span>
+<span>        <span class="va">aesthetics</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">quantiles</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span><span class="op">)</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
+<span>        <span class="va">aesthetics</span><span class="op">$</span><span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">quantiles</span><span class="op">)</span><span class="op">)</span></span>
+<span>        <span class="va">both</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">quantiles</span>, <span class="va">aesthetics</span><span class="op">)</span></span>
+<span>        <span class="va">quantile_grob</span> <span class="op">&lt;-</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="va"><a href="https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html">GeomPath</a></span><span class="op">$</span><span class="fu">draw_panel</span><span class="op">(</span><span class="va">both</span>, <span class="va">...</span><span class="op">)</span></span>
+<span>        <span class="fu">ggplot2</span><span class="fu">:::</span><span class="fu">ggname</span><span class="op">(</span></span>
+<span>          <span class="st">"geom_flat_violin"</span>,</span>
+<span>          <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/grid.grob.html">grobTree</a></span><span class="op">(</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="va"><a href="https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html">GeomPolygon</a></span><span class="op">$</span><span class="fu">draw_panel</span><span class="op">(</span><span class="va">newdata</span>, <span class="va">...</span><span class="op">)</span>, <span class="va">quantile_grob</span><span class="op">)</span></span>
+<span>        <span class="op">)</span></span>
+<span>      <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>        <span class="fu">ggplot2</span><span class="fu">:::</span><span class="fu">ggname</span><span class="op">(</span><span class="st">"geom_flat_violin"</span>, <span class="fu">ggplot2</span><span class="fu">::</span><span class="va"><a href="https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html">GeomPolygon</a></span><span class="op">$</span><span class="fu">draw_panel</span><span class="op">(</span><span class="va">newdata</span>, <span class="va">...</span><span class="op">)</span><span class="op">)</span></span>
+<span>      <span class="op">}</span></span>
+<span>    <span class="op">}</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span></span>
+<span>  <span class="fu">layer</span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">data</span>,</span>
+<span>    mapping <span class="op">=</span> <span class="va">mapping</span>,</span>
+<span>    stat <span class="op">=</span> <span class="va">stat</span>,</span>
+<span>    geom <span class="op">=</span> <span class="va">GeomSplitViolin</span>,</span>
+<span>    position <span class="op">=</span> <span class="va">position</span>,</span>
+<span>    show.legend <span class="op">=</span> <span class="va">show.legend</span>,</span>
+<span>    inherit.aes <span class="op">=</span> <span class="va">inherit.aes</span>,</span>
+<span>    params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>      trim <span class="op">=</span> <span class="va">trim</span>,</span>
+<span>      scale <span class="op">=</span> <span class="va">scale</span>,</span>
+<span>      draw_quantiles <span class="op">=</span> <span class="va">draw_quantiles</span>,</span>
+<span>      na.rm <span class="op">=</span> <span class="va">na.rm</span>, <span class="va">...</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
 
 
 </section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
 <ol>
 <li id="fn1"><p>类似的，在几何对象geom中也通过对 <code>draw_*()</code> 函数的调用来实现图形的绘制。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>这里的计算似乎在绘图中没有作用。<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
