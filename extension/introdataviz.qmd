@@ -247,7 +247,154 @@ GeomSplitViolin <- ggplot2::ggproto(
 
 通过以上三个步骤，就实现了分裂小提琴图的绘制。
 
-## `geom_flat_violin()` 的实现原理
+## `geom_flat_violin()` 的实现原理 {#sec-geom-flat-violin}
+
+`geom_flat_violin()`用于创建云雨图中的云，其实也就是将小提琴图位于左边的那一半挪到右边来形成的图形。我们首先来看开发者的实现代码。
+
+```{r}
+#| label: flat-violin-plot
+#| eval: false
+
+GeomFlatViolin <- ggplot2::ggproto(
+    "Violinist", 
+    Geom,
+    setup_data = function(data, params) {
+      data$width <- data$width %||%
+        params$width %||% (ggplot2::resolution(data$x, FALSE) * 0.9)
+      
+      # ymin, ymax, xmin, and xmax define the bounding rectangle for each group
+      data %>%
+        dplyr::group_by(group) %>%
+        dplyr::mutate(ymin = min(y),
+               ymax = max(y),
+               xmin = x,
+               xmax = x + width / 2) %>%
+        dplyr::ungroup()
+      
+    },
+    draw_group = function(data, panel_scales, coord) {
+      # Find the points for the line to go all the way around
+      data <- transform(data, xminv = x,
+      xmaxv = x + violinwidth * (xmax - x))
+      
+      # Make sure it's sorted properly to draw the outline
+      newdata <- rbind(plyr::arrange(transform(data, x = xminv), y),
+      plyr::arrange(transform(data, x = xmaxv), -y))
+      
+      # Close the polygon: set first and last point the same
+      # Needed for coord_polar and such
+      newdata <- rbind(newdata, newdata[1,])
+      
+      ggplot2:::ggname("geom_flat_violin", 
+                       ggplot2::GeomPolygon$draw_panel(newdata, panel_scales, coord))
+    },
+    draw_key = draw_key_polygon,
+    default_aes = aes(weight = 1, colour = "grey20", 
+                      fill = "white", size = 0.5,
+                      alpha = NA, linetype = "solid"),
+    required_aes = c("x", "y")
+  )
+```
+
+`GeomFlatViolin`类继承自`Geom`类而非`GeomViolin`类，那么很多方法的实现就需要自己写了。
+
+`setup_data` 函数
+
+1. 宽度计算：首先，函数计算每个数据点的宽度。`data$width` 如果为空，则使用 `params$width`，如果 `params$width` 也为空，则使用 `ggplot2::resolution(data$x, FALSE) * 0.9` 计算默认宽度。`ggplot2::resolution` 函数用于计算数据的分辨率，即数据点之间的最小间隔。它的第一个参数是数据向量，第二个参数是一个布尔值，表示是否考虑数据的连续性（`FALSE` 表示不考虑）。在这里，如果用户使用默认的统计变换（`ydensity`变换），那么值为`data$width`。
+
+2. 定义边界矩形：使用 `dplyr` 包对数据进行分组（按 `group` 列），并计算每组数据的 `ymin`（最小 `y` 值）、`ymax`（最大 `y` 值）、`xmin`（`x` 值）和 `xmax`（`x` 值加上宽度的一半）。这些值定义了每组数据的边界矩形 [^group]。
+
+[^group]: 这里的计算似乎在绘图中没有作用。
+
+`draw_group` 函数
+
+1. 计算边界点：函数通过 `transform` 函数计算每个数据点的 `xminv` 和 `xmaxv`，这些值用于绘制小提琴图的边界。这里，`xminv = x`就相当于不绘制小提琴图的左侧图形。`xmaxv = x + violinwidth * (xmax - x)`用于计算右侧的小提琴图边界。
+2. 排序数据：使用 `plyr::arrange` 函数对数据进行排序，以确保绘制轮廓时顺序正确。首先按 `y` 值升序排列 `xminv`，然后按 `y` 值降序排列 `xmaxv`。
+3. 闭合多边形：为了确保多边形闭合（例如在 `coord_polar` 坐标系中），将第一个数据点添加到 `newdata` 的末尾。
+4. 绘制多边形：使用 `ggplot2::GeomPolygon$draw_panel` 函数绘制多边形，并使用 `ggplot2:::ggname` 给图形命名。
+
+其他组件
+
+1. `draw_key`：定义了图例的绘制方式，使用 `draw_key_polygon`。
+2. `default_aes`：定义了默认的美学映射，包括颜色、填充、大小等。
+3. `required_aes`：定义了必须提供的美学映射，这里是 `x` 和 `y`。
+
+由于`geom_flat_violin()`的构造函数中使用了`position = "dodge"`参数，所以在`x`最终参与绘图的值会有所变化，反应到图中就是同一个`x`中如果有两个分组的话，那么在图里会有两个分开的图。
+
+```{r}
+#| label: flat-violin-constructor
+#| eval: false
+geom_flat_violin <- function(mapping = NULL, data = NULL, stat = "ydensity",
+                             position = "dodge", trim = TRUE, scale = "area",
+                             show.legend = NA, inherit.aes = TRUE, ...){
+                              ...
+                             }
+```
+
+::: {.callout-note}
+简单修改`GeomSplitViolin`类也可以实现类似的效果，代码如下：
+
+```{r}
+#| label: new_flat_violin
+#| eval: false
+geom_flat_violin <- function(mapping = NULL,
+                              data = NULL,
+                              stat = "ydensity",
+                              position = "identity", ...,
+                              draw_quantiles = NULL,
+                              trim = TRUE,
+                              scale = "area",
+                              na.rm = FALSE,
+                              show.legend = NA,
+                              inherit.aes = TRUE) {
+  GeomFlatViolin <- ggplot2::ggproto(
+    "GeomFlatViolin",
+    GeomViolin,
+    draw_group = function(self, data, ..., draw_quantiles = NULL) {
+      data <- transform(data, xminv = x,
+      xmaxv = x + violinwidth * (xmax - x))
+      
+      # Make sure it's sorted properly to draw the outline
+      newdata <- rbind(plyr::arrange(transform(data, x = xminv), y),
+      plyr::arrange(transform(data, x = xmaxv), -y))
+      
+      # Close the polygon: set first and last point the same
+      # Needed for coord_polar and such
+      newdata <- rbind(newdata, newdata[1,])
+      if (length(draw_quantiles) > 0 & !scales::zero_range(range(data$y))) {
+        stopifnot(all(draw_quantiles >= 0), all(draw_quantiles <= 1))
+        quantiles <- ggplot2:::create_quantile_segment_frame(data, draw_quantiles)
+        aesthetics <- data[rep(1, nrow(quantiles)), setdiff(names(data), c("x", "y")), drop = FALSE]
+        aesthetics$alpha <- rep(1, nrow(quantiles))
+        both <- cbind(quantiles, aesthetics)
+        quantile_grob <- ggplot2::GeomPath$draw_panel(both, ...)
+        ggplot2:::ggname(
+          "geom_flat_violin",
+          grid::grobTree(ggplot2::GeomPolygon$draw_panel(newdata, ...), quantile_grob)
+        )
+      } else {
+        ggplot2:::ggname("geom_flat_violin", ggplot2::GeomPolygon$draw_panel(newdata, ...))
+      }
+    }
+  )
 
 
+  layer(
+    data = data,
+    mapping = mapping,
+    stat = stat,
+    geom = GeomSplitViolin,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(
+      trim = trim,
+      scale = scale,
+      draw_quantiles = draw_quantiles,
+      na.rm = na.rm, ...
+    )
+  )
+}
 
+```
+:::
