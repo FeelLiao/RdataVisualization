@@ -229,14 +229,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../extension/gghdr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">gghdr</span></span></a>
+  <a href="../extension/introdataviz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">introdataviz</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../extension/introdataviz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">introdataviz</span></span></a>
+  <a href="../extension/gghdr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">gghdr</span></span></a>
   </div>
 </li>
       </ul>
@@ -320,20 +320,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">gwas_data_load</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  chr        snp      bp nmiss        beta         se           r2          t
-1   1  rs5227990  334257 19811 0.011118983 0.14090144 9.617731e-06  0.9638806
-2   1 rs90159076 2002289 20022 0.011026255 0.09728575 1.631621e-05  0.4475233
-3   1 rs16796702  480721 19932 0.003247319 0.06722447 2.845053e-05 -0.8837488
-4   1 rs92983752   95722 19904 0.023085775 0.04606896 6.531238e-05 -0.9390637
-5   1 rs66215732 1617096 20001 0.003929967 0.14570081 4.568743e-05  0.8138904
-6   1  rs6779359 1895232 19945 0.020720492 0.08516477 2.171735e-05 -0.5622017
-          p
-1 0.0409544
-2 0.4721253
-3 0.6313255
-4 0.6480016
-5 0.5536904
-6 0.7780078</code></pre>
+<pre><code>  chr        snp      bp nmiss         beta         se           r2          t
+1   1 rs29739675  207570 19866 0.0001172545 0.12259917 3.258736e-05  0.7157474
+2   1 rs59555188  229596 19986 0.0097647193 0.11289196 5.341985e-05  1.3679031
+3   1 rs32296801  203566 19869 0.0003257865 0.09293004 8.062375e-05  0.2131695
+4   1 rs39431709  488456 19996 0.0105858371 0.09383849 4.023357e-05 -0.1990375
+5   1 rs73112838 1518600 19752 0.0392933630 0.14405580 7.193600e-05 -0.6373294
+6   1 rs67499262  186255 19984 0.0020088124 0.23674989 1.293879e-04 -1.6002558
+            p
+1 0.878081529
+2 0.007446974
+3 0.247818474
+4 0.616258977
+5 0.905842768
+6 0.448370284</code></pre>
 </div>
 </div>
 <p>从模拟的GWAS数据中选择所有 p 值小于 0.05 的行，这些行代表统计上显著的结果。</p>
@@ -365,11 +365,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     chr  bp_add
   &lt;int&gt;   &lt;dbl&gt;
 1     1       0
-2     2 2199993
-3     3 4299036
-4     4 6297170
-5     5 8195131
-6     6 9994428</code></pre>
+2     2 2199859
+3     3 4298009
+4     4 6297676
+5     5 8195860
+6     6 9993273</code></pre>
 </div>
 </div>
 <p>将累积基对位置数据与原始GWAS数据合并。</p>
@@ -437,7 +437,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>曼哈顿图由ggplot2的点图+一条直线绘制而成。gwas数据由分布在染色体上的单核苷酸突变位点构成，每个突变位点记录了它在染色体上的绝对位置和它的p-value。为了对这个数据进行可视化，我们将每个单核苷酸突变位点的位置作为x轴，它的p-value作为y轴，然后沿y轴绘制一条p-value的阈值线，就完成可视化。在实际操作过程中，需要注意每个单核苷酸突变位点在染色体上的位置，这里的数据中，单核苷酸突变位点在染色体上的位置表示为在单个染色体上的位置，比如在2号染色体的1253位点，表示为1253，而非加上染色体1的长度，所以需要转换数据。另外，x轴和y轴的标签也做了相应转换，x轴取了每个染色体的中心位置写标签，而y轴做了-log10转换。</p>
 </section></section><section id="sec-split-violin-plot" class="level2" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="sec-split-violin-plot">
 <span class="header-section-number">7.2</span> 分裂小提琴图</h2>
-<p>分裂小提琴图能够很方便的展示嵌套数据中两组数据的分布情况。分裂小提琴图来自<code>introdataviz</code>包<code><a href="https://rdrr.io/pkg/introdataviz/man/geom_split_violin.html">geom_split_violin()</a></code>函数，有关如何实现这个函数，请参见 <a href="../extension/introdataviz.html" class="quarto-xref"><span>Chapter 10</span></a></p>
+<p>分裂小提琴图能够很方便的展示嵌套数据中两组数据的分布情况。分裂小提琴图来自<code>introdataviz</code>包<code><a href="https://rdrr.io/pkg/introdataviz/man/geom_split_violin.html">geom_split_violin()</a></code>函数，有关如何实现这个函数，请参见 <a href="../extension/introdataviz.html" class="quarto-xref"><span>Chapter 9</span></a></p>
 <section id="加载r包-1" class="level3" data-number="7.2.1"><h3 data-number="7.2.1" class="anchored" data-anchor-id="加载r包-1">
 <span class="header-section-number">7.2.1</span> 加载R包</h3>
 <div class="cell">
