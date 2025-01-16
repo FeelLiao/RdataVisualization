@@ -39,8 +39,8 @@ book:
 
     - part: extension/extension_chapter.qmd
       chapters: 
-        - extension/gghdr.qmd
         - extension/introdataviz.qmd
+        - extension/gghdr.qmd
 
 format:
   html:

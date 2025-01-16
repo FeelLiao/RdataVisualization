@@ -331,7 +331,6 @@ geom_flat_violin <- function(mapping = NULL, data = NULL, stat = "ydensity",
                              }
 ```
 
-::: {.callout-note}
 简单修改`GeomSplitViolin`类也可以实现类似的效果，代码如下：
 
 ```{r}
@@ -397,4 +396,3 @@ geom_flat_violin <- function(mapping = NULL,
 }
 
 ```
-:::
