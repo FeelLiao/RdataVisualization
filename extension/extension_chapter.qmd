@@ -5,3 +5,4 @@
 这里主要介绍以下包的编写过程：
 
 - [PsyTeachR/introdataviz](https://github.com/PsyTeachR/introdataviz)：这个包可以用来绘制分裂小提琴图（split-violin plot）和云雨图（raincloud plot）（都用来显示数据的分布情况）@sec-introdataviz 。
+- [Sayani07/gghdr](https://github.com/Sayani07/gghdr/)：以单个维度或两个维度可视化高密度区域数据（Highest Density Regions）。借助`hdrcde`包在`ggplot2`的框架下可视化HDRs数据 @#sec-gghdr 。
