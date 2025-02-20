@@ -15,8 +15,13 @@
 1. 多层箱体：普通箱线图（如 `geom_boxplot`）仅展示单一四分位数范围，而 HDR 箱线图通过 `prob` 参数展示多个概率层级，更直观反映数据密度分布。
 2. 模式线替代中位线：用众数（`mode`）替代传统中位数线，强调数据分布的峰值位置。
 
+::: {.callout-warning}
+下面利用`gghdr`绘制HDR箱线图的代码在最新的 ggplot2 v3.5.1 中已经无法运行，这里使用`gghdr`官网上的图片进行展示。
+:::
+
 ```{r}
 #| label: gghdr
+#| eval: false
 
 library(gghdr)
 library(ggplot2)
@@ -24,6 +29,8 @@ ggplot(faithful, aes(y = eruptions)) +
   geom_hdr_boxplot(prob = c(.5, 0.99), fill = "blue") + 
   theme_minimal()
 ```
+
+![](assets/README-gg_hdr-boxplot-1.png)
 
 ## 统计变换 stat
 
