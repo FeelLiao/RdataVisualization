@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.6.40">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Feel Liao">
-
 <title>10&nbsp; gghdr – R语言数据可视化学习笔记</title>
 <style>
 code{white-space: pre-wrap;}
@@ -21,8 +18,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
-
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
@@ -41,8 +71,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-78faf54a06e50be45dc6d83ab59297a7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap-2ce9fc9ac8b614e7ffef13962cc12eaf.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -68,17 +97,37 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-
-
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 </head>
-
 <body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
@@ -89,13 +138,9 @@ ul.task-list li input[type="checkbox"] {
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="../">R语言数据可视化学习笔记</a> 
         <div class="sidebar-tools-main">
@@ -115,7 +160,7 @@ ul.task-list li input[type="checkbox"] {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">欢迎</span></a>
@@ -135,8 +180,8 @@ ul.task-list li input[type="checkbox"] {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ggplot2/ggplot2intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">ggplot2简介</span></span></a>
@@ -161,7 +206,7 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../plot/plot_ex.html" class="sidebar-item-text sidebar-link">
@@ -170,8 +215,8 @@ ul.task-list li input[type="checkbox"] {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../plot/top50en.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Top 50 ggplot2 Visualizations</span></span></a>
@@ -196,7 +241,7 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../extension/extension_chapter.html" class="sidebar-item-text sidebar-link">
@@ -205,8 +250,8 @@ ul.task-list li input[type="checkbox"] {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../extension/introdataviz.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">introdataviz</span></span></a>
@@ -219,20 +264,21 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
       </ul>
-  </li>
+</li>
     </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#%E7%BB%9F%E8%AE%A1%E5%8F%98%E6%8D%A2-stat" id="toc-统计变换-stat" class="nav-link active" data-scroll-target="#%E7%BB%9F%E8%AE%A1%E5%8F%98%E6%8D%A2-stat"><span class="header-section-number">10.1</span> 统计变换 stat</a></li>
+  <li><a href="#%E5%87%A0%E4%BD%95%E5%AF%B9%E8%B1%A1-geom" id="toc-几何对象-geom" class="nav-link" data-scroll-target="#%E5%87%A0%E4%BD%95%E5%AF%B9%E8%B1%A1-geom"><span class="header-section-number">10.2</span> 几何对象 geom</a></li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/FeelLiao/RdataVisualization/edit/main/extension/gghdr.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/FeelLiao/RdataVisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../extension/extension_chapter.html">编写 ggplot2 拓展</a></li><li class="breadcrumb-item"><a href="../extension/gghdr.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">gghdr</span></a></li></ol></nav>
-<div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../extension/extension_chapter.html">编写 ggplot2 拓展</a></li><li class="breadcrumb-item"><a href="../extension/gghdr.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">gghdr</span></a></li></ol></nav><div class="quarto-title">
 <h1 class="title"><span id="sec-gghdr" class="quarto-section-identifier"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">gghdr</span></span></h1>
 </div>
 
@@ -247,14 +293,405 @@ ul.task-list li input[type="checkbox"] {
   
 
 
-</header>
+</header><p><a href="https://github.com/Sayani07/gghdr/">Sayani07/gghdr</a> 包来自github，目前该包已经从CRAN中移除，如需使用，请从github安装。</p>
+<p><code>gghdr</code>的主页：<a href="https://sayani07.github.io/gghdr/">https://sayani07.github.io/gghdr/</a> <code>gghdr</code>的开发过程：</p>
+<ol type="1">
+<li><a href="https://www.youtube.com/watch?v=ZMHJdW6a20I">Youtube</a></li>
+<li><a href="https://www.r-bloggers.com/2022/02/a-journey-to-gghdr/">R-bloggers</a></li>
+</ol>
+<p>这里只介绍<code>gghdr</code>中<code>geom_hdr_boxplot</code>的实现原理，不涉及其它部分，包括但不限于R包的编写，图例的编写等。</p>
+<p>与普通箱线图的区别:</p>
+<ol type="1">
+<li>多层箱体：普通箱线图（如 <code>geom_boxplot</code>）仅展示单一四分位数范围，而 HDR 箱线图通过 <code>prob</code> 参数展示多个概率层级，更直观反映数据密度分布。</li>
+<li>模式线替代中位线：用众数（<code>mode</code>）替代传统中位数线，强调数据分布的峰值位置。</li>
+</ol>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>下面利用<code>gghdr</code>绘制HDR箱线图的代码在最新的 ggplot2 v3.5.1 中已经无法运行，这里使用<code>gghdr</code>官网上的图片进行展示。</p>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Sayani07/gghdr">gghdr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">faithful</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">eruptions</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/gghdr/man/geom_hdr_boxplot.html">geom_hdr_boxplot</a></span><span class="op">(</span>prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.5</span>, <span class="fl">0.99</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="assets/README-gg_hdr-boxplot-1.png" class="img-fluid"></p>
+<section id="统计变换-stat" class="level2" data-number="10.1"><h2 data-number="10.1" class="anchored" data-anchor-id="统计变换-stat">
+<span class="header-section-number">10.1</span> 统计变换 stat</h2>
+<p><code>gghdr</code>包使用<code>hdrcde</code>包来进行高度密度区域和条件密度的估计，通过自定义函数将估计结果转换成<code>ggplot2</code>能够使用的标准格式，省去了计算步骤。</p>
+<p>这是<code>StatHdrcde</code>类的完整代码：</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">StatHdrcde</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggproto.html">ggproto</a></span><span class="op">(</span><span class="st">"StatHdrcde"</span>, <span class="va">Stat</span>,</span>
+<span>                      required_aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"y"</span><span class="op">)</span>,</span>
+<span>                      <span class="co"># non_missing_aes = "weight",</span></span>
+<span></span>
+<span>                      <span class="co">#setup_params = ggplot2::StatBoxplot$setup_params,</span></span>
+<span></span>
+<span>                      setup_data <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span><span class="op">)</span> <span class="op">{</span></span>
+<span></span>
+<span>                        <span class="co"># How are missing values handled?</span></span>
+<span>                        <span class="va">data</span><span class="op">$</span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">$</span><span class="va">x</span> <span class="op"><a href="https://rdrr.io/r/base/Control.html">%||%</a></span> <span class="fl">0</span></span>
+<span>                        <span class="va">data</span></span>
+<span>                      <span class="op">}</span>,</span>
+<span></span>
+<span>                      compute_group <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">scales</span>, <span class="va">width</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">probs</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">all.modes</span> <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">na.rm</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+<span></span>
+<span>                        <span class="co"># 如果data$x有两个以上的值，那么width就是x的差值的90%</span></span>
+<span>                        <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span></span>
+<span>                          <span class="va">width</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.9</span></span>
+<span></span>
+<span>                        <span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">x</span> <span class="op">==</span> <span class="va">data</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
+<span>                          <span class="co"># 如果x不全部相等</span></span>
+<span>                          <span class="co">#stop("Conditional density estimation is not yet supported. Make sure each plot group contains only one x value.")</span></span>
+<span></span>
+<span>                          <span class="va">hdrcde_est</span> <span class="op">&lt;-</span> <span class="fu">hdrcde</span><span class="fu">::</span><span class="fu"><a href="https://pkg.robjhyndman.com/hdrcde/reference/cde.html">cde</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">x</span>, <span class="va">data</span><span class="op">$</span><span class="va">y</span><span class="op">)</span></span>
+<span>                          <span class="va">hdr_stats</span> <span class="op">&lt;-</span> <span class="fu">hdrcde</span><span class="fu">::</span><span class="fu"><a href="https://pkg.robjhyndman.com/hdrcde/reference/hdr.cde.html">hdr.cde</a></span><span class="op">(</span><span class="va">hdrcde_est</span>, prob <span class="op">=</span> <span class="va">probs</span><span class="op">*</span><span class="fl">100</span>, plot <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
+<span></span>
+<span>                          <span class="va">one_cde_row</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">idx</span>, <span class="va">hdrcde_est</span>, <span class="va">hdr_stats</span><span class="op">)</span> <span class="op">{</span></span>
+<span>                            <span class="co"># 转置hdr_stats$hdr</span></span>
+<span>                            <span class="va">hdr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">hdr_stats</span><span class="op">$</span><span class="va">hdr</span><span class="op">[[</span><span class="va">idx</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span>                            <span class="va">max_boxes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">hdr</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span></span>
+<span></span>
+<span>                            <span class="co"># 初始化一个空的data.frame，使用structure()函数能够更好的控制data.frame的结构。</span></span>
+<span>                            <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/structure.html">structure</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>, .Names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">character</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>, row.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="op">-</span><span class="fl">1L</span><span class="op">)</span>, class <span class="op">=</span> <span class="st">"data.frame"</span><span class="op">)</span></span>
+<span>                            <span class="co"># col(hdr) %% 2 col(hdr)的每一列除以2的余数，col()函数返回矩阵中的值的列号</span></span>
+<span>                            <span class="va">box</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">hdr</span>, <span class="fu"><a href="https://rdrr.io/r/base/col.html">col</a></span><span class="op">(</span><span class="va">hdr</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html">%%</a></span> <span class="fl">2</span><span class="op">)</span></span>
+<span>                            <span class="co"># 判断box是否有NA值</span></span>
+<span>                            <span class="va">is_box</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/complete.cases.html">complete.cases</a></span><span class="op">(</span><span class="va">box</span><span class="op">)</span></span>
+<span></span>
+<span>                            <span class="va">df</span><span class="op">$</span><span class="va">prob</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="va">probs</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="va">max_boxes</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span>                            <span class="va">df</span><span class="op">$</span><span class="va">box</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span></span>
+<span>                              <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">box</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, <span class="va">box</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>                              dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="cn">NULL</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lower"</span>, <span class="st">"upper"</span><span class="op">)</span><span class="op">)</span></span>
+<span>                            <span class="op">)</span><span class="op">)</span></span>
+<span>                            <span class="va">df</span><span class="op">$</span><span class="va">ymax</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">box</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>                            <span class="va">df</span><span class="op">$</span><span class="va">ymin</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">box</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span>                            <span class="va">df</span><span class="op">$</span><span class="va">mode</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">hdr_stats</span><span class="op">$</span><span class="va">modes</span><span class="op">[</span><span class="va">idx</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span>                            <span class="va">df</span><span class="op">$</span><span class="va">width</span> <span class="op">&lt;-</span> <span class="va">hdrcde_est</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">-</span> <span class="va">hdrcde_est</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span></span>
+<span>                            <span class="va">df</span><span class="op">$</span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">hdrcde_est</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span></span>
+<span>                            <span class="va">df</span><span class="op">$</span><span class="va">x_cde</span> <span class="op">&lt;-</span> <span class="va">hdrcde_est</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span></span>
+<span>                            <span class="va">df</span></span>
+<span>                          <span class="op">}</span></span>
+<span></span>
+<span>                          </span>
+<span>                          <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">hdrcde_est</span><span class="op">$</span><span class="va">x</span><span class="op">)</span>, <span class="va">one_cde_row</span>, <span class="va">hdrcde_est</span>, <span class="va">hdr_stats</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span>                        <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>                          <span class="co"># imported from hdrcde</span></span>
+<span>                          <span class="va">hdr_stats</span> <span class="op">&lt;-</span> <span class="fu">hdrcde</span><span class="fu">::</span><span class="fu"><a href="https://pkg.robjhyndman.com/hdrcde/reference/hdr.html">hdr</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">y</span>, prob <span class="op">=</span> <span class="va">probs</span><span class="op">*</span><span class="fl">100</span>, all.modes <span class="op">=</span> <span class="va">all.modes</span><span class="op">)</span></span>
+<span></span>
+<span>                          <span class="va">hdr</span> <span class="op">&lt;-</span> <span class="va">hdr_stats</span><span class="op">$</span><span class="va">hdr</span></span>
+<span></span>
+<span>                          <span class="co"># number of boxes (for all probabilities max number of boxes will be shown although it has got NA values)</span></span>
+<span>                          <span class="va">max_boxes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">hdr</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span></span>
+<span></span>
+<span>                          <span class="co"># initialise 1 row data.frame</span></span>
+<span>                          <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/structure.html">structure</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>, .Names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">character</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>, row.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="op">-</span><span class="fl">1L</span><span class="op">)</span>, class <span class="op">=</span> <span class="st">"data.frame"</span><span class="op">)</span></span>
+<span></span>
+<span>                          <span class="va">box</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">hdr</span>, <span class="fu"><a href="https://rdrr.io/r/base/col.html">col</a></span><span class="op">(</span><span class="va">hdr</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html">%%</a></span> <span class="fl">2</span><span class="op">)</span></span>
+<span>                          <span class="va">is_box</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/complete.cases.html">complete.cases</a></span><span class="op">(</span><span class="va">box</span><span class="op">)</span></span>
+<span>                          <span class="va">df</span><span class="op">$</span><span class="va">prob</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="va">probs</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="va">max_boxes</span><span class="op">)</span><span class="op">[</span><span class="va">is_box</span><span class="op">]</span><span class="op">)</span></span>
+<span>                          <span class="va">df</span><span class="op">$</span><span class="va">box</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span></span>
+<span>                            <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">box</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, <span class="va">box</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>                            dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="cn">NULL</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lower"</span>, <span class="st">"upper"</span><span class="op">)</span><span class="op">)</span></span>
+<span>                          <span class="op">)</span><span class="op">[</span><span class="va">is_box</span>,<span class="op">]</span><span class="op">)</span></span>
+<span>                          <span class="va">df</span><span class="op">$</span><span class="va">ymax</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">box</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>                          <span class="va">df</span><span class="op">$</span><span class="va">ymin</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">box</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span>                          <span class="co"># keep only modes within boxes</span></span>
+<span>                          <span class="va">mode_proxy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">hdr_stats</span><span class="op">$</span><span class="va">mode</span><span class="op">)</span>, <span class="va">df</span><span class="op">$</span><span class="va">ymax</span><span class="op">)</span></span>
+<span>                          <span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">hdr_stats</span><span class="op">$</span><span class="va">mode</span><span class="op">)</span><span class="op">)</span></span>
+<span>                          <span class="op">{</span></span>
+<span>                            <span class="kw">for</span><span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">ymax</span><span class="op">)</span><span class="op">)</span></span>
+<span>                              <span class="kw">if</span><span class="op">(</span><span class="va">hdr_stats</span><span class="op">$</span><span class="va">mode</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">&lt;=</span><span class="va">df</span><span class="op">$</span><span class="va">ymax</span><span class="op">[</span><span class="va">j</span><span class="op">]</span> <span class="op">&amp;</span> <span class="va">hdr_stats</span><span class="op">$</span><span class="va">mode</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">&gt;=</span> <span class="va">df</span><span class="op">$</span><span class="va">ymin</span><span class="op">[</span><span class="va">j</span><span class="op">]</span><span class="op">)</span></span>
+<span>                              <span class="op">{</span></span>
+<span>                                <span class="va">mode_proxy</span><span class="op">[</span><span class="va">i</span>, <span class="va">j</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
+<span>                              <span class="op">}</span></span>
+<span>                            <span class="kw">else</span> <span class="va">mode_proxy</span><span class="op">[</span><span class="va">i</span>, <span class="va">j</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span>                          <span class="op">}</span></span>
+<span>                          <span class="va">hdr_mode</span> <span class="op">&lt;-</span> <span class="va">hdr_stats</span><span class="op">$</span><span class="va">mode</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="va">mode_proxy</span><span class="op">)</span><span class="op">==</span><span class="fl">0</span><span class="op">)</span><span class="op">]</span></span>
+<span>                          <span class="va">df</span><span class="op">$</span><span class="va">mode</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">hdr_mode</span><span class="op">)</span></span>
+<span></span>
+<span>                          <span class="va">df</span><span class="op">$</span><span class="va">width</span> <span class="op">&lt;-</span> <span class="va">width</span></span>
+<span>                          <span class="va">df</span><span class="op">$</span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">x</span><span class="op">)</span> <span class="co"># FIX LATER</span></span>
+<span>                          <span class="va">df</span></span>
+<span>                        <span class="op">}</span></span>
+<span></span>
+<span>                      <span class="op">}</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>这里有三个关键的部分：</p>
+<ol type="1">
+<li>
+<code>setup_data</code>函数：</li>
+</ol>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">setup_data</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span><span class="op">)</span> <span class="op">{</span></span>
+<span></span>
+<span>                        <span class="co"># How are missing values handled?</span></span>
+<span>                        <span class="va">data</span><span class="op">$</span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">$</span><span class="va">x</span> <span class="op"><a href="https://rdrr.io/r/base/Control.html">%||%</a></span> <span class="fl">0</span></span>
+<span>                        <span class="va">data</span></span>
+<span>                      <span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>如果data<span class="math inline">\(x的值不为空，则使用data\)</span>x，否则赋值为0。这里保证了data<span class="math inline">\(x是有值的。一般情况下，ggplot2处理数据时会添加data\)</span>x的值。</p>
+<ol start="2" type="1">
+<li>
+<code>compute_group</code>函数中<code>if</code>判断的第一部分（如果<code>data$x</code>不全部相等，也就是<code>data$x</code>这一列数据出现两种或以上的值）：</li>
+</ol>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">x</span> <span class="op">==</span> <span class="va">data</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="co"># 如果x不全部相等</span></span>
+<span>  <span class="co">#stop("Conditional density estimation is not yet supported. Make sure each plot group contains only one x value.")</span></span>
+<span></span>
+<span>  <span class="va">hdrcde_est</span> <span class="op">&lt;-</span> <span class="fu">hdrcde</span><span class="fu">::</span><span class="fu"><a href="https://pkg.robjhyndman.com/hdrcde/reference/cde.html">cde</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">x</span>, <span class="va">data</span><span class="op">$</span><span class="va">y</span><span class="op">)</span></span>
+<span>  <span class="va">hdr_stats</span> <span class="op">&lt;-</span> <span class="fu">hdrcde</span><span class="fu">::</span><span class="fu"><a href="https://pkg.robjhyndman.com/hdrcde/reference/hdr.cde.html">hdr.cde</a></span><span class="op">(</span><span class="va">hdrcde_est</span>, prob <span class="op">=</span> <span class="va">probs</span><span class="op">*</span><span class="fl">100</span>, plot <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">one_cde_row</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">idx</span>, <span class="va">hdrcde_est</span>, <span class="va">hdr_stats</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="co"># 转置hdr_stats$hdr</span></span>
+<span>    <span class="va">hdr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">hdr_stats</span><span class="op">$</span><span class="va">hdr</span><span class="op">[[</span><span class="va">idx</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span>    <span class="va">max_boxes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">hdr</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span></span>
+<span></span>
+<span>    <span class="co"># 初始化一个空的data.frame，使用structure()函数能够更好的控制data.frame的结构。</span></span>
+<span>    <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/structure.html">structure</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>, .Names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">character</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>, row.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="op">-</span><span class="fl">1L</span><span class="op">)</span>, class <span class="op">=</span> <span class="st">"data.frame"</span><span class="op">)</span></span>
+<span>    <span class="co"># col(hdr) %% 2 col(hdr)的每一列除以2的余数，col()函数返回矩阵中的值的列号</span></span>
+<span>    <span class="co"># 这里将hdr中的列按照奇数列和偶数列分开</span></span>
+<span>    <span class="va">box</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">hdr</span>, <span class="fu"><a href="https://rdrr.io/r/base/col.html">col</a></span><span class="op">(</span><span class="va">hdr</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html">%%</a></span> <span class="fl">2</span><span class="op">)</span></span>
+<span>    <span class="co"># 判断box是否有NA值</span></span>
+<span>    <span class="va">is_box</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/complete.cases.html">complete.cases</a></span><span class="op">(</span><span class="va">box</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="va">df</span><span class="op">$</span><span class="va">prob</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="va">probs</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="va">max_boxes</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="co"># 将分开的box重新合并为矩阵</span></span>
+<span>    <span class="va">df</span><span class="op">$</span><span class="va">box</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">box</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, <span class="va">box</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>      dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="cn">NULL</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lower"</span>, <span class="st">"upper"</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="va">df</span><span class="op">$</span><span class="va">ymax</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">box</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>    <span class="va">df</span><span class="op">$</span><span class="va">ymin</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">box</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="va">df</span><span class="op">$</span><span class="va">mode</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">hdr_stats</span><span class="op">$</span><span class="va">modes</span><span class="op">[</span><span class="va">idx</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span>    <span class="va">df</span><span class="op">$</span><span class="va">width</span> <span class="op">&lt;-</span> <span class="va">hdrcde_est</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">-</span> <span class="va">hdrcde_est</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span></span>
+<span>    <span class="va">df</span><span class="op">$</span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">hdrcde_est</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span></span>
+<span>    <span class="va">df</span><span class="op">$</span><span class="va">x_cde</span> <span class="op">&lt;-</span> <span class="va">hdrcde_est</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span></span>
+<span>    <span class="va">df</span></span>
+<span>  <span class="op">}</span></span>
+<span></span>
+<span>  </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">hdrcde_est</span><span class="op">$</span><span class="va">x</span><span class="op">)</span>, <span class="va">one_cde_row</span>, <span class="va">hdrcde_est</span>, <span class="va">hdr_stats</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>首先，利用<code><a href="https://pkg.robjhyndman.com/hdrcde/reference/cde.html">hdrcde::cde()</a></code>和<code><a href="https://pkg.robjhyndman.com/hdrcde/reference/hdr.cde.html">hdrcde::hdr.cde()</a></code>两个函数计算条件密度分布，然后利用自定义函数<code>one_cde_row()</code>处理计算结果。最后用<code><a href="https://rdrr.io/r/base/do.call.html">do.call()</a></code>函数和合并所有结果。通过这些步骤，实现了对条件密度估计结果的处理，并将其转换为 ggplot2 能够使用的标准格式。</p>
+<ol start="3" type="1">
+<li>
+<code>compute_group</code>函数中<code>if</code>判断的<code>else</code>部分（<code>data$x</code>的值全部相等）：</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># imported from hdrcde</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>hdr_stats <span class="ot">&lt;-</span> hdrcde<span class="sc">::</span><span class="fu">hdr</span>(data<span class="sc">$</span>y, <span class="at">prob =</span> probs<span class="sc">*</span><span class="dv">100</span>, <span class="at">all.modes =</span> all.modes)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>hdr <span class="ot">&lt;-</span> hdr_stats<span class="sc">$</span>hdr</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># number of boxes (for all probabilities max number of boxes will be shown although it has got NA values)</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>max_boxes <span class="ot">&lt;-</span> <span class="fu">ncol</span>(hdr)<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># initialise 1 row data.frame</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">structure</span>(<span class="fu">list</span>(), <span class="at">.Names =</span> <span class="fu">character</span>(<span class="dv">0</span>), <span class="at">row.names =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="sc">-</span><span class="dv">1</span>L), <span class="at">class =</span> <span class="st">"data.frame"</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>box <span class="ot">&lt;-</span> <span class="fu">split</span>(hdr, <span class="fu">col</span>(hdr) <span class="sc">%%</span> <span class="dv">2</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>is_box <span class="ot">&lt;-</span> <span class="fu">complete.cases</span>(box)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>prob <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">rep</span>(<span class="fu">sort</span>(probs, <span class="at">decreasing =</span> <span class="cn">TRUE</span>), max_boxes)[is_box])</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>box <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">matrix</span>(</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(box[[<span class="dv">2</span>]], box[[<span class="dv">1</span>]]), <span class="at">ncol =</span> <span class="dv">2</span>,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="cn">NULL</span>, <span class="fu">c</span>(<span class="st">"lower"</span>, <span class="st">"upper"</span>))</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>)[is_box,])</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>ymax <span class="ot">&lt;-</span> <span class="fu">max</span>(box[[<span class="dv">1</span>]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>ymin <span class="ot">&lt;-</span> <span class="fu">min</span>(box[[<span class="dv">2</span>]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co"># keep only modes within boxes</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>mode_proxy <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="fu">length</span>(hdr_stats<span class="sc">$</span>mode), df<span class="sc">$</span>ymax)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(hdr_stats<span class="sc">$</span>mode))</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(df<span class="sc">$</span>ymax))</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(hdr_stats<span class="sc">$</span>mode[i]<span class="sc">&lt;=</span>df<span class="sc">$</span>ymax[j] <span class="sc">&amp;</span> hdr_stats<span class="sc">$</span>mode[i]<span class="sc">&gt;=</span> df<span class="sc">$</span>ymin[j])</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>      mode_proxy[i, j] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> mode_proxy[i, j] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>hdr_mode <span class="ot">&lt;-</span> hdr_stats<span class="sc">$</span>mode[<span class="fu">which</span>(<span class="fu">rowSums</span>(mode_proxy)<span class="sc">==</span><span class="dv">0</span>)]</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>mode <span class="ot">&lt;-</span> <span class="fu">list</span>(hdr_mode)</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>width <span class="ot">&lt;-</span> width</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>x <span class="ot">&lt;-</span> <span class="fu">unique</span>(data<span class="sc">$</span>x) <span class="co"># FIX LATER</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>df</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>这里的处理过程和上面的基本相同，需要注意的是，这里使用了<code>mode_proxy</code>来对<code>mode</code>进行处理，以保证只有位于盒子内部的<code>mode</code>被保留。</p>
+</section><section id="几何对象-geom" class="level2" data-number="10.2"><h2 data-number="10.2" class="anchored" data-anchor-id="几何对象-geom">
+<span class="header-section-number">10.2</span> 几何对象 geom</h2>
+<p><code>geom_hdr_boxplot</code>形似箱线图，由矩形和线段组成，因此在绘图层面上，直接使用<code>GeomRect$draw_panel()</code>和<code>GeomSegment$draw_panel()</code>这两个已有的几何对象完成图形的绘制。</p>
+<p>以下为<code>GeomHdrBoxplot</code>类的源码：</p>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GeomHdrBoxplot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggproto.html">ggproto</a></span><span class="op">(</span><span class="st">"GeomHdrBoxplot"</span>, <span class="va">Geom</span>,</span>
+<span></span>
+<span>                          <span class="co"># need to declare `width` here in case this geom is used with a stat that</span></span>
+<span>                          <span class="co"># doesn't have a `width` parameter (e.g., `stat_identity`).</span></span>
+<span>                          extra_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"na.rm"</span>, <span class="st">"width"</span><span class="op">)</span>,</span>
+<span></span>
+<span>                          setup_data <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span><span class="op">)</span> <span class="op">{</span></span>
+<span>                            <span class="va">data</span><span class="op">$</span><span class="va">width</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">$</span><span class="va">width</span> <span class="op"><a href="https://rdrr.io/r/base/Control.html">%||%</a></span></span>
+<span>                              <span class="va">params</span><span class="op">$</span><span class="va">width</span> <span class="op"><a href="https://rdrr.io/r/base/Control.html">%||%</a></span> <span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/resolution.html">resolution</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">x</span>, <span class="cn">FALSE</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.9</span><span class="op">)</span></span>
+<span></span>
+<span>                            <span class="va">data</span><span class="op">$</span><span class="va">xmin</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">$</span><span class="va">x</span> <span class="op">-</span> <span class="va">data</span><span class="op">$</span><span class="va">width</span> <span class="op">/</span> <span class="fl">2</span></span>
+<span>                            <span class="va">data</span><span class="op">$</span><span class="va">xmax</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">$</span><span class="va">x</span> <span class="op">+</span> <span class="va">data</span><span class="op">$</span><span class="va">width</span> <span class="op">/</span> <span class="fl">2</span></span>
+<span></span>
+<span>                            <span class="co">#                         data$width &lt;- NULL</span></span>
+<span>                            <span class="co">#                         data$outliers &lt;- NULL</span></span>
+<span>                            <span class="va">data</span></span>
+<span>                          <span class="op">}</span>,</span>
+<span></span>
+<span>                          draw_group <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">panel_params</span>, <span class="va">coord</span>, <span class="va">varwidth</span> <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                                                <span class="va">prob</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.95</span>, <span class="fl">0.99</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span></span>
+<span>                            <span class="va">fill_shade</span> <span class="op">&lt;-</span> <span class="fu">darken_fill</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep_len</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">fill</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">prob</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>, <span class="va">data</span><span class="op">$</span><span class="va">prob</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span>                            <span class="va">common</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>                              size <span class="op">=</span> <span class="va">data</span><span class="op">$</span><span class="va">size</span>,</span>
+<span>                              linetype <span class="op">=</span> <span class="va">data</span><span class="op">$</span><span class="va">linetype</span>,</span>
+<span>                              group <span class="op">=</span> <span class="va">data</span><span class="op">$</span><span class="va">group</span>,</span>
+<span>                              alpha <span class="op">=</span> <span class="cn">NA</span></span>
+<span>                            <span class="op">)</span></span>
+<span></span>
+<span>                            <span class="va">num_boxes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">box</span>, <span class="va">nrow</span><span class="op">)</span></span>
+<span>                            <span class="va">num_probs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">prob</span>, <span class="va">length</span><span class="op">)</span></span>
+<span>                            <span class="co">#ignore dodged widths if doing cde</span></span>
+<span>                            </span>
+<span>                            <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span>                              <span class="va">data</span><span class="op">$</span><span class="va">xmin</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">$</span><span class="va">x_cde</span> <span class="op">-</span> <span class="va">data</span><span class="op">$</span><span class="va">width</span> <span class="op">/</span> <span class="fl">2</span></span>
+<span>                              <span class="va">data</span><span class="op">$</span><span class="va">xmax</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">$</span><span class="va">x_cde</span> <span class="op">+</span> <span class="va">data</span><span class="op">$</span><span class="va">width</span> <span class="op">/</span> <span class="fl">2</span></span>
+<span>                            <span class="op">}</span></span>
+<span></span>
+<span>                            <span class="va">box</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>                              <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>                                <span class="co">#Expand out packed HDR box specifications</span></span>
+<span>                                xmin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">xmin</span> <span class="op">+</span> <span class="fl">0.1</span><span class="op">*</span> <span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">xmax</span><span class="op">-</span><span class="va">data</span><span class="op">$</span><span class="va">xmin</span><span class="op">)</span>, times <span class="op">=</span> <span class="va">num_boxes</span><span class="op">)</span>,</span>
+<span>                                xmax <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">xmax</span> <span class="op">-</span> <span class="fl">0.1</span><span class="op">*</span> <span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">xmax</span><span class="op">-</span><span class="va">data</span><span class="op">$</span><span class="va">xmin</span><span class="op">)</span>, times <span class="op">=</span> <span class="va">num_boxes</span><span class="op">)</span>,</span>
+<span>                                <span class="co"># 这两行代码使用 lapply 对 data$box 列中的每个元素应用一个匿名函数，</span></span>
+<span>                                <span class="co"># 提取每个矩阵的 "lower" 和 "upper" 列，并使用 unlist 将结果转换为向量。</span></span>
+<span>                                ymin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">box</span>, <span class="kw">function</span><span class="op">(</span><span class="va">b</span><span class="op">)</span> <span class="va">b</span><span class="op">[</span>,<span class="st">"lower"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                                ymax <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">box</span>, <span class="kw">function</span><span class="op">(</span><span class="va">b</span><span class="op">)</span> <span class="va">b</span><span class="op">[</span>,<span class="st">"upper"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                                fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/alpha.html">alpha</a></span><span class="op">(</span><span class="va">fill_shade</span>, <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">alpha</span><span class="op">)</span><span class="op">)</span>, length.out <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">num_probs</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                                colour <span class="op">=</span> <span class="cn">NA</span></span>
+<span>                              <span class="op">)</span>,</span>
+<span>                              <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">common</span>, <span class="va">rep</span>, length.out <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">num_boxes</span><span class="op">)</span><span class="op">)</span></span>
+<span>                            <span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span>                            <span class="va">mode</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>                              <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>                                x <span class="op">=</span> <span class="va">data</span><span class="op">$</span><span class="va">xmin</span>,</span>
+<span>                                xend <span class="op">=</span> <span class="va">data</span><span class="op">$</span><span class="va">xmax</span>,</span>
+<span>                                y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">mode</span><span class="op">)</span>,</span>
+<span>                                yend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">mode</span><span class="op">)</span>,</span>
+<span>                                colour <span class="op">=</span> <span class="va">data</span><span class="op">$</span><span class="va">colour</span></span>
+<span>                              <span class="op">)</span>,</span>
+<span>                              <span class="va">common</span></span>
+<span>                            <span class="op">)</span>, n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">mode</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span>                            <span class="fu">ggplot2</span><span class="fu">:::</span><span class="fu">ggname</span><span class="op">(</span><span class="st">"geom_hdr_boxplot"</span>, <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/grid.grob.html">grobTree</a></span><span class="op">(</span></span>
+<span>                              <span class="fu">ggplot2</span><span class="fu">::</span><span class="va"><a href="https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html">GeomRect</a></span><span class="op">$</span><span class="fu">draw_panel</span><span class="op">(</span><span class="va">box</span>, <span class="va">panel_params</span>, <span class="va">coord</span><span class="op">)</span>,</span>
+<span>                              <span class="fu">ggplot2</span><span class="fu">::</span><span class="va"><a href="https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html">GeomSegment</a></span><span class="op">$</span><span class="fu">draw_panel</span><span class="op">(</span><span class="va">mode</span>, <span class="va">panel_params</span>, <span class="va">coord</span><span class="op">)</span></span>
+<span>                            <span class="op">)</span><span class="op">)</span></span>
+<span>                          <span class="op">}</span>,</span>
+<span></span>
+<span>                          draw_key <span class="op">=</span> <span class="va">draw_key_hdr_boxplot</span>,</span>
+<span></span>
+<span>                          default_aes <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>weight <span class="op">=</span> <span class="fl">1</span>, colour <span class="op">=</span> <span class="st">"grey20"</span>, fill <span class="op">=</span> <span class="st">"black"</span>, size <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>                                            alpha <span class="op">=</span> <span class="cn">NA</span>, shape <span class="op">=</span> <span class="fl">19</span>, linetype <span class="op">=</span> <span class="st">"solid"</span>, prob <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>,</span>
+<span></span>
+<span>                          required_aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ymax"</span>, <span class="st">"ymin"</span>, <span class="st">"box"</span><span class="op">)</span>,</span>
+<span>                          optional_aes <span class="op">=</span> <span class="st">"prob"</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol type="1">
+<li>
+<code>setup_data</code> 函数</li>
+</ol>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">setup_data</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">data</span><span class="op">$</span><span class="va">width</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">$</span><span class="va">width</span> <span class="op"><a href="https://rdrr.io/r/base/Control.html">%||%</a></span></span>
+<span>    <span class="va">params</span><span class="op">$</span><span class="va">width</span> <span class="op"><a href="https://rdrr.io/r/base/Control.html">%||%</a></span> <span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/resolution.html">resolution</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">x</span>, <span class="cn">FALSE</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.9</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">data</span><span class="op">$</span><span class="va">xmin</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">$</span><span class="va">x</span> <span class="op">-</span> <span class="va">data</span><span class="op">$</span><span class="va">width</span> <span class="op">/</span> <span class="fl">2</span></span>
+<span>  <span class="va">data</span><span class="op">$</span><span class="va">xmax</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">$</span><span class="va">x</span> <span class="op">+</span> <span class="va">data</span><span class="op">$</span><span class="va">width</span> <span class="op">/</span> <span class="fl">2</span></span>
+<span></span>
+<span>  <span class="va">data</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>对输入的数据进行预处理，设置图形的宽度和位置。<code>data</code> 是包含绘图数据的 <code>data.frame</code> ，<code>params</code> 是额外的参数。如果 <code>data</code> 中没有 <code>width</code> 列，则从 <code>params</code> 中获取，若都没有，则使用默认宽度 <code>resolution(data$x, FALSE) * 0.9</code> 。</p>
+<p><code>xmin</code> 和 <code>xmax</code>，分别表示图形的左右边界。</p>
+<ol start="2" type="1">
+<li>
+<code>draw_group</code> 函数</li>
+</ol>
+<ul>
+<li>填充颜色深浅：通过 <code>darken_fill</code> 函数根据概率值调整颜色透明度（<code>alpha</code>），概率越高的区域颜色越深。</li>
+<li>组数据时的宽度处理：当数据存在多行（<code>nrow(data) &gt; 1</code>）时，使用 <code>x_cde</code> 列重新计算箱体边界（<code>data$xmin</code> <code>data$xmax</code>），避免重叠。</li>
+<li>构建箱体数据：计算<code>xmin</code>, <code>xmax</code>, <code>ymin</code>, <code>ymax</code>，再与<code>common</code>组合成绘图数据，这里使用<code>num_boxes</code>来确保数据框的行数一致。</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">box</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>      <span class="co">#Expand out packed HDR box specifications</span></span>
+<span>      xmin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">xmin</span> <span class="op">+</span> <span class="fl">0.1</span><span class="op">*</span> <span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">xmax</span><span class="op">-</span><span class="va">data</span><span class="op">$</span><span class="va">xmin</span><span class="op">)</span>, times <span class="op">=</span> <span class="va">num_boxes</span><span class="op">)</span>,</span>
+<span>      xmax <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">xmax</span> <span class="op">-</span> <span class="fl">0.1</span><span class="op">*</span> <span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">xmax</span><span class="op">-</span><span class="va">data</span><span class="op">$</span><span class="va">xmin</span><span class="op">)</span>, times <span class="op">=</span> <span class="va">num_boxes</span><span class="op">)</span>,</span>
+<span>      <span class="co"># 这两行代码使用 lapply 对 data$box 列中的每个元素应用一个匿名函数，</span></span>
+<span>      <span class="co"># 提取每个矩阵的 "lower" 和 "upper" 列，并使用 unlist 将结果转换为向量。</span></span>
+<span>      ymin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">box</span>, <span class="kw">function</span><span class="op">(</span><span class="va">b</span><span class="op">)</span> <span class="va">b</span><span class="op">[</span>,<span class="st">"lower"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>      ymax <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">box</span>, <span class="kw">function</span><span class="op">(</span><span class="va">b</span><span class="op">)</span> <span class="va">b</span><span class="op">[</span>,<span class="st">"upper"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>      fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/alpha.html">alpha</a></span><span class="op">(</span><span class="va">fill_shade</span>, <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">alpha</span><span class="op">)</span><span class="op">)</span>, length.out <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">num_probs</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>      colour <span class="op">=</span> <span class="cn">NA</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">common</span>, <span class="va">rep</span>, length.out <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">num_boxes</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>构建模式线数据：使用 <code>data$mode</code> 中的众数值，生成横跨箱体宽度的水平线段。通过<code>n = length(data$mode[[1]])</code>来控制行数。</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mode</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>                              <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>                                x <span class="op">=</span> <span class="va">data</span><span class="op">$</span><span class="va">xmin</span>,</span>
+<span>                                xend <span class="op">=</span> <span class="va">data</span><span class="op">$</span><span class="va">xmax</span>,</span>
+<span>                                y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">mode</span><span class="op">)</span>,</span>
+<span>                                yend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">mode</span><span class="op">)</span>,</span>
+<span>                                colour <span class="op">=</span> <span class="va">data</span><span class="op">$</span><span class="va">colour</span></span>
+<span>                              <span class="op">)</span>,</span>
+<span>                              <span class="va">common</span></span>
+<span>                            <span class="op">)</span>, n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">mode</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>合并图形元素：使用 <code><a href="https://rdrr.io/r/grid/grid.grob.html">grid::grobTree</a></code> 将箱体和模式线组合为单一图形对象，并通过 <code>ggname</code> 命名以便图例管理。</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot2</span><span class="fu">:::</span><span class="fu">ggname</span><span class="op">(</span><span class="st">"geom_hdr_boxplot"</span>, <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/grid.grob.html">grobTree</a></span><span class="op">(</span></span>
+<span>                              <span class="fu">ggplot2</span><span class="fu">::</span><span class="va"><a href="https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html">GeomRect</a></span><span class="op">$</span><span class="fu">draw_panel</span><span class="op">(</span><span class="va">box</span>, <span class="va">panel_params</span>, <span class="va">coord</span><span class="op">)</span>,</span>
+<span>                              <span class="fu">ggplot2</span><span class="fu">::</span><span class="va"><a href="https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html">GeomSegment</a></span><span class="op">$</span><span class="fu">draw_panel</span><span class="op">(</span><span class="va">mode</span>, <span class="va">panel_params</span>, <span class="va">coord</span><span class="op">)</span></span>
+<span>                            <span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
-
-
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -670,9 +1107,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="../extension/introdataviz.html" class="pagination-link" aria-label="introdataviz">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">introdataviz</span></span>
       </a>          
@@ -681,21 +1116,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
+<footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
       &nbsp;
     </div>   
     <div class="nav-footer-center">
 <p>博客<a href="https://blog.stariverfeel.eu.org/">Feel’s Blog</a> | 部署 <a href="https://quarto.org/">Quarto</a>.</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/FeelLiao/RdataVisualization/edit/main/extension/gghdr.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/FeelLiao/RdataVisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/FeelLiao/RdataVisualization/edit/main/extension/gghdr.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/FeelLiao/RdataVisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
   </div>
 </footer>
-
-
 
 
 </body></html>

@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-78faf54a06e50be45dc6d83ab59297a7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap-2ce9fc9ac8b614e7ffef13962cc12eaf.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -321,19 +321,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">gwas_data_load</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  chr        snp      bp nmiss         beta         se           r2          t
-1   1 rs29739675  207570 19866 0.0001172545 0.12259917 3.258736e-05  0.7157474
-2   1 rs59555188  229596 19986 0.0097647193 0.11289196 5.341985e-05  1.3679031
-3   1 rs32296801  203566 19869 0.0003257865 0.09293004 8.062375e-05  0.2131695
-4   1 rs39431709  488456 19996 0.0105858371 0.09383849 4.023357e-05 -0.1990375
-5   1 rs73112838 1518600 19752 0.0392933630 0.14405580 7.193600e-05 -0.6373294
-6   1 rs67499262  186255 19984 0.0020088124 0.23674989 1.293879e-04 -1.6002558
-            p
-1 0.878081529
-2 0.007446974
-3 0.247818474
-4 0.616258977
-5 0.905842768
-6 0.448370284</code></pre>
+1   1 rs37706406  463758 19882 0.0029864364 0.25622430 1.292083e-04  2.3273699
+2   1 rs10011667  567266 19987 0.0102220228 0.15317258 3.316500e-05 -1.9720065
+3   1 rs46291958  694606 20011 0.0601440093 0.08921205 7.115235e-05 -0.0418025
+4   1 rs48634113 1852741 19976 0.0269168093 0.04563751 2.721316e-05 -1.4420942
+5   1 rs21562068 1886010 19964 0.0452142227 0.19233830 2.154977e-05 -0.2692923
+6   1 rs74512906  126411 20018 0.0001694101 0.06042490 2.751615e-05  0.1498507
+           p
+1 0.87891579
+2 0.05683218
+3 0.76140842
+4 0.83767710
+5 0.22275352
+6 0.19437160</code></pre>
 </div>
 </div>
 <p>从模拟的GWAS数据中选择所有 p 值小于 0.05 的行，这些行代表统计上显著的结果。</p>
@@ -365,11 +365,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     chr  bp_add
   &lt;int&gt;   &lt;dbl&gt;
 1     1       0
-2     2 2199859
-3     3 4298009
-4     4 6297676
-5     5 8195860
-6     6 9993273</code></pre>
+2     2 2199742
+3     3 4299076
+4     4 6297344
+5     5 8196932
+6     6 9996391</code></pre>
 </div>
 </div>
 <p>将累积基对位置数据与原始GWAS数据合并。</p>
